@@ -1,0 +1,213 @@
+<subheader-pn [title]="'Work Orders' | translate">
+  <!--  <div class="p-3">-->
+  <!--    <button *ngIf="pluginClaimsHelper.check(installationCheckingPnClaims.createInstallations)"-->
+  <!--            id="createInstallationBtn"-->
+  <!--            class="btn btn-success"-->
+  <!--            mdbTooltip="{{ 'New installation' | translate }}"-->
+  <!--            (click)="showNewInstallationModal()">{{ 'New installation' | translate }}-->
+  <!--    </button>-->
+  <!--  </div>-->
+</subheader-pn>
+
+<div class="container-fluid">
+  <div class="row pl-1">
+    <div class="col-md-2">
+      <div class="md-form">
+        <input
+          mdbInput
+          type="text"
+          (input)="onSearchInputChanged($event)"
+          class="form-control input-sm"
+          id="searchInput"
+        />
+        <label for="searchInput">{{ 'Search' | translate }}</label>
+      </div>
+    </div>
+  </div>
+  <div class="row p-1 mt-4 table-responsive no-gutters">
+    <table
+      mdbTable
+      striped="true"
+      hover="true"
+      small="true"
+      class="z-depth-1 text-center"
+    >
+      <thead>
+        <tr>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="idTableHeader"
+            (click)="sortTable(sortCols.id)"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              ID
+              <i class="material-icons text-black-50">{{
+                getSortIcon(sortCols.id)
+              }}</i>
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="createdAtHeader"
+            (click)="sortTable(sortCols.createdAt)"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'Created at' | translate }}
+              <i class="material-icons text-black-50">{{
+                getSortIcon(sortCols.createdAt)
+              }}</i>
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="createdByHeader"
+            (click)="sortTable(sortCols.createdBy)"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'Created by' | translate }}
+              <i class="material-icons text-black-50">{{
+                getSortIcon(sortCols.createdBy)
+              }}</i>
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="descriptionHeader"
+            (click)="sortTable(sortCols.description)"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'Description' | translate }}
+              <i class="material-icons text-black-50">{{
+                getSortIcon(sortCols.description)
+              }}</i>
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="correctedAtTheLatestHeader"
+            (click)="sortTable(sortCols.correctedAtLatest)"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'Corrected at the latest' | translate }}
+              <i class="material-icons text-black-50">{{
+                getSortIcon(sortCols.correctedAtLatest)
+              }}</i>
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="doneAtHeader"
+            (click)="sortTable(sortCols.doneAt)"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'Done at' | translate }}
+              <i class="material-icons text-black-50">{{
+                getSortIcon(sortCols.doneAt)
+              }}</i>
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="doneByHeader"
+            (click)="sortTable(sortCols.doneBy)"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'Done by' | translate }}
+              <i class="material-icons text-black-50">{{
+                getSortIcon(sortCols.doneBy)
+              }}</i>
+            </div>
+          </th>
+          <th scope="col" id="picturesOfTaskHeader">
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'Pictures of task' | translate }}
+            </div>
+          </th>
+          <th scope="col" id="picturesOfTaskDoneHeader">
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'Pictures of task done' | translate }}
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="descriptionOfTaskDoneHeader"
+            (click)="sortTable(sortCols.descriptionTaskDone)"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'Description of task done' | translate }}
+              <i class="material-icons text-black-50">{{
+                getSortIcon(sortCols.descriptionTaskDone)
+              }}</i>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <tr
+          *ngFor="
+            let workOrder of workOrdersModel?.workOrders;
+            let i = index
+          "
+        >
+          <td id="workOrderId">
+            {{ workOrder.id }}
+          </td>
+          <td id="workOrderCreatedAt">
+            {{ workOrder.createdAt | date: 'dd.MM.y HH:mm:ss' }}
+          </td>
+          <td id="workOrderCreatedBy">
+            {{ workOrder.createdBy }}
+          </td>
+          <td id="workOrderDescription">
+            {{ workOrder.description }}
+          </td>
+          <td id="workOrderCorrectedAtLatest">
+            {{ workOrder.correctedAtLatest }}
+          </td>
+          <td id="workOrderDoneBy">
+            {{ workOrder.doneBy }}
+          </td>
+          <td id="workOrderPicturesOfTask">
+            {{ workOrder.picturesOfTask }}
+          </td>
+          <td id="workOrderPicturesOfTaskDone">
+            {{ workOrder.picturesOfTaskDone }}
+          </td>
+          <td id="workOrderDescriptionOfTaskDone">
+            {{ workOrder.descriptionOfTaskDone }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row p-1 my-4 mx-2" *ngIf="workOrdersModel.total === 0">
+    <span>{{ 'No work orders found' | translate }}</span>
+  </div>
+  <div class="row justify-content-between mr-2 ml-2">
+    <div class="col-md-1">
+      <page-size-pn
+        [pageSize]="localPageSettings.pageSize"
+        (onPageSizeChanged)="
+          localPageSettings.pageSize = $event;
+          workOrdersRequestModel.offset = 0;
+          updateLocalPageSettings()
+        "
+      ></page-size-pn>
+    </div>
+    <pagination-pn
+      *ngIf="workOrdersModel?.total > workOrdersRequestModel.pageSize"
+      [limit]="workOrdersRequestModel.pageSize"
+      [size]="workOrdersModel.total"
+      [offset]="workOrdersRequestModel.offset"
+      (onPageChanged)="changePage($event)"
+    ></pagination-pn>
+  </div>
+</div>
