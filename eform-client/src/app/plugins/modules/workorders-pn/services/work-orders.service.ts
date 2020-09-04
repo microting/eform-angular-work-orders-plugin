@@ -11,7 +11,7 @@ import {
 import { WorkOrdersModel, WorkOrdersRequestModel } from '../models';
 
 export let WorkOrdersMethods = {
-  WorkOrders: 'api/workorders-pn/',
+  WorkOrders: 'api/workorders-pn',
 };
 
 @Injectable()

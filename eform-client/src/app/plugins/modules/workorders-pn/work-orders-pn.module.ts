@@ -8,13 +8,19 @@ import {
   WorkOrdersSettingsComponent,
   WorkOrdersPageComponent,
   SettingsAddSiteModalComponent,
-  SettingsRemoveSiteModalComponent
+  SettingsRemoveSiteModalComponent,
 } from './components';
-import {SharedPnModule} from 'src/app/plugins/modules/shared/shared-pn.module';
-import {ButtonsModule, ModalModule, TableModule, TooltipModule} from 'angular-bootstrap-md';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {NgSelectModule} from '@ng-select/ng-select';
-import {FormsModule} from '@angular/forms';
+import { SharedPnModule } from 'src/app/plugins/modules/shared/shared-pn.module';
+import {
+  ButtonsModule,
+  InputsModule,
+  ModalModule,
+  TableModule,
+  TooltipModule,
+} from 'angular-bootstrap-md';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -29,6 +35,7 @@ import {FormsModule} from '@angular/forms';
     NgSelectModule,
     FormsModule,
     ButtonsModule,
+    InputsModule,
   ],
   declarations: [
     WorkOrdersPnLayoutComponent,

@@ -1,13 +1,4 @@
-<subheader-pn [title]="'Work Orders' | translate">
-  <!--  <div class="p-3">-->
-  <!--    <button *ngIf="pluginClaimsHelper.check(installationCheckingPnClaims.createInstallations)"-->
-  <!--            id="createInstallationBtn"-->
-  <!--            class="btn btn-success"-->
-  <!--            mdbTooltip="{{ 'New installation' | translate }}"-->
-  <!--            (click)="showNewInstallationModal()">{{ 'New installation' | translate }}-->
-  <!--    </button>-->
-  <!--  </div>-->
-</subheader-pn>
+<subheader-pn [title]="'Work Orders' | translate"> </subheader-pn>
 
 <div class="container-fluid">
   <div class="row pl-1">
@@ -152,10 +143,7 @@
       </thead>
       <tbody id="tableBody">
         <tr
-          *ngFor="
-            let workOrder of workOrdersModel?.workOrders;
-            let i = index
-          "
+          *ngFor="let workOrder of workOrdersModel?.workOrders; let i = index"
         >
           <td id="workOrderId">
             {{ workOrder.id }}

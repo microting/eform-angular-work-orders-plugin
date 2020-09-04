@@ -32,10 +32,10 @@
           "
         >
           <td id="workOrderSiteId">
-            {{ siteDto.siteId }}
+            {{ siteDto.siteUId }}
           </td>
           <td id="workOrderSiteName">
-            {{ siteDto.fullName }}
+            {{ siteDto.siteName }}
           </td>
           <td id="workOrderSiteActions"></td>
         </tr>
@@ -52,7 +52,7 @@
     <div class="col-md-1">
       <button
         id="addNewSiteBtn"
-        class="btn btn-success"
+        class="btn btn-sm btn-success"
         mdbTooltip="{{ 'Add new site' | translate }}"
         (click)="showAddNewSiteModal()"
       >
@@ -62,3 +62,6 @@
     </div>
   </div>
 </div>
+
+<app-settings-add-site-modal #addSiteModal (siteAdded)="getSites()"></app-settings-add-site-modal>
+<app-settings-remove-site-modal #removeSiteModal (siteRemoved)="getSites()"></app-settings-remove-site-modal>

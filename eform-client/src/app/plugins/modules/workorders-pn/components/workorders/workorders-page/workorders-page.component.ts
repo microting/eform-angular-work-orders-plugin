@@ -56,16 +56,16 @@ export class WorkOrdersPageComponent implements OnInit, OnDestroy {
 
   getLocalPageSettings() {
     this.localPageSettings = this.sharedPnService.getLocalPageSettings(
-      'workOrdersPnSettings',
-      'WorkOrders'
+      'workOrdersPnLocalSettings',
+      'WorkOrdersList'
     ).settings;
   }
 
   updateLocalPageSettings() {
     this.sharedPnService.updateLocalPageSettings(
-      'workOrdersPnSettings',
+      'workOrdersPnLocalSettings',
       this.localPageSettings,
-      'WorkOrders'
+      'WorkOrdersList'
     );
     this.getWorkOrders();
   }
