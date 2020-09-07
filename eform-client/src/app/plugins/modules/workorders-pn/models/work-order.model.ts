@@ -1,3 +1,5 @@
+import {CommonImageModel} from 'src/app/common/models';
+
 export class WorkOrderModel {
   id: number;
   createdAt: Date | string;
@@ -6,7 +8,7 @@ export class WorkOrderModel {
   correctedAtLatest: Date;
   doneAt: Date | string;
   doneBy: string;
-  picturesOfTask: string[];
-  picturesOfTaskDone: string[];
+  picturesOfTask: CommonImageModel[] = [];
+  picturesOfTaskDone: CommonImageModel[] = [];
   descriptionOfTaskDone: string;
 }

@@ -1,4 +1,4 @@
-<subheader-pn [title]="'Work Orders' | translate"> </subheader-pn>
+<subheader-pn [title]="'Work Orders' | translate"></subheader-pn>
 
 <div class="container-fluid">
   <div class="row pl-1">
@@ -116,16 +116,6 @@
               }}</i>
             </div>
           </th>
-          <th scope="col" id="picturesOfTaskHeader">
-            <div class="d-flex align-items-center justify-content-center">
-              {{ 'Pictures of task' | translate }}
-            </div>
-          </th>
-          <th scope="col" id="picturesOfTaskDoneHeader">
-            <div class="d-flex align-items-center justify-content-center">
-              {{ 'Pictures of task done' | translate }}
-            </div>
-          </th>
           <th
             scope="col"
             class="table-header-sortable"
@@ -139,6 +129,7 @@
               }}</i>
             </div>
           </th>
+          <th>{{ 'Actions' | translate }}</th>
         </tr>
       </thead>
       <tbody id="tableBody">
@@ -163,14 +154,36 @@
           <td id="workOrderDoneBy">
             {{ workOrder.doneBy }}
           </td>
-          <td id="workOrderPicturesOfTask">
-            {{ workOrder.picturesOfTask }}
-          </td>
-          <td id="workOrderPicturesOfTaskDone">
-            {{ workOrder.picturesOfTaskDone }}
-          </td>
           <td id="workOrderDescriptionOfTaskDone">
             {{ workOrder.descriptionOfTaskDone }}
+          </td>
+          <td>
+            <div class="d-flex flex-row justify-content-center">
+              <button
+                id="workOrderShowPicturesOfTask"
+                (click)="showPicturesOfTask(workOrder.picturesOfTask)"
+                class="btn btn-accent text-black-50 btn-icon mb-2"
+                mdbTooltip="{{ 'View pictures of task' | translate }}"
+              >
+                <fa-icon
+                  icon="clipboard-list"
+                  size="lg"
+                  [fixedWidth]="true"
+                ></fa-icon>
+              </button>
+              <button
+                id="workOrderShowPicturesOfTaskDone"
+                (click)="showPicturesOfTask(workOrder.picturesOfTaskDone)"
+                class="btn btn-accent text-black-50 btn-icon mb-2"
+                mdbTooltip="{{ 'View pictures of task done' | translate }}"
+              >
+                <fa-icon
+                  icon="clipboard-check"
+                  size="lg"
+                  [fixedWidth]="true"
+                ></fa-icon>
+              </button>
+            </div>
           </td>
         </tr>
       </tbody>
