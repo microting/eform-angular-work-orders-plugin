@@ -3,8 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microting.eFormApi.BasePn;
+using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Extensions;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Settings;
 using Microting.WorkOrderBase.Infrastructure.Data;
@@ -17,6 +19,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using WorkOrders.Pn.Abstractions;
 using WorkOrders.Pn.Handlers;
+using WorkOrders.Pn.Helpers;
 using WorkOrders.Pn.Infrastructure.Data.Seed.Data;
 using WorkOrders.Pn.Infrastructure.Models.Settings;
 using WorkOrders.Pn.Messages;
@@ -44,8 +47,8 @@ namespace WorkOrders.Pn
             services.AddTransient<IWorkOrdersSettingsService, WorkOrdersSettingsService>();
             services.AddTransient<IWorkOrdersService, WorkOrdersService>();
             services.AddSingleton<IRebusService, RebusService>();
-
             services.AddControllers();
+            SeedWorkOrderForms(services);
         }
 
         public void AddPluginConfig(IConfigurationBuilder builder, string connectionString)
@@ -161,6 +164,27 @@ namespace WorkOrders.Pn
         private void UpdateRelatedCase(int caseId)
         {
             _bus.SendLocal(new eFormCaseUpdated(caseId));
+        }
+
+        private async void SeedWorkOrderForms(IServiceCollection serviceCollection)
+        {
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+            var pluginDbOptions = serviceProvider.GetRequiredService<IPluginDbOptions<WorkOrdersBaseSettings>>();
+
+            var core = await serviceProvider.GetRequiredService<IEFormCoreService>().GetCore();
+            var context = serviceProvider.GetRequiredService<WorkOrderPnDbContext>();
+
+            if (pluginDbOptions.Value.NewTaskId > 0)
+            {
+                var newTaskId = await SeedHelper.CreateNewTaskEform(core);
+                await pluginDbOptions.UpdateDb(settings => settings.NewTaskId = newTaskId, context, 1);
+            }
+
+            if (pluginDbOptions.Value.TaskListId > 0)
+            {
+                var taskListId = await SeedHelper.CreateTaskListEform(core);
+                await pluginDbOptions.UpdateDb(settings => settings.TaskListId = taskListId, context, 1);
+            }
         }
     }
 }
