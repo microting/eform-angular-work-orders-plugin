@@ -1,4 +1,4 @@
-<subheader-pn [title]="'Work Orders Settings' | translate"> </subheader-pn>
+<subheader-pn [title]="'Work Orders Settings' | translate"></subheader-pn>
 
 <div class="container-fluid">
   <div class="row p-1 mt-4 table-responsive no-gutters">
@@ -10,35 +10,41 @@
       class="z-depth-1 text-center"
     >
       <thead>
-        <tr>
-          <th scope="col" class="table-header-sortable" id="idTableHeader">
-            <div class="d-flex align-items-center justify-content-center">
-              ID
-            </div>
-          </th>
-          <th scope="col" id="nameHeader">
-            {{ 'Site name' | translate }}
-          </th>
-          <th scope="col" id="actionsHeader">
-            {{ 'Actions' | translate }}
-          </th>
-        </tr>
+      <tr>
+        <th scope="col" class="table-header-sortable" id="idTableHeader">
+          <div class="d-flex align-items-center justify-content-center">
+            ID
+          </div>
+        </th>
+        <th scope="col" id="nameHeader">
+          {{ 'Site name' | translate }}
+        </th>
+        <th scope="col" id="actionsHeader">
+          {{ 'Actions' | translate }}
+        </th>
+      </tr>
       </thead>
       <tbody id="tableBody">
-        <tr
-          *ngFor="
+      <tr
+        *ngFor="
             let siteDto of workOrdersSettingsModel?.assignedSites;
             let i = index
           "
-        >
-          <td id="workOrderSiteId">
-            {{ siteDto.siteUId }}
-          </td>
-          <td id="workOrderSiteName">
-            {{ siteDto.siteName }}
-          </td>
-          <td id="workOrderSiteActions"></td>
-        </tr>
+      >
+        <td id="workOrderSiteId">
+          {{ siteDto.siteUId }}
+        </td>
+        <td id="workOrderSiteName">
+          {{ siteDto.siteName }}
+        </td>
+        <td id="workOrderSiteActions">
+          <button mdbBtn class="btn-danger btn-icon mb-2"
+                  (click)="showRemoveSiteModal(siteDto)"
+                  mdbTooltip="{{ 'Remove site' | translate }}">
+            <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>
+          </button>
+        </td>
+      </tr>
       </tbody>
     </table>
   </div>
@@ -63,5 +69,5 @@
   </div>
 </div>
 
-<app-settings-add-site-modal #addSiteModal (siteAdded)="getSites()"></app-settings-add-site-modal>
-<app-settings-remove-site-modal #removeSiteModal (siteRemoved)="getSites()"></app-settings-remove-site-modal>
+<app-settings-add-site-modal #addSiteModal (siteAdded)="getSettings()"></app-settings-add-site-modal>
+<app-settings-remove-site-modal #removeSiteModal (siteRemoved)="getSettings()"></app-settings-remove-site-modal>

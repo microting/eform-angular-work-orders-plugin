@@ -13,7 +13,7 @@ export const routes: Routes = [
     // data: {requiredPermission: WorkOrdersPnClaims.accessWorkOrdersPlugin},
     children: [
       {
-        path: '',
+        path: 'orders',
         canActivate: [AuthGuard],
         component: WorkOrdersPageComponent
       },

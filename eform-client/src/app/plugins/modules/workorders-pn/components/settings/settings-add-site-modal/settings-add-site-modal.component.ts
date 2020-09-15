@@ -24,7 +24,7 @@ export class SettingsAddSiteModalComponent implements OnInit, OnDestroy {
 
   show(sites: SiteNameDto[], assignedSites: SiteNameDto[]) {
     // Removing assigned sites from all sites by id
-    const propEqual = eqBy(prop('id'));
+    const propEqual = eqBy(prop('siteUId'));
     this.availableSites = symmetricDifferenceWith(propEqual, sites, assignedSites);
     this.frame.show();
   }

@@ -24,7 +24,7 @@ export class WorkOrdersSettingsComponent implements OnInit, OnDestroy {
   constructor(private settingsService: WorkOrdersSettingsService, private sitesService: SitesService) {}
 
   ngOnInit(): void {
-    // this.getSettings();
+    this.getSettings();
     this.getSites();
   }
 

@@ -9,9 +9,9 @@
           <div class="row">
             <div class="col">
               <ng-select [items]="availableSites"
-                         bindLabel="label"
+                         bindLabel="siteName"
                          [placeholder]="'Select employee' | translate"
-                         bindValue="id"
+                         bindValue="siteUId"
                          [(ngModel)]="selectedSiteId"
                          id="selectDeviceUser">
               </ng-select>

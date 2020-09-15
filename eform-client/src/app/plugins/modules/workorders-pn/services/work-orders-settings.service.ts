@@ -21,8 +21,8 @@ export class WorkOrdersSettingsService extends BaseService {
     return this.get(WorkOrdersSettingsMethods.Settings);
   }
 
-  addSiteToSettings(id: number): Observable<OperationResult> {
-    return this.post(WorkOrdersSettingsMethods.SettingsSites, {id});
+  addSiteToSettings(siteId: number): Observable<OperationResult> {
+    return this.post(WorkOrdersSettingsMethods.SettingsSites, siteId);
   }
 
   removeSiteFromSettings(id: number): Observable<OperationResult> {
