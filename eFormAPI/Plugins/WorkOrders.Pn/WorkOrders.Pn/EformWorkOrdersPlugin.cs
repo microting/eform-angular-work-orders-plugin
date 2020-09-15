@@ -9,6 +9,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Settings;
+using Microting.WorkOrderBase.Infrastructure.Const;
 using Microting.WorkOrderBase.Infrastructure.Data;
 using Microting.WorkOrderBase.Infrastructure.Data.Factories;
 using Rebus.Bus;
@@ -122,7 +123,7 @@ namespace WorkOrders.Pn
                 Name = localizationService.GetString("WorkOrders"),
                 E2EId = "work-orders-pn",
                 Link = "",
-                //Guards = new List<string>() { ItemsGroupPlanningClaims.AccessItemsGroupPlanningPlugin },
+                Guards = new List<string>() { WorkOrdersClaims.AccessWorkOrdersPlugin },
                 MenuItems = new List<MenuItemModel>()
                 {
                     new MenuItemModel()
