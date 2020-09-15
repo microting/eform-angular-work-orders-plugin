@@ -46,6 +46,7 @@ namespace WorkOrders.Pn
         {
             services.AddTransient<IWorkOrdersSettingsService, WorkOrdersSettingsService>();
             services.AddTransient<IWorkOrdersService, WorkOrdersService>();
+            services.AddTransient<IWorkOrdersLocalizationService, WorkOrdersLocalizationService>();
             services.AddSingleton<IRebusService, RebusService>();
             services.AddControllers();
             SeedWorkOrderForms(services);
@@ -127,7 +128,7 @@ namespace WorkOrders.Pn
                     {
                         Name = localizationService.GetString("Orders"),
                         E2EId = "work-orders-pn-orders",
-                        Link = "/plugins/work-orders-pn",
+                        Link = "/plugins/work-orders-pn/orders",
                         Position = 0,
                     },
                     new MenuItemModel()

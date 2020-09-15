@@ -21,8 +21,8 @@ namespace WorkOrders.Pn.Controllers
             _workOrdersService = workOrdersService;
         }
 
-        [HttpGet]
-        public async Task<OperationDataResult<WorkOrdersModel>> GetWorkOrders(WorkOrdersRequestModel requestModel)
+        [HttpPost]
+        public async Task<OperationDataResult<WorkOrdersModel>> GetWorkOrders([FromBody]WorkOrdersRequestModel requestModel)
         {
             return await _workOrdersService.GetWorkOrdersAsync(requestModel);
         }

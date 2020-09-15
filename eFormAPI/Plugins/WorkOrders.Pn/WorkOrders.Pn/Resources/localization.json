@@ -1,4 +1,4 @@
-﻿{
+﻿[
   {
     "Key": "ErrorWhileObtainingWorkOrders",
     "LocalizedValue": {
@@ -96,5 +96,26 @@
       "da": "Fejl under sletning af websted fra indstillinger",
       "en-US": "Error While Deleting Site From Settings"
     }
+  },
+  {
+    "Key": "WorkOrders",
+    "LocalizedValue": {
+      "da": "Work orders",
+      "en-US": "Work orders"
+    }
+  },
+  {
+    "Key": "Orders",
+    "LocalizedValue": {
+      "da": "Orders",
+      "en-US": "Orders"
+    }
+  },
+  {
+    "Key": "Settings",
+    "LocalizedValue": {
+      "da": "Settings",
+      "en-US": "Settings"
+    }
   }
-}
+]
