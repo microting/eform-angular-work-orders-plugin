@@ -1,4 +1,4 @@
-﻿using Amazon.Runtime.Internal.Util;
+using Amazon.Runtime.Internal.Util;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -51,7 +51,8 @@ namespace WorkOrders.Pn.Services
                 {
                     var siteNameModel = allSites.Where(x => x.SiteId == id).Select(x => new SiteNameModel()
                     {
-                        SiteName = x.SiteName
+                        SiteName = x.SiteName,
+                        SiteUId = x.SiteId
                     }).FirstOrDefault();
                     workOrdersSettings.AssignedSites.Add(siteNameModel);
                 }
