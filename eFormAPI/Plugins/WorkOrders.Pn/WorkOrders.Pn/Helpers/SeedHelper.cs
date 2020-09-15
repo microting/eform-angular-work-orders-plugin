@@ -12,6 +12,19 @@ namespace WorkOrders.Pn.Helpers
     {
         public static async Task<int> CreateNewTaskEform(Core core)
         {
+
+            //var timeZone = _dbContext.Users.Single(x => x.Id == int.Parse(value)).TimeZone;
+            //TimeZoneInfo timeZoneInfo;
+
+            //try
+            //{
+            //    timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
+            //}
+            //catch
+            //{
+            //    timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standard Time");
+            //}
+
             var templatesDto = await core.TemplateItemReadAll(false,
                 "",
                 "eform-angular-workorder-plugin-newtask",

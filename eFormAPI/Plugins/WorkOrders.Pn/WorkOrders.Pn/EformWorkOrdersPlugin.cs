@@ -14,6 +14,7 @@ using Microting.WorkOrderBase.Infrastructure.Data.Factories;
 using Rebus.Bus;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -175,13 +176,13 @@ namespace WorkOrders.Pn
             var core = await serviceProvider.GetRequiredService<IEFormCoreService>().GetCore();
             var context = serviceProvider.GetRequiredService<WorkOrderPnDbContext>();
 
-            if (pluginDbOptions.Value.NewTaskId > 0)
+            if (pluginDbOptions.Value.NewTaskId == 0)
             {
                 var newTaskId = await SeedHelper.CreateNewTaskEform(core);
                 await pluginDbOptions.UpdateDb(settings => settings.NewTaskId = newTaskId, context, 1);
             }
 
-            if (pluginDbOptions.Value.TaskListId > 0)
+            if (pluginDbOptions.Value.TaskListId == 0)
             {
                 var taskListId = await SeedHelper.CreateTaskListEform(core);
                 await pluginDbOptions.UpdateDb(settings => settings.TaskListId = taskListId, context, 1);

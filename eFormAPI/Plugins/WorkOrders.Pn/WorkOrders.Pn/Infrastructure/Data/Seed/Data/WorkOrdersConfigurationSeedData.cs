@@ -15,26 +15,6 @@ namespace WorkOrders.Pn.Infrastructure.Data.Seed.Data
             {
                 Name = "WorkOrdersBaseSettings:LogLevel",
                 Value = "4"
-            },
-            new PluginConfigurationValue()
-            {
-                Name = "WorkOrdersBaseSettings:LogLimit",
-                Value = "25000"
-            },
-            new PluginConfigurationValue()
-            {
-                Name = "WorkOrdersBaseSettings:SdkConnectionString",
-                Value = "..."
-            },
-            new PluginConfigurationValue()
-            {
-                Name = "WorkOrdersBaseSettings:MaxParallelism",
-                Value = "1"
-            },
-            new PluginConfigurationValue()
-            {
-                Name = "WorkOrdersBaseSettings:NumberOfWorkers",
-                Value = "1"
             }
         };
     }

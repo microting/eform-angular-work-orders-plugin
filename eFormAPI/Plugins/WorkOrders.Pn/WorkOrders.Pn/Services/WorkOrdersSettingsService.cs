@@ -1,4 +1,4 @@
-using Amazon.Runtime.Internal.Util;
+﻿using Amazon.Runtime.Internal.Util;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -104,7 +104,6 @@ namespace WorkOrders.Pn.Services
         {
             try
             {
-                AssignedSite assignedSite = new AssignedSite() { SiteId = siteId };
                 AssignedSite assignedSite = await _dbContext.AssignedSites.FirstOrDefaultAsync(x => x.SiteId == siteId);
                 await assignedSite.Delete(_dbContext);
 

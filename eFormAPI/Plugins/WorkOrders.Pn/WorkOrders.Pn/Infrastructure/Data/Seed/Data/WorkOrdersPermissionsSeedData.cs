@@ -13,14 +13,9 @@ namespace WorkOrders.Pn.Infrastructure.Data.Seed.Data
 {
             new PluginPermission()
             {
-                PermissionName = "Access ItemsPlanning Plugin",
+                PermissionName = "Access WorkOrder Plugin",
                 ClaimName = WorkOrderClaims.AccessInstallationCheckingPlugin
-            }//,
-            //new PluginPermission()
-            //{
-            //    PermissionName = "Create Notification Rules",
-            //    ClaimName = WorkOrderClaims.CreateItemsLists
-            //},
+            }
         };
     }
 }
