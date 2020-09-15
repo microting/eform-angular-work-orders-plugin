@@ -13,25 +13,25 @@ namespace WorkOrders.Pn.Helpers
         public static async Task<int> CreateNewTaskEform(Core core)
         {
 
-            //var timeZone = _dbContext.Users.Single(x => x.Id == int.Parse(value)).TimeZone;
-            //TimeZoneInfo timeZoneInfo;
+            var timeZone = "Europe/Copenhagen";
+            TimeZoneInfo timeZoneInfo;
 
-            //try
-            //{
-            //    timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
-            //}
-            //catch
-            //{
-            //    timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standard Time");
-            //}
+            try
+            {
+                timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
+            }
+            catch
+            {
+                timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standard Time");
+            }
 
             var templatesDto = await core.TemplateItemReadAll(false,
                 "",
-                "eform-angular-workorder-plugin-newtask",
+                "eform-angular-workorders-plugin-newtask",
                 false,
                 "",
                 new List<int>(),
-                TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standart Time")
+                timeZoneInfo
                 );
 
             if (templatesDto.Count > 0)
@@ -44,7 +44,7 @@ namespace WorkOrders.Pn.Helpers
                 {
                     Id = 142108,
                     Repeated = 0,
-                    Label = "Ny opgave",
+                    Label = "eform-angular-workorders-plugin-newtask",
                     StartDate = new DateTime(2020, 09, 14),
                     EndDate = new DateTime(2030, 09, 14),
                     Language = "da",
@@ -136,13 +136,25 @@ namespace WorkOrders.Pn.Helpers
 
         public static async Task<int> CreateTaskListEform(Core core)
         {
+            var timeZone = "Europe/Copenhagen";
+            TimeZoneInfo timeZoneInfo;
+
+            try
+            {
+                timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
+            }
+            catch
+            {
+                timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standard Time");
+            }
+
             var templatesDto = await core.TemplateItemReadAll(false,
                     "",
-                    "eform-angular-workorder-plugin-newtask",
+                    "eform-angular-workorders-plugin-tasklist",
                     false,
                     "",
                     new List<int>(),
-                    TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standart Time")
+                    timeZoneInfo
                     );
 
             if (templatesDto.Count > 0)
@@ -155,7 +167,7 @@ namespace WorkOrders.Pn.Helpers
                 {
                     Id = 142109,
                     Repeated = 0,
-                    Label = "Opgave registreret",
+                    Label = "eform-angular-workorders-plugin-tasklist",
                     StartDate = new DateTime(2020, 09, 14),
                     EndDate = new DateTime(2030, 09, 14),
                     Language = "da",
@@ -186,7 +198,7 @@ namespace WorkOrders.Pn.Helpers
                         "e8eaf6",
                         1,
                         false,
-                        ""
+                        "https://eform.microting.com/app_files/uploads/20200914114927_14937_9fae9a0b11bda418201523437984027c.pdf"
                     )
                 );
                 dataItems.Add(new CheckBox(
