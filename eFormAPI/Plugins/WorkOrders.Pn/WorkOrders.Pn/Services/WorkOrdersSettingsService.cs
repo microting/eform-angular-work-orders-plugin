@@ -16,6 +16,7 @@ using System.Net.NetworkInformation;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microting.eForm.Infrastructure.Constants;
 using WorkOrders.Pn.Abstractions;
 using WorkOrders.Pn.Infrastructure.Models;
 using WorkOrders.Pn.Infrastructure.Models.Settings;
@@ -44,18 +45,27 @@ namespace WorkOrders.Pn.Services
         {
             try
             {
-                var assignedSitesId = await _dbContext.AssignedSites.Select(x => x.SiteId).ToListAsync();
-                var allSites = await _core.GetCore().Result.SiteReadAll(false);
-                var workOrdersSettings = new WorkOrdersSettingsModel();
-                foreach (var id in assignedSitesId)
+                var assignedSitesIds = await _dbContext.AssignedSites.Where(y => y.WorkflowState != Constants.WorkflowStates.Removed).Select(x => x.SiteId).ToListAsync();
+                var workOrdersSettings = new WorkOrdersSettingsModel()
                 {
-                    var siteNameModel = allSites.Where(x => x.SiteId == id).Select(x => new SiteNameModel()
+                    AssignedSites = new List<SiteNameModel>()
+                };
+
+                if (assignedSitesIds.Count > 0)
+                {
+                    var allSites = await _core.GetCore().Result.SiteReadAll(false);
+
+                    foreach (var id in assignedSitesIds)
                     {
-                        SiteName = x.SiteName,
-                        SiteUId = x.SiteId
-                    }).FirstOrDefault();
-                    workOrdersSettings.AssignedSites.Add(siteNameModel);
+                        var siteNameModel = allSites.Where(x => x.SiteId == id).Select(x => new SiteNameModel()
+                        {
+                            SiteName = x.SiteName,
+                            SiteUId = x.SiteId
+                        }).FirstOrDefault();
+                        workOrdersSettings.AssignedSites.Add(siteNameModel);
+                    }
                 }
+                
 
                 return new OperationDataResult<WorkOrdersSettingsModel>(true, workOrdersSettings);
             }
@@ -95,6 +105,7 @@ namespace WorkOrders.Pn.Services
             try
             {
                 AssignedSite assignedSite = new AssignedSite() { SiteId = siteId };
+                AssignedSite assignedSite = await _dbContext.AssignedSites.FirstOrDefaultAsync(x => x.SiteId == siteId);
                 await assignedSite.Delete(_dbContext);
 
                 return new OperationResult(true,
