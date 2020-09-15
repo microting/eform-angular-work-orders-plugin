@@ -14,7 +14,7 @@ namespace WorkOrders.Pn.Infrastructure.Data.Seed.Data
             new PluginPermission()
             {
                 PermissionName = "Access WorkOrder Plugin",
-                ClaimName = WorkOrderClaims.AccessInstallationCheckingPlugin
+                ClaimName = WorkOrdersClaims.AccessWorkOrdersPlugin
             }
         };
     }
