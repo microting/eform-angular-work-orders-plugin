@@ -1,19 +1,22 @@
 ﻿using eFormCore;
-using Microting.eForm.Infrastructure.Constants;
 using Microting.eForm.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+// ReSharper disable StringLiteralTypo
 
 namespace WorkOrders.Pn.Helpers
 {
+    using Infrastructure.Consts;
+    using Microting.eForm.Dto;
+
     public class SeedHelper
     {
         public static async Task<int> CreateNewTaskEform(Core core)
         {
 
-            var timeZone = "Europe/Copenhagen";
+            const string timeZone = "Europe/Copenhagen";
             TimeZoneInfo timeZoneInfo;
 
             try
@@ -25,7 +28,7 @@ namespace WorkOrders.Pn.Helpers
                 timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standard Time");
             }
 
-            var templatesDto = await core.TemplateItemReadAll(false,
+            List<Template_Dto> templatesDto = await core.TemplateItemReadAll(false,
                 "",
                 "eform-angular-workorders-plugin-newtask",
                 false,
@@ -40,9 +43,9 @@ namespace WorkOrders.Pn.Helpers
             }
             else
             {
-                var newTaskForm = new MainElement
+                MainElement newTaskForm = new MainElement
                 {
-                    Id = 142108,
+                    Id = WorkOrderEformConsts.NewTaskId,
                     Repeated = 0,
                     Label = "eform-angular-workorders-plugin-newtask",
                     StartDate = new DateTime(2020, 09, 14),
@@ -53,22 +56,21 @@ namespace WorkOrders.Pn.Helpers
                     DisplayOrder = 0
                 };
 
-                var dataItems = new List<DataItem>();
-
-                dataItems.Add(new Picture(
+                List<DataItem> dataItems = new List<DataItem>
+                {
+                    new Picture(
                         371263,
                         false,
                         false,
                         "Billede af opgaven",
                         "<br>",
                         "e8eaf6",
-                        0, 
+                        0,
                         false,
                         0,
                         false
-                    )
-                );
-                dataItems.Add(new Text(
+                    ),
+                    new Text(
                         371264,
                         false,
                         false,
@@ -84,9 +86,8 @@ namespace WorkOrders.Pn.Helpers
                         false,
                         false,
                         ""
-                    )
-                );
-                dataItems.Add(new Date(
+                    ),
+                    new Date(
                         371265,
                         false,
                         false,
@@ -98,9 +99,8 @@ namespace WorkOrders.Pn.Helpers
                         new DateTime(),
                         new DateTime(),
                         ""
-                    )
-                );
-                dataItems.Add(new SaveButton(
+                    ),
+                    new SaveButton(
                         371266,
                         false,
                         false,
@@ -111,9 +111,10 @@ namespace WorkOrders.Pn.Helpers
                         false,
                         "GEM & SEND"
                     )
-                );
+                };
 
-                var dataElement = new DataElement(
+
+                DataElement dataElement = new DataElement(
                     142108,
                     "Ny opgave",
                     0,
@@ -136,7 +137,7 @@ namespace WorkOrders.Pn.Helpers
 
         public static async Task<int> CreateTaskListEform(Core core)
         {
-            var timeZone = "Europe/Copenhagen";
+            string timeZone = "Europe/Copenhagen";
             TimeZoneInfo timeZoneInfo;
 
             try
@@ -148,7 +149,7 @@ namespace WorkOrders.Pn.Helpers
                 timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standard Time");
             }
 
-            var templatesDto = await core.TemplateItemReadAll(false,
+            List<Template_Dto> templatesDto = await core.TemplateItemReadAll(false,
                     "",
                     "eform-angular-workorders-plugin-tasklist",
                     false,
@@ -163,9 +164,9 @@ namespace WorkOrders.Pn.Helpers
             }
             else
             {
-                var taskListForm = new MainElement
+                MainElement taskListForm = new MainElement
                 {
-                    Id = 142109,
+                    Id = WorkOrderEformConsts.TaskListId,
                     Repeated = 0,
                     Label = "eform-angular-workorders-plugin-tasklist",
                     StartDate = new DateTime(2020, 09, 14),
@@ -176,20 +177,19 @@ namespace WorkOrders.Pn.Helpers
                     DisplayOrder = 0
                 };
 
-                var dataItems = new List<DataItem>();
-
-                dataItems.Add(new None(
-                        371267, 
+                List<DataItem> dataItems = new List<DataItem>
+                {
+                    new None(
+                        371267,
                         false,
                         false,
                         "Beskrivelse af opgaven",
                         "",
                         "e8eaf6",
-                        0, 
+                        0,
                         false
-                    )
-                );
-                dataItems.Add(new ShowPdf(
+                    ),
+                    new ShowPdf(
                         371268,
                         false,
                         false,
@@ -199,9 +199,8 @@ namespace WorkOrders.Pn.Helpers
                         1,
                         false,
                         "https://eform.microting.com/app_files/uploads/20200914114927_14937_9fae9a0b11bda418201523437984027c.pdf"
-                    )
-                );
-                dataItems.Add(new CheckBox(
+                    ),
+                    new CheckBox(
                         371269,
                         false,
                         false,
@@ -212,9 +211,8 @@ namespace WorkOrders.Pn.Helpers
                         false,
                         false,
                         false
-                    )
-                );
-                dataItems.Add(new Picture(
+                    ),
+                    new Picture(
                         371270,
                         true,
                         false,
@@ -225,9 +223,8 @@ namespace WorkOrders.Pn.Helpers
                         false,
                         0,
                         false
-                    )
-                );
-                dataItems.Add(new Text(
+                    ),
+                    new Text(
                         371271,
                         false,
                         false,
@@ -243,9 +240,8 @@ namespace WorkOrders.Pn.Helpers
                         false,
                         false,
                         ""
-                    )
-                );
-                dataItems.Add(new SaveButton(
+                    ),
+                    new SaveButton(
                         371272,
                         false,
                         false,
@@ -256,9 +252,10 @@ namespace WorkOrders.Pn.Helpers
                         false,
                         "GEM & SEND"
                     )
-                );
+                };
 
-                var dataElement = new DataElement(
+
+                DataElement dataElement = new DataElement(
                     142109,
                     "Opgave registreret",
                     0,

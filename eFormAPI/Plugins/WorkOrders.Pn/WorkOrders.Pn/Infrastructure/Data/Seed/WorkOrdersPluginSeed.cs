@@ -1,24 +1,24 @@
-﻿using Microting.eForm.Infrastructure.Constants;
-using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
-using Microting.WorkOrderBase.Infrastructure.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace WorkOrders.Pn.Infrastructure.Data.Seed.Data
+﻿namespace WorkOrders.Pn.Infrastructure.Data.Seed
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Data;
+    using Microting.eForm.Infrastructure.Constants;
+    using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
+    using Microting.WorkOrderBase.Infrastructure.Data;
+
     public class WorkOrdersPluginSeed
     {
         public static void SeedData(WorkOrderPnDbContext dbContext)
         {
-            var seedData = new WorkOrdersConfigurationSeedData();
-            var configurationList = seedData.Data;
-            foreach (var configurationItem in configurationList)
+            WorkOrdersConfigurationSeedData seedData = new WorkOrdersConfigurationSeedData();
+            PluginConfigurationValue[] configurationList = seedData.Data;
+            foreach (PluginConfigurationValue configurationItem in configurationList)
             {
                 if (!dbContext.PluginConfigurationValues.Any(x => x.Name == configurationItem.Name))
                 {
-                    var newConfigValue = new PluginConfigurationValue()
+                    PluginConfigurationValue newConfigValue = new PluginConfigurationValue()
                     {
                         Name = configurationItem.Name,
                         Value = configurationItem.Value,
@@ -34,7 +34,7 @@ namespace WorkOrders.Pn.Infrastructure.Data.Seed.Data
             }
 
             // Seed plugin permissions
-            var newPermissions = WorkOrdersPermissionsSeedData.Data
+            IEnumerable<PluginPermission> newPermissions = WorkOrdersPermissionsSeedData.Data
                 .Where(p => dbContext.PluginPermissions.All(x => x.ClaimName != p.ClaimName))
                 .Select(p => new PluginPermission
                 {

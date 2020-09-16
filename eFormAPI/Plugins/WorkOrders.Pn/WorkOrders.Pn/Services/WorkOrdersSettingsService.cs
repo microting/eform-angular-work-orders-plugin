@@ -1,10 +1,6 @@
-﻿using Amazon.Runtime.Internal.Util;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microting.eForm.Dto;
 using Microting.eFormApi.BasePn.Abstractions;
-using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.WorkOrderBase.Infrastructure.Data;
 using Microting.WorkOrderBase.Infrastructure.Data.Entities;
@@ -12,9 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.NetworkInformation;
-using System.Security.Claims;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microting.eForm.Infrastructure.Constants;
 using WorkOrders.Pn.Abstractions;
@@ -23,6 +16,9 @@ using WorkOrders.Pn.Infrastructure.Models.Settings;
 
 namespace WorkOrders.Pn.Services
 {
+    using Microsoft.EntityFrameworkCore.Storage;
+    using Microting.eForm.Dto;
+
     public class WorkOrdersSettingsService : IWorkOrdersSettingsService
     {
         private readonly WorkOrderPnDbContext _dbContext;
@@ -45,19 +41,19 @@ namespace WorkOrders.Pn.Services
         {
             try
             {
-                var assignedSitesIds = await _dbContext.AssignedSites.Where(y => y.WorkflowState != Constants.WorkflowStates.Removed).Select(x => x.SiteId).ToListAsync();
-                var workOrdersSettings = new WorkOrdersSettingsModel()
+                List<int> assignedSitesIds = await _dbContext.AssignedSites.Where(y => y.WorkflowState != Constants.WorkflowStates.Removed).Select(x => x.SiteId).ToListAsync();
+                WorkOrdersSettingsModel workOrdersSettings = new WorkOrdersSettingsModel()
                 {
                     AssignedSites = new List<SiteNameModel>()
                 };
 
                 if (assignedSitesIds.Count > 0)
                 {
-                    var allSites = await _core.GetCore().Result.SiteReadAll(false);
+                    List<SiteDto> allSites = await _core.GetCore().Result.SiteReadAll(false);
 
-                    foreach (var id in assignedSitesIds)
+                    foreach (int id in assignedSitesIds)
                     {
-                        var siteNameModel = allSites.Where(x => x.SiteId == id).Select(x => new SiteNameModel()
+                        SiteNameModel siteNameModel = allSites.Where(x => x.SiteId == id).Select(x => new SiteNameModel()
                         {
                             SiteName = x.SiteName,
                             SiteUId = x.SiteId
@@ -80,7 +76,7 @@ namespace WorkOrders.Pn.Services
 
         public async Task<OperationResult> AddSiteToSettingsAsync(int siteId)
         {
-            using(var transaction = await _dbContext.Database.BeginTransactionAsync())
+            using(IDbContextTransaction transaction = await _dbContext.Database.BeginTransactionAsync())
             {
                 try
                 {

@@ -1,9 +1,5 @@
 ﻿using Microsoft.Extensions.Localization;
 using Microting.eFormApi.BasePn.Localization.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using WorkOrders.Pn.Abstractions;
 
 namespace WorkOrders.Pn.Services
@@ -20,13 +16,13 @@ namespace WorkOrders.Pn.Services
 
         public string GetString(string key)
         {
-            var str = _localizer[key];
+            LocalizedString str = _localizer[key];
             return str.Value;
         }
 
         public string GetString(string format, params object[] args)
         {
-            var message = _localizer[format];
+            LocalizedString message = _localizer[format];
             if (message?.Value == null)
             {
                 return null;

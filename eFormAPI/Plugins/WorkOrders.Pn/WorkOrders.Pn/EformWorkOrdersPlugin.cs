@@ -15,12 +15,8 @@ using Microting.WorkOrderBase.Infrastructure.Data.Factories;
 using Rebus.Bus;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using WorkOrders.Pn.Abstractions;
-using WorkOrders.Pn.Handlers;
 using WorkOrders.Pn.Helpers;
 using WorkOrders.Pn.Infrastructure.Data.Seed.Data;
 using WorkOrders.Pn.Infrastructure.Models.Settings;
@@ -29,6 +25,9 @@ using WorkOrders.Pn.Services;
 
 namespace WorkOrders.Pn
 {
+    using eFormCore;
+    using Infrastructure.Data.Seed;
+
     public class EformWorkOrdersPlugin : IEformPlugin
     {
         public string Name => "Microting Work Orders Plugin";
@@ -56,8 +55,8 @@ namespace WorkOrders.Pn
 
         public void AddPluginConfig(IConfigurationBuilder builder, string connectionString)
         {
-            var seedData = new WorkOrdersConfigurationSeedData();
-            var contextFactory = new WorkOrderPnContextFactory();
+            WorkOrdersConfigurationSeedData seedData = new WorkOrdersConfigurationSeedData();
+            WorkOrderPnContextFactory contextFactory = new WorkOrderPnContextFactory();
             builder.AddPluginConfiguration(
                 connectionString,
                 seedData,
@@ -85,7 +84,7 @@ namespace WorkOrders.Pn
             }
 
             WorkOrderPnContextFactory contextFactory = new WorkOrderPnContextFactory();
-            var context = contextFactory.CreateDbContext(new[] { connectionString });
+            WorkOrderPnDbContext context = contextFactory.CreateDbContext(new[] { connectionString });
             context.Database.Migrate();
 
             // Seed database
@@ -98,7 +97,7 @@ namespace WorkOrders.Pn
 
             appBuilder.UseRouting();
 
-            var serviceProvider = appBuilder.ApplicationServices;
+            IServiceProvider serviceProvider = appBuilder.ApplicationServices;
             IRebusService rebusService = serviceProvider.GetService<IRebusService>();
             rebusService.Start(_connectionString);
 
@@ -114,10 +113,10 @@ namespace WorkOrders.Pn
 
         public MenuModel HeaderMenu(IServiceProvider serviceProvider)
         {
-            var localizationService = serviceProvider
+            IWorkOrdersLocalizationService localizationService = serviceProvider
                             .GetService<IWorkOrdersLocalizationService>();
 
-            var result = new MenuModel();
+            MenuModel result = new MenuModel();
             result.LeftMenu.Add(new MenuItemModel()
             {
                 Name = localizationService.GetString("WorkOrders"),
@@ -148,18 +147,16 @@ namespace WorkOrders.Pn
         public void SeedDatabase(string connectionString)
         {
             // Get DbContext
-            var contextFactory = new WorkOrderPnContextFactory();
-            using (var context = contextFactory.CreateDbContext(new[] { connectionString }))
-            {
-                // Seed configuration
-                WorkOrdersPluginSeed.SeedData(context);
-            }
+            WorkOrderPnContextFactory contextFactory = new WorkOrderPnContextFactory();
+            using WorkOrderPnDbContext context = contextFactory.CreateDbContext(new[] { connectionString });
+            // Seed configuration
+            WorkOrdersPluginSeed.SeedData(context);
         }
 
         public PluginPermissionsManager GetPermissionsManager(string connectionString)
         {
-            var contextFactory = new WorkOrderPnContextFactory();
-            var context = contextFactory.CreateDbContext(new[] { connectionString });
+            WorkOrderPnContextFactory contextFactory = new WorkOrderPnContextFactory();
+            WorkOrderPnDbContext context = contextFactory.CreateDbContext(new[] { connectionString });
 
             return new PluginPermissionsManager(context);
         }
@@ -171,21 +168,21 @@ namespace WorkOrders.Pn
 
         private async void SeedWorkOrderForms(IServiceCollection serviceCollection)
         {
-            var serviceProvider = serviceCollection.BuildServiceProvider();
-            var pluginDbOptions = serviceProvider.GetRequiredService<IPluginDbOptions<WorkOrdersBaseSettings>>();
+            ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
+            IPluginDbOptions<WorkOrdersBaseSettings> pluginDbOptions = serviceProvider.GetRequiredService<IPluginDbOptions<WorkOrdersBaseSettings>>();
 
-            var core = await serviceProvider.GetRequiredService<IEFormCoreService>().GetCore();
-            var context = serviceProvider.GetRequiredService<WorkOrderPnDbContext>();
+            Core core = await serviceProvider.GetRequiredService<IEFormCoreService>().GetCore();
+            WorkOrderPnDbContext context = serviceProvider.GetRequiredService<WorkOrderPnDbContext>();
 
             if (pluginDbOptions.Value.NewTaskId == 0)
             {
-                var newTaskId = await SeedHelper.CreateNewTaskEform(core);
+                int newTaskId = await SeedHelper.CreateNewTaskEform(core);
                 await pluginDbOptions.UpdateDb(settings => settings.NewTaskId = newTaskId, context, 1);
             }
 
             if (pluginDbOptions.Value.TaskListId == 0)
             {
-                var taskListId = await SeedHelper.CreateTaskListEform(core);
+                int taskListId = await SeedHelper.CreateTaskListEform(core);
                 await pluginDbOptions.UpdateDb(settings => settings.TaskListId = taskListId, context, 1);
             }
         }

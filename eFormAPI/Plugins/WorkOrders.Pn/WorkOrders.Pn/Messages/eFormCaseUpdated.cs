@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace WorkOrders.Pn.Messages
+﻿namespace WorkOrders.Pn.Messages
 {
     public class eFormCaseUpdated
     {
