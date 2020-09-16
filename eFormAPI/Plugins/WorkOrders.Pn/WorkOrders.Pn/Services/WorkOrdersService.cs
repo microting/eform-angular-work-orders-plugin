@@ -73,8 +73,13 @@ namespace WorkOrders.Pn.Services
                     CorrectedAtLatest = x.CorrectedAtLatest,
                     DoneAt = x.DoneAt,
                     DoneBySiteId = x.DoneBySiteId,
-                    DescriptionOfTaskDone = x.DescriptionOfTaskDone
-
+                    DescriptionOfTaskDone = x.DescriptionOfTaskDone,
+                    PicturesOfTask = x.PicturesOfTasks
+                        .Select(y => y.FileName)
+                        .ToList(),
+                    PicturesOfTaskDone = x.PicturesOfTaskDone
+                        .Select(y => y.FileName)
+                        .ToList(),
                 }).ToListAsync();
                 workOrdersModel.Total = await _dbContext.WorkOrders.CountAsync(x => 
                             x.WorkflowState != Constants.WorkflowStates.Removed);
