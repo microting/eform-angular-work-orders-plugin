@@ -1,3 +1,14 @@
 {
-  "Test": "TestDA"
+  "Description of the task done": "Beskrivelse af den udførte opgave",
+  "Done at": "Udfærdiget i",
+  "Corrected at the latest": "Rettet senest",
+  "Task photos": "Opgaver fotos",
+  "Work orders": "Arbejdsordrer",
+  "Site name": "Side navn",
+  "Work orders settings": "Indstillinger for arbejdsordrer",
+  "Company name": "Firmanavn",
+  "Are you sure you want to remove this site": "Er du sikker på, at du vil fjerne dette websted",
+  "Add site": "Tilføj websted",
+  "Assign site": "Tildel websted",
+  "Select employee": "Vælg medarbejder"
 }

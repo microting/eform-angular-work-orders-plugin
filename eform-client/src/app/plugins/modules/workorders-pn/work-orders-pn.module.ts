@@ -9,6 +9,7 @@ import {
   WorkOrdersPageComponent,
   SettingsAddSiteModalComponent,
   SettingsRemoveSiteModalComponent,
+  WorkOrdersImagesModalComponent
 } from './components';
 import { SharedPnModule } from 'src/app/plugins/modules/shared/shared-pn.module';
 import {
@@ -21,6 +22,8 @@ import {
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
+import { LightboxModule } from '@ngx-gallery/lightbox';
+import {GalleryModule} from '@ngx-gallery/core';
 
 @NgModule({
   imports: [
@@ -36,6 +39,8 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     ButtonsModule,
     InputsModule,
+    LightboxModule,
+    GalleryModule,
   ],
   declarations: [
     WorkOrdersPnLayoutComponent,
@@ -43,6 +48,7 @@ import { FormsModule } from '@angular/forms';
     WorkOrdersPageComponent,
     SettingsAddSiteModalComponent,
     SettingsRemoveSiteModalComponent,
+    WorkOrdersImagesModalComponent,
   ],
   providers: [WorkOrdersService, WorkOrdersSettingsService],
 })

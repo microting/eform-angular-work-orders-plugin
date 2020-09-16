@@ -1,4 +1,4 @@
-<subheader-pn [title]="'Work Orders Settings' | translate"></subheader-pn>
+<subheader-pn [title]="'Work orders settings' | translate"></subheader-pn>
 
 <div class="container-fluid">
   <div class="row p-1 mt-4 table-responsive no-gutters">
@@ -54,8 +54,7 @@
   >
     <span>{{ 'No assigned sites found' | translate }}</span>
   </div>
-  <div class="row justify-content-end">
-    <div class="col-md-1">
+  <div class="row justify-content-end mr-1">
       <button
         id="addNewSiteBtn"
         class="btn btn-sm btn-success"
@@ -65,7 +64,6 @@
         <fa-icon icon="user-plus" size="lg" [fixedWidth]="true"></fa-icon>
         {{ 'Add site' | translate }}
       </button>
-    </div>
   </div>
 </div>
 

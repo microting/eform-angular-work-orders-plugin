@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonImageModel, PageSettingsModel } from 'src/app/common/models';
 import { WorkOrdersModel, WorkOrdersRequestModel } from '../../../models';
 import { Subject, Subscription } from 'rxjs';
@@ -12,9 +12,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { WorkOrdersService } from '../../../services';
 import { debounceTime } from 'rxjs/operators';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
-import { TemplateFilesService } from 'src/app/common/services';
-import { Gallery, GalleryItem, ImageItem } from '@ngx-gallery/core';
-import { Lightbox } from '@ngx-gallery/lightbox';
 
 @AutoUnsubscribe()
 @Component({
@@ -23,14 +20,13 @@ import { Lightbox } from '@ngx-gallery/lightbox';
   styleUrls: ['./workorders-page.component.scss'],
 })
 export class WorkOrdersPageComponent implements OnInit, OnDestroy {
+  @ViewChild('imagesModalComponent', { static: false })
+  imagesModalComponent: any;
   localPageSettings: PageSettingsModel = new PageSettingsModel();
   workOrdersRequestModel: WorkOrdersRequestModel = new WorkOrdersRequestModel();
   workOrdersModel: WorkOrdersModel = new WorkOrdersModel();
   searchSubject = new Subject();
   getAllSub$: Subscription;
-  imageSub$: Subscription;
-  images = [];
-  galleryImages: GalleryItem[] = [];
 
   get pluginClaimsHelper() {
     return PluginClaimsHelper;
@@ -47,10 +43,7 @@ export class WorkOrdersPageComponent implements OnInit, OnDestroy {
   constructor(
     private sharedPnService: SharedPnService,
     private translateService: TranslateService,
-    private workOrdersService: WorkOrdersService,
-    private imageService: TemplateFilesService,
-    public gallery: Gallery,
-    public lightbox: Lightbox
+    private workOrdersService: WorkOrdersService
   ) {
     this.searchSubject.pipe(debounceTime(500)).subscribe((val) => {
       this.workOrdersRequestModel.searchString = val.toString();
@@ -124,28 +117,8 @@ export class WorkOrdersPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  showPicturesOfTask(images: string[]) {
-    images.forEach((value) => {
-      this.imageSub$ = this.imageService
-        .getImage(value)
-        .subscribe((blob) => {
-          const imageUrl = URL.createObjectURL(blob);
-          this.images.push({
-            src: imageUrl,
-            thumbnail: imageUrl,
-            fileName: value,
-          });
-        });
-    });
-    if (this.images.length > 0) {
-      this.galleryImages = [];
-      this.images.forEach((value) => {
-        this.galleryImages.push(
-          new ImageItem({ src: value.src, thumb: value.thumbnail })
-        );
-      });
-      this.lightbox.open(0);
-    }
+  openPicturesModal(images: string[]) {
+    this.imagesModalComponent.show(images);
   }
 
   ngOnDestroy(): void {}

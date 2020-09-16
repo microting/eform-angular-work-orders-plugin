@@ -16,18 +16,25 @@ using CollectionExtensions = Castle.Core.Internal.CollectionExtensions;
 
 namespace WorkOrders.Pn.Services
 {
+    using Microting.eFormApi.BasePn.Abstractions;
+
     public class WorkOrdersService : IWorkOrdersService
     {
         private readonly ILogger<WorkOrdersService> _logger;
         private readonly WorkOrderPnDbContext _dbContext;
         private readonly IWorkOrdersLocalizationService _workOrdersLocalizationService;
-        public WorkOrdersService(WorkOrderPnDbContext dbContext, 
+        private readonly IEFormCoreService _coreService;
+
+        public WorkOrdersService(
+            WorkOrderPnDbContext dbContext, 
             IWorkOrdersLocalizationService workOrdersLocalizationService,
-            ILogger<WorkOrdersService> logger)
+            ILogger<WorkOrdersService> logger,
+            IEFormCoreService coreService)
         {
             _dbContext = dbContext;
             _workOrdersLocalizationService = workOrdersLocalizationService;
             _logger = logger;
+            _coreService = coreService;
         }
 
         public async Task<OperationDataResult<WorkOrdersModel>> GetWorkOrdersAsync(WorkOrdersRequestModel pnRequestModel)
@@ -81,6 +88,24 @@ namespace WorkOrders.Pn.Services
                         .Select(y => y.FileName)
                         .ToList(),
                 }).ToListAsync();
+
+
+
+                var core = await _coreService.GetCore();
+                var sites = await core.Advanced_SiteItemReadAll(false);
+                foreach (var workOrderModel in workOrderList)
+                {
+                    workOrderModel.CreatedBy = sites
+                        .Where(x => x.SiteUId == workOrderModel.CreatedByUserId)
+                        .Select(x => x.SiteName)
+                        .FirstOrDefault();
+
+                    workOrderModel.DoneBy = sites
+                        .Where(x => x.SiteUId == workOrderModel.DoneBySiteId)
+                        .Select(x => x.SiteName)
+                        .FirstOrDefault();
+                }
+
                 workOrdersModel.Total = await _dbContext.WorkOrders.CountAsync(x => 
                             x.WorkflowState != Constants.WorkflowStates.Removed);
                 workOrdersModel.WorkOrders = workOrderList;
