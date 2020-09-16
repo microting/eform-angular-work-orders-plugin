@@ -8,7 +8,7 @@ export class WorkOrderModel {
   correctedAtLatest: Date;
   doneAt: Date | string;
   doneBy: string;
-  picturesOfTask: CommonImageModel[] = [];
-  picturesOfTaskDone: CommonImageModel[] = [];
+  picturesOfTask: string[] = [];
+  picturesOfTaskDone: string[] = [];
   descriptionOfTaskDone: string;
 }

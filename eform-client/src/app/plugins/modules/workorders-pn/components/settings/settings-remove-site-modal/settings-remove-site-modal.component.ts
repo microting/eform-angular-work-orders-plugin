@@ -33,6 +33,7 @@ export class SettingsRemoveSiteModalComponent implements OnInit, OnDestroy {
   }
 
   removeSite() {
+    debugger;
     this.removeSub$ = this.settingsService
       .removeSiteFromSettings(this.selectedSite.siteUId)
       .subscribe((data) => {

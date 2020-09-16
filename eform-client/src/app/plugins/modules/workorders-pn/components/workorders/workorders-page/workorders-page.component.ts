@@ -124,16 +124,16 @@ export class WorkOrdersPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  showPicturesOfTask(images: CommonImageModel[]) {
+  showPicturesOfTask(images: string[]) {
     images.forEach((value) => {
       this.imageSub$ = this.imageService
-        .getImage(value.hash)
+        .getImage(value)
         .subscribe((blob) => {
           const imageUrl = URL.createObjectURL(blob);
           this.images.push({
             src: imageUrl,
             thumbnail: imageUrl,
-            fileName: value.name,
+            fileName: value,
           });
         });
     });
