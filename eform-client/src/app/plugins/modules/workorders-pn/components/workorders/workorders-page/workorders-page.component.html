@@ -1,4 +1,4 @@
-<subheader-pn [title]="'Work Orders' | translate"></subheader-pn>
+<subheader-pn [title]="'Work orders' | translate"></subheader-pn>
 
 <div class="container-fluid">
   <div class="row pl-1">
@@ -15,7 +15,7 @@
       </div>
     </div>
   </div>
-  <div class="row p-1 mt-4 table-responsive no-gutters">
+  <div class="row p-1 table-responsive no-gutters">
     <table
       mdbTable
       striped="true"
@@ -53,15 +53,10 @@
           </th>
           <th
             scope="col"
-            class="table-header-sortable"
             id="createdByHeader"
-            (click)="sortTable(sortCols.createdBy)"
           >
             <div class="d-flex align-items-center justify-content-center">
               {{ 'Created by' | translate }}
-              <i class="material-icons text-black-50">{{
-                getSortIcon(sortCols.createdBy)
-              }}</i>
             </div>
           </th>
           <th
@@ -105,15 +100,23 @@
           </th>
           <th
             scope="col"
-            class="table-header-sortable"
             id="doneByHeader"
-            (click)="sortTable(sortCols.doneBy)"
           >
             <div class="d-flex align-items-center justify-content-center">
               {{ 'Done by' | translate }}
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="descriptionOfTaskDoneHeader"
+            (click)="sortTable(sortCols.description)"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'Description of the task done' | translate }}
               <i class="material-icons text-black-50">{{
-                getSortIcon(sortCols.doneBy)
-              }}</i>
+                getSortIcon(sortCols.description)
+                }}</i>
             </div>
           </th>
           <th>{{ 'Actions' | translate }}</th>
@@ -136,7 +139,10 @@
             {{ workOrder.description }}
           </td>
           <td id="workOrderCorrectedAtLatest">
-            {{ workOrder.correctedAtLatest }}
+            {{ workOrder.correctedAtLatest | date: 'dd.MM.y HH:mm:ss' }}
+          </td>
+          <td id="workOrderDoneAt">
+            {{ workOrder.doneAt | date: 'dd.MM.y HH:mm:ss' }}
           </td>
           <td id="workOrderDoneBy">
             {{ workOrder.doneBy }}
@@ -147,8 +153,8 @@
           <td>
             <div class="d-flex flex-row justify-content-center">
               <button
-                id="workOrderShowPicturesOfTask"
-                (click)="showPicturesOfTask(workOrder.picturesOfTask)"
+                id="workOrderShowPicturesOfTask" *ngIf="workOrder.picturesOfTask.length > 0"
+                (click)="openPicturesModal(workOrder.picturesOfTask)"
                 class="btn btn-accent text-black-50 btn-icon mb-2"
                 mdbTooltip="{{ 'View pictures of task' | translate }}"
               >
@@ -158,9 +164,9 @@
                   [fixedWidth]="true"
                 ></fa-icon>
               </button>
-              <button
+              <button *ngIf="workOrder.picturesOfTaskDone.length > 0"
                 id="workOrderShowPicturesOfTaskDone"
-                (click)="showPicturesOfTask(workOrder.picturesOfTaskDone)"
+                (click)="openPicturesModal(workOrder.picturesOfTaskDone)"
                 class="btn btn-accent text-black-50 btn-icon mb-2"
                 mdbTooltip="{{ 'View pictures of task done' | translate }}"
               >
@@ -199,3 +205,5 @@
     ></pagination-pn>
   </div>
 </div>
+
+<app-workorders-images-modal #imagesModalComponent></app-workorders-images-modal>
