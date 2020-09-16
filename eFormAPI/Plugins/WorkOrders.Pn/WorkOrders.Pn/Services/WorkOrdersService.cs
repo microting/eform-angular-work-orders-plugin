@@ -101,7 +101,7 @@ namespace WorkOrders.Pn.Services
                         .FirstOrDefault();
 
                     workOrderModel.DoneBy = sites
-                        .Where(x => x.SiteUId == workOrderModel.CreatedByUserId)
+                        .Where(x => x.SiteUId == workOrderModel.DoneBySiteId)
                         .Select(x => x.SiteName)
                         .FirstOrDefault();
                 }
