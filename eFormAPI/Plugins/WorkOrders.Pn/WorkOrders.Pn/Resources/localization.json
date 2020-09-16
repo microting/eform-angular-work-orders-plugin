@@ -1,0 +1,121 @@
+﻿[
+  {
+    "Key": "ErrorWhileObtainingWorkOrders",
+    "LocalizedValue": {
+      "da": "Fejl under indhentning af arbejdsordrer",
+      "en-US": "Error while obtaining work orders"
+    }
+  },
+  {
+    "Key": "Settings",
+    "LocalizedValue": {
+      "da": "Indstillinger",
+      "en-US": "Settings"
+    }
+  },
+  {
+    "Key": "ErrorWhileObtainingWorkOrdersSettings",
+    "LocalizedValue": {
+      "da": "Fejl under indhentning af arbejdsordre indstillinger",
+      "en-US": "Error while obtaining work orders settings"
+    }
+  },
+  {
+    "Key": "Yes",
+    "LocalizedValue": {
+      "da": "Ja",
+      "en-US": "Yes"
+    }
+  },
+  {
+    "Key": "No",
+    "LocalizedValue": {
+      "da": "Nej",
+      "en-US": "No"
+    }
+  },
+  {
+    "Key": "Deployed at",
+    "LocalizedValue": {
+      "da": "Udsendt d.",
+      "en-US": "Deployed at"
+    }
+  },
+  {
+    "Key": "Date of doing",
+    "LocalizedValue": {
+      "da": "Udførelsesdato",
+      "en-US": "Date of doing"
+    }
+  },
+  {
+    "Key": "Done by",
+    "LocalizedValue": {
+      "da": "Udført af",
+      "en-US": "Done by"
+    }
+  },
+  {
+    "Key": "Name",
+    "LocalizedValue": {
+      "da": "Navn",
+      "en-US": "Name"
+    }
+  },
+  {
+    "Key": "Description",
+    "LocalizedValue": {
+      "da": "Beskrivelse",
+      "en-US": "Description"
+    }
+  },
+  {
+    "Key": "SiteAddedSuccessfully",
+    "LocalizedValue": {
+      "da": "Site tilføjet med succes",
+      "en-US": "Site Added Successfully"
+    }
+  },
+  {
+    "Key": "ErrorWhileAddingSiteToSettings",
+    "LocalizedValue": {
+      "da": "Fejl under tilføjelse af websted til indstillinger",
+      "en-US": "Error While Adding Site To Settings"
+    }
+  },
+  {
+    "Key": "SiteDeletedSuccessfully",
+    "LocalizedValue": {
+      "da": "Webstedet blev slettet med succes",
+      "en-US": "Site Deleted Successfully"
+    }
+  },
+  {
+    "Key": "ErrorWhileDeletingSiteFromSettings",
+    "LocalizedValue": {
+      "da": "Fejl under sletning af websted fra indstillinger",
+      "en-US": "Error While Deleting Site From Settings"
+    }
+  },
+  {
+    "Key": "WorkOrders",
+    "LocalizedValue": {
+      "da": "Work orders",
+      "en-US": "Work orders"
+    }
+  },
+  {
+    "Key": "Orders",
+    "LocalizedValue": {
+      "da": "Orders",
+      "en-US": "Orders"
+    }
+  },
+  {
+    "Key": "Settings",
+    "LocalizedValue": {
+      "da": "Settings",
+      "en-US": "Settings"
+    }
+  }
+]
