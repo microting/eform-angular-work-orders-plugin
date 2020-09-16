@@ -33,7 +33,7 @@ script:
   - dotnet test -v n eFormAPI/Plugins/WorkOrders.Pn/WorkOrders.Pn.Test/WorkOrders.Pn.Test.csproj
   - cd ../..
   - git clone --depth=50 --branch=$TRAVIS_BRANCH https://github.com/microting/eform-angular-frontend.git microting/eform-angular-frontend
-  - cp -av microting/eform-angular-workorder-plugin/eform-client/src/app/plugins/modules/workorder-pn microting/eform-angular-frontend/eform-client/src/app/plugins/modules/workorder-pn
+  - cp -av microting/eform-angular-workorder-plugin/eform-client/src/app/plugins/modules/workorders-pn microting/eform-angular-frontend/eform-client/src/app/plugins/modules/workorders-pn
   - cp -av microting/eform-angular-workorder-plugin/eform-client/e2e/Tests/workorder-settings microting/eform-angular-frontend/eform-client/e2e/Tests/workorder-settings
   - cp -av microting/eform-angular-workorder-plugin/eform-client/e2e/Tests/workorder-general microting/eform-angular-frontend/eform-client/e2e/Tests/workorder-general
   - cp -av microting/eform-angular-workorder-plugin/eform-client/e2e/Page\ objects/WorkOrders microting/eform-angular-frontend/eform-client/e2e/Page\ objects/WorkOrders

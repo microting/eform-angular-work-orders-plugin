@@ -22,9 +22,9 @@ On front-end part plugins will be included into `eform-client/src/app/plugins/mo
     ...
 },
 {
-    path: 'workorder-pn',
+    path: 'workorders-pn',
     canActivate: [AuthGuard],
-    loadChildren: './modules/workorder-pn/workorder-pn.module#WorkOrdersPnModule'
+    loadChildren: './modules/workorders-pn/workorders-pn.module#WorkOrdersPnModule'
 }
 ```
 

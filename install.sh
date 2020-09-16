@@ -18,10 +18,10 @@ su ubuntu -c \
 "dotnet publish eFormAPI/Plugins/WorkOrders.Pn/WorkOrders.Pn.sln -o out /p:Version=$GITVERSION --runtime linux-x64 --configuration Release"
 
 su ubuntu -c \
-"rm -fR /var/www/microting/eform-angular-frontend/eform-client/src/app/plugins/modules/workorder-pn"
+"rm -fR /var/www/microting/eform-angular-frontend/eform-client/src/app/plugins/modules/workorders-pn"
 
 su ubuntu -c \
-"cp -av /var/www/microting/eform-angular-workorder-plugin/eform-client/src/app/plugins/modules/workorder-pn /var/www/microting/eform-angular-frontend/eform-client/src/app/plugins/modules/workorder-pn"
+"cp -av /var/www/microting/eform-angular-workorder-plugin/eform-client/src/app/plugins/modules/workorders-pn /var/www/microting/eform-angular-frontend/eform-client/src/app/plugins/modules/workorders-pn"
 su ubuntu -c \
 "mkdir -p /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/Plugins/"
 
