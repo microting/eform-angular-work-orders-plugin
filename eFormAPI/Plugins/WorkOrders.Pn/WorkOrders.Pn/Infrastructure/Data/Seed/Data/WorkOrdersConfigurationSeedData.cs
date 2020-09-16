@@ -17,12 +17,12 @@ namespace WorkOrders.Pn.Infrastructure.Data.Seed.Data
             new PluginConfigurationValue()
             {
                 Name = "WorkOrdersBaseSettings:NewTaskId",
-                Value = WorkOrderEformConsts.NewTaskId.ToString(),
+                Value = "0",
             },
             new PluginConfigurationValue()
             {
                 Name = "WorkOrdersBaseSettings:TaskListId",
-                Value = WorkOrderEformConsts.TaskListId.ToString(),
+                Value = "0",
             },
         };
     }
