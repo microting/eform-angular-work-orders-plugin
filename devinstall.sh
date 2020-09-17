@@ -10,7 +10,7 @@ mkdir Documents/workspace/microting/eform-angular-frontend/eFormAPI/Plugins
 
 rm -fR Documents/workspace/microting/eform-angular-frontend/eFormAPI/Plugins/WorkOrders.Pn
 
-cp -a Documents/workspace/microting/eform-angular-workorders-plugin/eFormAPI/Plugins/WorkOrders.Pn Documents/workspace/microting/eform-angular-frontend/eFormAPI/Plugins/WorkOrders.Pn
+cp -a Documents/workspace/microting/eform-angular-workorder-plugin/eFormAPI/Plugins/WorkOrders.Pn Documents/workspace/microting/eform-angular-frontend/eFormAPI/Plugins/WorkOrders.Pn
 
 # Test files rm
 rm -fR Documents/workspace/microting/eform-angular-frontend/eform-client/e2e/Tests/workorders-settings
