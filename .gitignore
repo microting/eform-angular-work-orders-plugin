@@ -351,3 +351,4 @@ MigrationBackup/
 
 eFormAPI/eFormAPI.Web/Plugins/WorkOrders/
 out/
+.idea/*
