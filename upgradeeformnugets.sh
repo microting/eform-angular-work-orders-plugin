@@ -4,7 +4,7 @@ GIT_STATUS=`git status | grep "nothing to commit, working tree clean" | wc -l`
 if (( "$GIT_STATUS" > 0 )); then
 	git checkout stable
 	git pull
-	cd eFormAPI/Plugins/WorkOrders.Pn/WorkOrders.Pn.sln
+	cd eFormAPI/Plugins/WorkOrders.Pn/WorkOrders.Pn
 
 	dotnet add WorkOrders.Pn.csproj package Microting.eForm
 	dotnet add WorkOrders.Pn.csproj package Microting.eFormApi.BasePn
