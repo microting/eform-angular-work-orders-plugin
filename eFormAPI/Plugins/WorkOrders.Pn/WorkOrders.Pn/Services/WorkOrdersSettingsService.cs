@@ -146,7 +146,8 @@ namespace WorkOrders.Pn.Services
         {
             try
             {
-                AssignedSite assignedSite = await _dbContext.AssignedSites.FirstOrDefaultAsync(x => x.SiteId == siteId);
+                AssignedSite assignedSite = await _dbContext.AssignedSites.FirstOrDefaultAsync(x => x.SiteId == siteId
+                        && x.WorkflowState != Constants.WorkflowStates.Removed);
                 await assignedSite.Delete(_dbContext);
 
                 return new OperationResult(true,
