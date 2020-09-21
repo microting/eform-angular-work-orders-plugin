@@ -81,7 +81,7 @@ namespace WorkOrders.Pn.Services
             {
                 AssignedSite assignedSite = new AssignedSite() { SiteId = siteId };
                 await assignedSite.Create(_dbContext);
-                transaction.Commit();
+                await transaction.CommitAsync();
                 return new OperationResult(true, _workOrdersLocalizationService.GetString("SiteAddedSuccessfully"));
             }
             catch (Exception e)
