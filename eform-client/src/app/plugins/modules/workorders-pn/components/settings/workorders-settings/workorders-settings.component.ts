@@ -7,6 +7,9 @@ import {SettingsRemoveSiteModalComponent} from '../settings-remove-site-modal/se
 import {SettingsAddSiteModalComponent} from '../settings-add-site-modal/settings-add-site-modal.component';
 import {SitesService} from 'src/app/common/services/advanced';
 import {SiteNameDto} from 'src/app/common/models';
+import {FolderDto} from 'src/app/common/models/dto/folder.dto';
+import {FoldersService} from 'src/app/common/services/advanced/folders.service';
+import { WorkOrdersFoldersModalComponent } from '../workorders-folders-modal/workorders-folders-modal.component';
 
 @AutoUnsubscribe()
 @Component({
@@ -17,11 +20,15 @@ import {SiteNameDto} from 'src/app/common/models';
 export class WorkOrdersSettingsComponent implements OnInit, OnDestroy {
   @ViewChild('removeSiteModal') removeSiteModal: SettingsRemoveSiteModalComponent;
   @ViewChild('addSiteModal') addSiteModal: SettingsAddSiteModalComponent;
+  @ViewChild('foldersModal', {static: false}) foldersModal: WorkOrdersFoldersModalComponent;
   workOrdersSettingsModel: WorkOrdersSettingsModel = new WorkOrdersSettingsModel();
   sites: SiteNameDto[] = [];
+  foldersDto: FolderDto[] = [];
   settingsSub$: Subscription;
   sitesSub$: Subscription;
-  constructor(private settingsService: WorkOrdersSettingsService, private sitesService: SitesService) {}
+  foldersSub$: Subscription;
+  folderUpdateSub$: Subscription;
+  constructor(private settingsService: WorkOrdersSettingsService, private sitesService: SitesService, private foldersService: FoldersService) {}
 
   ngOnInit(): void {
     this.getSettings();
@@ -34,6 +41,7 @@ export class WorkOrdersSettingsComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         if (data && data.success) {
           this.workOrdersSettingsModel = data.model;
+          this.loadAllFolders();
         }
       });
   }
@@ -46,12 +54,36 @@ export class WorkOrdersSettingsComponent implements OnInit, OnDestroy {
     });
   }
 
+  loadAllFolders() {
+    this.foldersSub$ = this.foldersService.getAllFolders().subscribe((operation) => {
+      if (operation && operation.success) {
+        this.foldersDto = operation.model;
+        this.workOrdersSettingsModel.folderId == 0 ?
+        this.workOrdersSettingsModel.folderName = null :
+        this.workOrdersSettingsModel.folderName = this.foldersDto.find(x => x.id === this.workOrdersSettingsModel.folderId).name
+      }
+    });
+  }
+
   showAddNewSiteModal() {
     this.addSiteModal.show(this.sites, this.workOrdersSettingsModel.assignedSites);
   }
 
   showRemoveSiteModal(selectedSite: SiteNameDto) {
     this.removeSiteModal.show(selectedSite);
+  }
+
+  openFoldersModal() {
+    this.foldersModal.show(this.workOrdersSettingsModel.folderId);
+  }
+
+  onFolderSelected(folderDto: FolderDto) {
+    debugger;
+    this.folderUpdateSub$ = this.settingsService.updateSettingsFolder(folderDto.id).subscribe((operation) => {
+      if (operation && operation.success) {
+        this.getSettings();
+      }
+    });
   }
 
   ngOnDestroy(): void {}

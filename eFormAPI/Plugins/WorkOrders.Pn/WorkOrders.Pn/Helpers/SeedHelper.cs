@@ -30,7 +30,7 @@ namespace WorkOrders.Pn.Helpers
 
             List<Template_Dto> templatesDto = await core.TemplateItemReadAll(false,
                 "",
-                "eform-angular-work-orders-plugin-newtask",
+                "eform-angular-workorders-plugin-newtask",
                 false,
                 "",
                 new List<int>(),
@@ -47,7 +47,7 @@ namespace WorkOrders.Pn.Helpers
                 {
                     Id = WorkOrderEformConsts.NewTaskId,
                     Repeated = 0,
-                    Label = "eform-angular-work-orders-plugin-newtask",
+                    Label = "eform-angular-workorders-plugin-newtask",
                     StartDate = new DateTime(2020, 09, 14),
                     EndDate = new DateTime(2030, 09, 14),
                     Language = "da",
@@ -151,7 +151,7 @@ namespace WorkOrders.Pn.Helpers
 
             List<Template_Dto> templatesDto = await core.TemplateItemReadAll(false,
                     "",
-                    "eform-angular-work-orders-plugin-tasklist",
+                    "eform-angular-workorders-plugin-tasklist",
                     false,
                     "",
                     new List<int>(),
@@ -168,7 +168,7 @@ namespace WorkOrders.Pn.Helpers
                 {
                     Id = WorkOrderEformConsts.TaskListId,
                     Repeated = 0,
-                    Label = "eform-angular-work-orders-plugin-tasklist",
+                    Label = "eform-angular-workorders-plugin-tasklist",
                     StartDate = new DateTime(2020, 09, 14),
                     EndDate = new DateTime(2030, 09, 14),
                     Language = "da",

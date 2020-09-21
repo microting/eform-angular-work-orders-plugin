@@ -131,13 +131,6 @@ namespace WorkOrders.Pn
                         E2EId = "work-orders-pn-orders",
                         Link = "/plugins/work-orders-pn/orders",
                         Position = 0,
-                    },
-                    new MenuItemModel()
-                    {
-                        Name = localizationService.GetString("Settings"),
-                        E2EId = "work-orders-pn-settings",
-                        Link = "/plugins/work-orders-pn/settings",
-                        Position = 1,
                     }
                 }
             });

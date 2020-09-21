@@ -9,7 +9,8 @@ import {
   WorkOrdersPageComponent,
   SettingsAddSiteModalComponent,
   SettingsRemoveSiteModalComponent,
-  WorkOrdersImagesModalComponent
+  WorkOrdersImagesModalComponent,
+  WorkOrdersFoldersModalComponent
 } from './components';
 import { SharedPnModule } from 'src/app/plugins/modules/shared/shared-pn.module';
 import {
@@ -24,6 +25,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { LightboxModule } from '@ngx-gallery/lightbox';
 import {GalleryModule} from '@ngx-gallery/core';
+import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 
 @NgModule({
   imports: [
@@ -41,6 +43,7 @@ import {GalleryModule} from '@ngx-gallery/core';
     InputsModule,
     LightboxModule,
     GalleryModule,
+    EformSharedModule
   ],
   declarations: [
     WorkOrdersPnLayoutComponent,
@@ -49,6 +52,7 @@ import {GalleryModule} from '@ngx-gallery/core';
     SettingsAddSiteModalComponent,
     SettingsRemoveSiteModalComponent,
     WorkOrdersImagesModalComponent,
+    WorkOrdersFoldersModalComponent
   ],
   providers: [WorkOrdersService, WorkOrdersSettingsService],
 })
