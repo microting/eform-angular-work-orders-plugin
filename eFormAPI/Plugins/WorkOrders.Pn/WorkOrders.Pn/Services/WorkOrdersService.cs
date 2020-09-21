@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microting.eForm.Infrastructure.Models;
 using WorkOrders.Pn.Abstractions;
 using WorkOrders.Pn.Infrastructure.Models;
 using CollectionExtensions = Castle.Core.Internal.CollectionExtensions;
@@ -24,21 +25,26 @@ namespace WorkOrders.Pn.Services
         private readonly WorkOrderPnDbContext _dbContext;
         private readonly IWorkOrdersLocalizationService _workOrdersLocalizationService;
         private readonly IEFormCoreService _coreService;
+        private readonly IUserService _userService;
 
         public WorkOrdersService(
             WorkOrderPnDbContext dbContext, 
             IWorkOrdersLocalizationService workOrdersLocalizationService,
             ILogger<WorkOrdersService> logger,
-            IEFormCoreService coreService)
+            IEFormCoreService coreService,
+            IUserService userService)
         {
             _dbContext = dbContext;
             _workOrdersLocalizationService = workOrdersLocalizationService;
             _logger = logger;
             _coreService = coreService;
+            _userService = userService;
         }
 
         public async Task<OperationDataResult<WorkOrdersModel>> GetWorkOrdersAsync(WorkOrdersRequestModel pnRequestModel)
         {
+            TimeZoneInfo timeZoneInfo = await _userService.GetCurrentUserTimeZoneInfo();
+
             try
             {
                 WorkOrdersModel workOrdersModel = new WorkOrdersModel();
@@ -74,11 +80,11 @@ namespace WorkOrders.Pn.Services
                 List<WorkOrderModel> workOrderList = await workOrdersQuery.Select(x => new WorkOrderModel()
                 {
                     Id = x.Id,
-                    CreatedAt = x.CreatedAt,
+                    CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(x.CreatedAt, timeZoneInfo),
                     CreatedByUserId = x.CreatedByUserId,
                     Description = x.Description,
                     CorrectedAtLatest = x.CorrectedAtLatest,
-                    DoneAt = x.DoneAt,
+                    DoneAt = x.DoneAt != null ? TimeZoneInfo.ConvertTimeFromUtc((DateTime)x.DoneAt, timeZoneInfo) : (DateTime?) null,
                     DoneBySiteId = x.DoneBySiteId,
                     DescriptionOfTaskDone = x.DescriptionOfTaskDone,
                     PicturesOfTask = x.PicturesOfTasks
