@@ -14,7 +14,10 @@ exports.config = {
   ],
     suites: {
         settings: [
-            'e2e/Tests/application-settings/**/*.spec.ts'
+            'e2e/Tests/workorders-settings/application-settings.plugins-page.spec.ts'
+            'e2e/Tests/workorders-general/workorders-settings/workorders-settings.site.spec.ts',
+            'e2e/Tests/workorders-general/workorders-settings/workorders-settings.folder.spec.ts',
+            'e2e/Tests/workorders-general/workorders-page/workorders.get.spec.ts'
         ],
     },
     // Patterns to exclude.

@@ -2,7 +2,7 @@
 
 <div class="container-fluid">
   <div class="row p-1 mt-4 table-responsive no-gutters">
-  <div class="col-md-3 col-sm-6 col-xs-6" *ngIf="foldersDto.length > 0">
+  <div class="col-md-3 col-sm-6 col-xs-6" *ngIf="foldersTreeDto.length > 0">
     <div class="md-form" id="folderSelector" (click)="openFoldersModal()">
       <input mdbInput
              type="text" id="folderSelectorInput"
@@ -13,7 +13,7 @@
     </div>
   </div>
   </div>
-  <div class="row p-1 mt-4 table-responsive no-gutters">
+  <div class="row p-1 table-responsive no-gutters">
     <table
       mdbTable
       striped="true"
@@ -81,4 +81,4 @@
 
 <app-settings-add-site-modal #addSiteModal (siteAdded)="getSettings()"></app-settings-add-site-modal>
 <app-settings-remove-site-modal #removeSiteModal (siteRemoved)="getSettings()"></app-settings-remove-site-modal>
-<app-workorders-folders-modal (folderSelected)="onFolderSelected($event)" [folders]="foldersDto" #foldersModal></app-workorders-folders-modal>
+<app-workorders-folders-modal (folderSelected)="onFolderSelected($event)" [folders]="foldersTreeDto" #foldersModal></app-workorders-folders-modal>
