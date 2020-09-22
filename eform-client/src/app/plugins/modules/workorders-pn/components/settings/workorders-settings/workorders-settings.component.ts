@@ -23,15 +23,18 @@ export class WorkOrdersSettingsComponent implements OnInit, OnDestroy {
   @ViewChild('foldersModal', {static: false}) foldersModal: WorkOrdersFoldersModalComponent;
   workOrdersSettingsModel: WorkOrdersSettingsModel = new WorkOrdersSettingsModel();
   sites: SiteNameDto[] = [];
+  foldersTreeDto: FolderDto[] = [];
   foldersDto: FolderDto[] = [];
   settingsSub$: Subscription;
   sitesSub$: Subscription;
+  foldersSubTree$: Subscription;
   foldersSub$: Subscription;
   folderUpdateSub$: Subscription;
   constructor(private settingsService: WorkOrdersSettingsService, private sitesService: SitesService, private foldersService: FoldersService) {}
 
   ngOnInit(): void {
     this.getSettings();
+    this.loadAllFoldersTree();
     this.getSites();
   }
 
@@ -41,7 +44,7 @@ export class WorkOrdersSettingsComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         if (data && data.success) {
           this.workOrdersSettingsModel = data.model;
-          this.loadAllFolders();
+          this.loadFlatFolders();
         }
       });
   }
@@ -54,13 +57,21 @@ export class WorkOrdersSettingsComponent implements OnInit, OnDestroy {
     });
   }
 
-  loadAllFolders() {
-    this.foldersSub$ = this.foldersService.getAllFolders().subscribe((operation) => {
+  loadAllFoldersTree() {
+    this.foldersSubTree$ = this.foldersService.getAllFolders().subscribe((operation) => {
+      if (operation && operation.success) {
+        this.foldersTreeDto = operation.model;
+      }
+    });
+  }
+
+  loadFlatFolders() {
+    this.foldersSub$ = this.foldersService.getAllFoldersList().subscribe((operation) => {
       if (operation && operation.success) {
         this.foldersDto = operation.model;
-        this.workOrdersSettingsModel.folderId == 0 ?
-        this.workOrdersSettingsModel.folderName = null :
-        this.workOrdersSettingsModel.folderName = this.foldersDto.find(x => x.id === this.workOrdersSettingsModel.folderId).name
+        this.workOrdersSettingsModel.folderId === null ?
+          this.workOrdersSettingsModel.folderName = null :
+          this.workOrdersSettingsModel.folderName = this.foldersDto.find(x => x.id === this.workOrdersSettingsModel.folderId).name;
       }
     });
   }
