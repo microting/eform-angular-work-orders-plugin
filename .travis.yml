@@ -27,27 +27,27 @@ install:
   - wget http://localhost:15672/cli/rabbitmqadmin
   - chmod +x rabbitmqadmin
   - ./rabbitmqadmin declare queue name=eformsdk-input durable=true
-  - ./rabbitmqadmin declare queue name=eform-angular-workorder-plugin durable=true
+  - ./rabbitmqadmin declare queue name=eform-angular-work-orders-plugin durable=true
 script:
   - dotnet build eFormAPI/Plugins/WorkOrders.Pn/WorkOrders.Pn.sln
   - dotnet test -v n eFormAPI/Plugins/WorkOrders.Pn/WorkOrders.Pn.Test/WorkOrders.Pn.Test.csproj
   - cd ../..
   - git clone --depth=50 --branch=$TRAVIS_BRANCH https://github.com/microting/eform-angular-frontend.git microting/eform-angular-frontend
-  - cp -av microting/eform-angular-workorder-plugin/eform-client/src/app/plugins/modules/workorders-pn microting/eform-angular-frontend/eform-client/src/app/plugins/modules/workorders-pn
-  - cp -av microting/eform-angular-workorder-plugin/eform-client/e2e/Tests/workorder-settings microting/eform-angular-frontend/eform-client/e2e/Tests/workorder-settings
-  - cp -av microting/eform-angular-workorder-plugin/eform-client/e2e/Tests/workorder-general microting/eform-angular-frontend/eform-client/e2e/Tests/workorder-general
-  - cp -av microting/eform-angular-workorder-plugin/eform-client/e2e/Page\ objects/WorkOrders microting/eform-angular-frontend/eform-client/e2e/Page\ objects/WorkOrders
-  - cp -av microting/eform-angular-workorder-plugin/eform-client/wdio-headless-plugin-step2.conf.js microting/eform-angular-frontend/eform-client/wdio-headless-plugin-step2.conf.js
-  - cp -av microting/eform-angular-workorder-plugin/eform-client/wdio-plugin-step2.conf.js microting/eform-angular-frontend/eform-client/wdio-plugin-step2.conf.js
+  - cp -av microting/eform-angular-work-orders-plugin/eform-client/src/app/plugins/modules/workorders-pn microting/eform-angular-frontend/eform-client/src/app/plugins/modules/workorders-pn
+  - cp -av microting/eform-angular-work-orders-plugin/eform-client/e2e/Tests/workorder-settings microting/eform-angular-frontend/eform-client/e2e/Tests/workorder-settings
+  - cp -av microting/eform-angular-work-orders-plugin/eform-client/e2e/Tests/workorder-general microting/eform-angular-frontend/eform-client/e2e/Tests/workorder-general
+  - cp -av microting/eform-angular-work-orders-plugin/eform-client/e2e/Page\ objects/WorkOrders microting/eform-angular-frontend/eform-client/e2e/Page\ objects/WorkOrders
+  - cp -av microting/eform-angular-work-orders-plugin/eform-client/wdio-headless-plugin-step2.conf.js microting/eform-angular-frontend/eform-client/wdio-headless-plugin-step2.conf.js
+  - cp -av microting/eform-angular-work-orders-plugin/eform-client/wdio-plugin-step2.conf.js microting/eform-angular-frontend/eform-client/wdio-plugin-step2.conf.js
   - cd microting/eform-angular-frontend
   - dotnet build eFormAPI/eFormAPI.sln > dotnet_log 2>&1 &
   - cd ../..
   - mkdir -p microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/Plugins
-  - cp -av microting/eform-angular-workorder-plugin/eFormAPI/eFormAPI.Web/Plugins/WorkOrders microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/Plugins/WorkOrders
+  - cp -av microting/eform-angular-work-orders-plugin/eFormAPI/eFormAPI.Web/Plugins/WorkOrders microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/Plugins/WorkOrders
   - cd microting/eform-angular-frontend
   - mkdir -p /home/travis/build/microting/eform-angular-frontend/eform-client/errorShots
   - cd eform-client && npm install
-  - ../../eform-angular-workorder-plugin/testinginstallpn.sh
+  - ../../eform-angular-work-orders-plugin/testinginstallpn.sh
   - npm start &
   - sleep 75
   - dotnet run --project ../eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj > dotnet_log 2>&1 &
