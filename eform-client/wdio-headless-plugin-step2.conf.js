@@ -11,14 +11,14 @@ exports.config = {
     // directory is where your package.json resides, so `wdio` will be called from there.
     //
     specs: [
-      // 'e2e/Tests/workorder-settings/application-settings.plugins-page.spec.ts',
+        'e2e/Tests/workorders-settings/application-settings.plugins-page.spec.ts'
+        'e2e/Tests/workorders-general/workorders-settings/workorders-settings.site.spec.ts',
+        'e2e/Tests/workorders-general/workorders-settings/workorders-settings.folder.spec.ts',
+        'e2e/Tests/workorders-general/workorders-page/workorders.get.spec.ts'
     ],
     suites: {
         settings: [
-            'e2e/Tests/workorders-settings/application-settings.plugins-page.spec.ts'
-            'e2e/Tests/workorders-general/workorders-settings/workorders-settings.site.spec.ts',
-            'e2e/Tests/workorders-general/workorders-settings/workorders-settings.folder.spec.ts',
-            'e2e/Tests/workorders-general/workorders-page/workorders.get.spec.ts'
+            'e2e/Tests/application-settings/**/*.spec.ts'
         ],
     },
     // Patterns to exclude.
@@ -228,37 +228,37 @@ exports.config = {
      * @param {Object} test test details
      */
     afterTest(test, context, { error, result, duration, passed, retries }) {
-      const path = require('path');
+        const path = require('path');
 
-      // if test passed, ignore, else take and save screenshot.
-      if (passed) {
-        return;
-      }
+        // if test passed, ignore, else take and save screenshot.
+        if (passed) {
+            return;
+        }
 
-      /*
-       * get the current date and clean it
-       * const date = (new Date()).toString().replace(/\s/g, '-').replace(/-\(\w+\)/, '');
-       */
-      //const { browserName } = browser.desiredCapabilities;
-      const timestamp = new Date().toLocaleString('iso', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false
-      }).replace(/[ ]/g, '--').replace(':', '-');
+        /*
+         * get the current date and clean it
+         * const date = (new Date()).toString().replace(/\s/g, '-').replace(/-\(\w+\)/, '');
+         */
+        //const { browserName } = browser.desiredCapabilities;
+        const timestamp = new Date().toLocaleString('iso', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+        }).replace(/[ ]/g, '--').replace(':', '-');
 
-      // get current test title and clean it, to use it as file name
-      const filename = encodeURIComponent(
-        `${
-          test.fullTitle.replace(/\s+/g, '-')
-        }-chrome-${timestamp}`.replace(/[/]/g, '__')
-      ).replace(/%../, '.');
+        // get current test title and clean it, to use it as file name
+        const filename = encodeURIComponent(
+            `${
+                test.fullTitle.replace(/\s+/g, '-')
+            }-chrome-${timestamp}`.replace(/[/]/g, '__')
+        ).replace(/%../, '.');
 
-      const filePath = path.resolve(this.screenshotPath, `${filename}.png`);
+        const filePath = path.resolve(this.screenshotPath, `${filename}.png`);
 
-      browser.saveScreenshot(filePath);
+        browser.saveScreenshot(filePath);
     },
     /**
      * Hook that gets executed after the suite has ended
