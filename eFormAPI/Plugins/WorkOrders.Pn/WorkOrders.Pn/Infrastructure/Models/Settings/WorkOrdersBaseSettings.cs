@@ -9,5 +9,6 @@
         public int NumberOfWorkers { get; set; }
         public int NewTaskId { get; set; }
         public int TaskListId { get; set; }
+        public int FolderId { get; set; }
     }
 }

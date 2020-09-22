@@ -43,7 +43,12 @@ namespace WorkOrders.Pn.Infrastructure.Data.Seed.Data
             {
                 Name = "WorkOrdersBaseSettings:NumberOfWorkers",
                 Value = "1"
-            }
+            },
+            new PluginConfigurationValue()
+            {
+                Name = "WorkOrdersBaseSettings:FolderId",
+                Value = "0"
+            },
         };
     }
 }

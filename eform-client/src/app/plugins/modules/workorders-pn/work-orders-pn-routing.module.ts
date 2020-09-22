@@ -9,8 +9,8 @@ export const routes: Routes = [
   {
     path: '',
     component: WorkOrdersPnLayoutComponent,
-    // canActivate: [PermissionGuard],
-    // data: {requiredPermission: WorkOrdersPnClaims.accessWorkOrdersPlugin},
+    canActivate: [PermissionGuard],
+    data: {requiredPermission: WorkOrdersPnClaims.accessWorkOrdersPlugin},
     children: [
       {
         path: 'orders',

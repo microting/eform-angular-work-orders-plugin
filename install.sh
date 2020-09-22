@@ -1,12 +1,12 @@
-#!/bin/bash
+work-orders-#!/bin/bash
 
-if [ ! -d "/var/www/microting/eform-angular-workorder-plugin" ]; then
+if [ ! -d "/var/www/microting/eform-angular-work-orders-plugin" ]; then
   cd /var/www/microting
   su ubuntu -c \
-  "git clone https://github.com/microting/eform-angular-workorder-plugin.git -b stable"
+  "git clone https://github.com/microting/eform-angular-work-orders-plugin.git -b stable"
 fi
 
-cd /var/www/microting/eform-angular-workorder-plugin
+cd /var/www/microting/eform-angular-work-orders-plugin
 su ubuntu -c \
 "dotnet restore eFormAPI/Plugins/WorkOrders.Pn/WorkOrders.Pn.sln"
 
@@ -21,7 +21,7 @@ su ubuntu -c \
 "rm -fR /var/www/microting/eform-angular-frontend/eform-client/src/app/plugins/modules/workorders-pn"
 
 su ubuntu -c \
-"cp -av /var/www/microting/eform-angular-workorder-plugin/eform-client/src/app/plugins/modules/workorders-pn /var/www/microting/eform-angular-frontend/eform-client/src/app/plugins/modules/workorders-pn"
+"cp -av /var/www/microting/eform-angular-work-orders-plugin/eform-client/src/app/plugins/modules/workorders-pn /var/www/microting/eform-angular-frontend/eform-client/src/app/plugins/modules/workorders-pn"
 su ubuntu -c \
 "mkdir -p /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/Plugins/"
 
@@ -29,14 +29,14 @@ su ubuntu -c \
 "rm -fR /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/Plugins/WorkOrders"
 
 su ubuntu -c \
-"cp -av /var/www/microting/eform-angular-workorder-plugin/out /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/Plugins/WorkOrders"
+"cp -av /var/www/microting/eform-angular-work-orders-plugin/out /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/Plugins/WorkOrders"
 
 
 echo "Recompile angular"
 cd /var/www/microting/eform-angular-frontend/eform-client
 su ubuntu -c \
-"/var/www/microting/eform-angular-workorder-plugin/testinginstallpn.sh"
+"/var/www/microting/eform-angular-work-orders-plugin/testinginstallpn.sh"
 su ubuntu -c \
 "export NODE_OPTIONS=--max_old_space_size=8192 && GENERATE_SOURCEMAP=false npm run build"
 echo "Recompiling angular done"
-/root/rabbitmqadmin declare queue name=eform-angular-workorder-plugin durable=true
+/root/rabbitmqadmin declare queue name=eform-angular-work-orders-plugin durable=true

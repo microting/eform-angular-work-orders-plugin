@@ -18,6 +18,7 @@ namespace WorkOrders.Pn.Services
 {
     using Microsoft.EntityFrameworkCore.Storage;
     using Microting.eForm.Dto;
+    using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 
     public class WorkOrdersSettingsService : IWorkOrdersSettingsService
     {
@@ -25,16 +26,22 @@ namespace WorkOrders.Pn.Services
         private readonly ILogger<WorkOrdersSettingsService> _logger;
         private readonly IWorkOrdersLocalizationService _workOrdersLocalizationService;
         private readonly IEFormCoreService _core;
+        private readonly IPluginDbOptions<WorkOrdersBaseSettings> _options;
+        private readonly IUserService _userService;
 
         public WorkOrdersSettingsService(WorkOrderPnDbContext dbContext, 
             ILogger<WorkOrdersSettingsService> logger,
             IWorkOrdersLocalizationService workOrdersLocalizationService,
-            IEFormCoreService core)
+            IEFormCoreService core,
+            IPluginDbOptions<WorkOrdersBaseSettings> options,
+            IUserService userService)
         {
             _dbContext = dbContext;
             _logger = logger;
             _workOrdersLocalizationService = workOrdersLocalizationService;
             _core = core;
+            _options = options;
+            _userService = userService;
         }
 
         public async Task<OperationDataResult<WorkOrdersSettingsModel>> GetAllSettingsAsync()
@@ -61,8 +68,18 @@ namespace WorkOrders.Pn.Services
                         workOrdersSettings.AssignedSites.Add(siteNameModel);
                     }
                 }
-                
 
+                var option = _options.Value;
+
+                if (option.FolderId > 0)
+                {
+                    workOrdersSettings.FolderId = option.FolderId;
+                }
+                else
+                {
+                    workOrdersSettings.FolderId = null;
+                }
+                
                 return new OperationDataResult<WorkOrdersSettingsModel>(true, workOrdersSettings);
             }
             catch (Exception e)
@@ -76,7 +93,7 @@ namespace WorkOrders.Pn.Services
 
         public async Task<OperationResult> AddSiteToSettingsAsync(int siteId)
         {
-            using(IDbContextTransaction transaction = await _dbContext.Database.BeginTransactionAsync())
+            using (IDbContextTransaction transaction = await _dbContext.Database.BeginTransactionAsync())
             {
                 try
                 {
@@ -96,11 +113,41 @@ namespace WorkOrders.Pn.Services
             }
         }
 
+        public async Task<OperationResult> UpdateFolder(int folderId)
+        {
+            try
+            {
+                if (folderId > 0)
+                {
+                    await _options.UpdateDb(settings =>
+                        {
+                            settings.FolderId = folderId;
+                        },
+                        _dbContext,
+                        _userService.UserId);
+
+                    return new OperationResult(
+                        true,
+                        _workOrdersLocalizationService.GetString("FolderUpdatedSuccessfully"));
+                }
+
+                throw new ArgumentException($"{nameof(folderId)} is 0");
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+                _logger.LogError(e.Message);
+                return new OperationResult(false,
+                    _workOrdersLocalizationService.GetString("ErrorWhileUpdatingFolder"));
+            }
+        }
+
         public async Task<OperationResult> RemoveSiteFromSettingsAsync(int siteId)
         {
             try
             {
-                AssignedSite assignedSite = await _dbContext.AssignedSites.FirstOrDefaultAsync(x => x.SiteId == siteId);
+                AssignedSite assignedSite = await _dbContext.AssignedSites.FirstOrDefaultAsync(x => x.SiteId == siteId
+                        && x.WorkflowState != Constants.WorkflowStates.Removed);
                 await assignedSite.Delete(_dbContext);
 
                 return new OperationResult(true,

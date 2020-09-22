@@ -350,3 +350,5 @@ MigrationBackup/
 .ionide/
 
 eFormAPI/eFormAPI.Web/Plugins/WorkOrders/
+out/
+.idea/*
