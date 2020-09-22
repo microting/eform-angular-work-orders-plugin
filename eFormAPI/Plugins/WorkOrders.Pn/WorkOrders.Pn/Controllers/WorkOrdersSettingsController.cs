@@ -8,7 +8,6 @@ using WorkOrders.Pn.Infrastructure.Models.Settings;
 namespace WorkOrders.Pn.Controllers
 {
     [Authorize]
-    [Route("api/workorders-pn")]
     public class WorkOrdersSettingsController : Controller
     {
         private readonly IWorkOrdersSettingsService _workOrdersSettingsService;
@@ -18,19 +17,25 @@ namespace WorkOrders.Pn.Controllers
             _workOrdersSettingsService = workOrdersSettingsService;
         }
 
-        [HttpGet("settings")]
+        [HttpGet("api/workorders-pn/settings")]
         public async Task<OperationDataResult<WorkOrdersSettingsModel>> GetAllSettings()
         {
             return await _workOrdersSettingsService.GetAllSettingsAsync();
         }
 
-        [HttpPost("settings/sites")]
+        [HttpPost("api/workorders-pn/settings/sites")]
         public async Task<OperationResult> PostSiteToSettings([FromBody]int siteId)
         {
             return await _workOrdersSettingsService.AddSiteToSettingsAsync(siteId);
         }
 
-        [HttpDelete("settings/sites/{siteId}")]
+        [HttpPost("api/workorders-pn/settings/folder")]
+        public async Task<OperationResult> UpdateFolder([FromBody] int folderId)
+        {
+            return await _workOrdersSettingsService.UpdateFolder(folderId);
+        }
+
+        [HttpDelete("api/workorders-pn/settings/sites/{siteId}")]
         public async Task<OperationResult> DeleteSiteFromSettingsAsync(int siteId)
         {
             return await _workOrdersSettingsService.RemoveSiteFromSettingsAsync(siteId);

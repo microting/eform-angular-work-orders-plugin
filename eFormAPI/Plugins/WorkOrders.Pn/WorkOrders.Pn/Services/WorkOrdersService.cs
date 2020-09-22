@@ -28,7 +28,7 @@ namespace WorkOrders.Pn.Services
         private readonly IUserService _userService;
 
         public WorkOrdersService(
-            WorkOrderPnDbContext dbContext, 
+            WorkOrderPnDbContext dbContext,
             IWorkOrdersLocalizationService workOrdersLocalizationService,
             ILogger<WorkOrdersService> logger,
             IEFormCoreService coreService,
@@ -48,7 +48,7 @@ namespace WorkOrders.Pn.Services
             try
             {
                 WorkOrdersModel workOrdersModel = new WorkOrdersModel();
-                IQueryable<WorkOrder> workOrdersQuery= _dbContext.WorkOrders.Where(x => 
+                IQueryable<WorkOrder> workOrdersQuery= _dbContext.WorkOrders.Where(x =>
                     x.WorkflowState != Constants.WorkflowStates.Removed).AsQueryable();
                 if(!CollectionExtensions.IsNullOrEmpty(pnRequestModel.SearchString) && pnRequestModel.SearchString != "")
                 {
@@ -58,7 +58,7 @@ namespace WorkOrders.Pn.Services
                 }
                 if (!string.IsNullOrEmpty(pnRequestModel.Sort))
                 {
-                    if (pnRequestModel.IsSortDsc) 
+                    if (pnRequestModel.IsSortDsc)
                     {
                         workOrdersQuery = workOrdersQuery.CustomOrderByDescending(pnRequestModel.Sort);
                     }
@@ -112,7 +112,7 @@ namespace WorkOrders.Pn.Services
                         .FirstOrDefault();
                 }
 
-                workOrdersModel.Total = await _dbContext.WorkOrders.CountAsync(x => 
+                workOrdersModel.Total = await _dbContext.WorkOrders.CountAsync(x =>
                             x.WorkflowState != Constants.WorkflowStates.Removed);
                 workOrdersModel.WorkOrders = workOrderList;
 

@@ -117,5 +117,19 @@
       "da": "Settings",
       "en-US": "Settings"
     }
+  },
+  {
+    "Key": "FolderUpdatedSuccessfully",
+    "LocalizedValue": {
+      "da": "Mappe blev opdateret",
+      "en-US": "Folder updated successfully"
+    }
+  },
+  {
+    "Key": "ErrorWhileUpdatingFolder",
+    "LocalizedValue": {
+      "da": "Fejl under opdatering af mappe",
+      "en-US": "Error while updating folder"
+    }
   }
 ]

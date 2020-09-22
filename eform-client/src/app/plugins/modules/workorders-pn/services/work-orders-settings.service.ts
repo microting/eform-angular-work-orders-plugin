@@ -9,7 +9,8 @@ import {WorkOrdersSettingsModel} from '../models';
 
 export let WorkOrdersSettingsMethods = {
   Settings: 'api/workorders-pn/settings',
-  SettingsSites: 'api/workorders-pn/settings/sites'
+  SettingsSites: 'api/workorders-pn/settings/sites',
+  SettingsFolder: 'api/workorders-pn/settings/folder'
 };
 @Injectable()
 export class WorkOrdersSettingsService extends BaseService {
@@ -27,5 +28,9 @@ export class WorkOrdersSettingsService extends BaseService {
 
   removeSiteFromSettings(id: number): Observable<OperationResult> {
     return this.delete(WorkOrdersSettingsMethods.SettingsSites + '/' + id);
+  }
+
+  updateSettingsFolder(folderId: number): Observable<OperationResult> {
+    return this.post(WorkOrdersSettingsMethods.SettingsFolder, folderId);
   }
 }

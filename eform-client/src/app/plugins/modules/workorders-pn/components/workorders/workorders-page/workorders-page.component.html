@@ -100,19 +100,6 @@
           </th>
           <th
             scope="col"
-            class="table-header-sortable"
-            id="status"
-            (click)="sortTable(sortCols.doneAt)"
-          >
-            <div class="d-flex align-items-center justify-content-center">
-              {{ 'Status' | translate }}
-              <i class="material-icons text-black-50">{{
-                getSortIcon(sortCols.doneAt)
-                }}</i>
-            </div>
-          </th>
-          <th
-            scope="col"
             id="doneByHeader"
           >
             <div class="d-flex align-items-center justify-content-center">
@@ -152,19 +139,10 @@
             {{ workOrder.description }}
           </td>
           <td id="workOrderCorrectedAtLatest">
-            {{ workOrder.correctedAtLatest | date: 'dd.MM.y' }}
+            {{ workOrder.correctedAtLatest | date: 'dd.MM.y HH:mm:ss' }}
           </td>
           <td id="workOrderDoneAt">
             {{ workOrder.doneAt | date: 'dd.MM.y HH:mm:ss' }}
-          </td>
-          <td id="statusResult">
-            <div *ngIf="workOrder.doneAt">
-              <fa-icon
-                icon="check"
-                size="lg"
-                [fixedWidth]="true"
-              ></fa-icon>
-            </div>
           </td>
           <td id="workOrderDoneBy">
             {{ workOrder.doneBy }}
