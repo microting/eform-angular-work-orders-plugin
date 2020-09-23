@@ -9,7 +9,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microting.eForm.Infrastructure;
 using Microting.eForm.Infrastructure.Constants;
+using Microting.eForm.Infrastructure.Models;
 using WorkOrders.Pn.Abstractions;
 using WorkOrders.Pn.Infrastructure.Models;
 using WorkOrders.Pn.Infrastructure.Models.Settings;
@@ -101,10 +103,18 @@ namespace WorkOrders.Pn.Services
 
         public async Task<OperationResult> AddSiteToSettingsAsync(int siteId)
         {
+            var result = await _dbContext.PluginConfigurationValues.SingleAsync(x => x.Name == "WorkOrdersBaseSettings:NewTaskId");
+            var folderResult = await _dbContext.PluginConfigurationValues.SingleAsync(x => x.Name == "WorkOrdersBaseSettings:FolderId");
+            var theCore = await _core.GetCore();
+            MainElement mainElement = await theCore.TemplateRead(int.Parse(result.Value));
+            mainElement.Label = "Ny opgave";
+            mainElement.CheckListFolderName = folderResult.Value;
             await using IDbContextTransaction transaction = await _dbContext.Database.BeginTransactionAsync();
             try
             {
-                AssignedSite assignedSite = new AssignedSite() { SiteId = siteId };
+                int? caseId = await theCore.CaseCreate(mainElement, "", siteId, int.Parse(folderResult.Value));
+                AssignedSite assignedSite = new AssignedSite() { SiteId = siteId, CaseId = (int)caseId};
+
                 await assignedSite.Create(_dbContext);
                 await transaction.CommitAsync();
                 return new OperationResult(true, _workOrdersLocalizationService.GetString("SiteAddedSuccessfully"));
@@ -183,6 +193,8 @@ namespace WorkOrders.Pn.Services
             {
                 AssignedSite assignedSite = await _dbContext.AssignedSites.FirstOrDefaultAsync(x => x.SiteId == siteId
                         && x.WorkflowState != Constants.WorkflowStates.Removed);
+                var theCore = await _core.GetCore();
+                await theCore.CaseDelete(assignedSite.CaseId);
                 await assignedSite.Delete(_dbContext);
 
                 return new OperationResult(true,
