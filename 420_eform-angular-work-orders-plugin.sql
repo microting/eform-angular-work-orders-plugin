@@ -16,13 +16,13 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `__efmigrationshistory`
+-- Table structure for table `__EFMigrationsHistory`
 --
 
-DROP TABLE IF EXISTS `__efmigrationshistory`;
+DROP TABLE IF EXISTS `__EFMigrationsHistory`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `__efmigrationshistory` (
+CREATE TABLE `__EFMigrationsHistory` (
   `MigrationId` varchar(95) NOT NULL,
   `ProductVersion` varchar(32) NOT NULL,
   PRIMARY KEY (`MigrationId`)
@@ -30,23 +30,23 @@ CREATE TABLE `__efmigrationshistory` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `__efmigrationshistory`
+-- Dumping data for table `__EFMigrationsHistory`
 --
 
-LOCK TABLES `__efmigrationshistory` WRITE;
-/*!40000 ALTER TABLE `__efmigrationshistory` DISABLE KEYS */;
-INSERT INTO `__efmigrationshistory` VALUES ('20200916141603_Init','3.1.8');
-/*!40000 ALTER TABLE `__efmigrationshistory` ENABLE KEYS */;
+LOCK TABLES `__EFMigrationsHistory` WRITE;
+/*!40000 ALTER TABLE `__EFMigrationsHistory` DISABLE KEYS */;
+INSERT INTO `__EFMigrationsHistory` VALUES ('20200916141603_Init','3.1.8');
+/*!40000 ALTER TABLE `__EFMigrationsHistory` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `assignedsites`
+-- Table structure for table `AssignedSites`
 --
 
-DROP TABLE IF EXISTS `assignedsites`;
+DROP TABLE IF EXISTS `AssignedSites`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `assignedsites` (
+CREATE TABLE `AssignedSites` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `CreatedAt` datetime(6) NOT NULL,
   `UpdatedAt` datetime(6) DEFAULT NULL,
@@ -61,22 +61,22 @@ CREATE TABLE `assignedsites` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `assignedsites`
+-- Dumping data for table `AssignedSites`
 --
 
-LOCK TABLES `assignedsites` WRITE;
-/*!40000 ALTER TABLE `assignedsites` DISABLE KEYS */;
-/*!40000 ALTER TABLE `assignedsites` ENABLE KEYS */;
+LOCK TABLES `AssignedSites` WRITE;
+/*!40000 ALTER TABLE `AssignedSites` DISABLE KEYS */;
+/*!40000 ALTER TABLE `AssignedSites` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `assignedsiteversions`
+-- Table structure for table `AssignedSiteVersions`
 --
 
-DROP TABLE IF EXISTS `assignedsiteversions`;
+DROP TABLE IF EXISTS `AssignedSiteVersions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `assignedsiteversions` (
+CREATE TABLE `AssignedSiteVersions` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `CreatedAt` datetime(6) NOT NULL,
   `UpdatedAt` datetime(6) DEFAULT NULL,
@@ -91,22 +91,22 @@ CREATE TABLE `assignedsiteversions` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `assignedsiteversions`
+-- Dumping data for table `AssignedSiteVersions`
 --
 
-LOCK TABLES `assignedsiteversions` WRITE;
-/*!40000 ALTER TABLE `assignedsiteversions` DISABLE KEYS */;
-/*!40000 ALTER TABLE `assignedsiteversions` ENABLE KEYS */;
+LOCK TABLES `AssignedSiteVersions` WRITE;
+/*!40000 ALTER TABLE `AssignedSiteVersions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `AssignedSiteVersions` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `picturesoftaskdone`
+-- Table structure for table `PicturesOfTaskDone`
 --
 
-DROP TABLE IF EXISTS `picturesoftaskdone`;
+DROP TABLE IF EXISTS `PicturesOfTaskDone`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `picturesoftaskdone` (
+CREATE TABLE `PicturesOfTaskDone` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `CreatedAt` datetime(6) NOT NULL,
   `UpdatedAt` datetime(6) DEFAULT NULL,
@@ -119,27 +119,27 @@ CREATE TABLE `picturesoftaskdone` (
   PRIMARY KEY (`Id`),
   KEY `IX_PicturesOfTaskDone_FileName` (`FileName`),
   KEY `IX_PicturesOfTaskDone_WorkOrderId` (`WorkOrderId`),
-  CONSTRAINT `FK_PicturesOfTaskDone_WorkOrders_WorkOrderId` FOREIGN KEY (`WorkOrderId`) REFERENCES `workorders` (`Id`) ON DELETE CASCADE
+  CONSTRAINT `FK_PicturesOfTaskDone_WorkOrders_WorkOrderId` FOREIGN KEY (`WorkOrderId`) REFERENCES `WorkOrders` (`Id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `picturesoftaskdone`
+-- Dumping data for table `PicturesOfTaskDone`
 --
 
-LOCK TABLES `picturesoftaskdone` WRITE;
-/*!40000 ALTER TABLE `picturesoftaskdone` DISABLE KEYS */;
-/*!40000 ALTER TABLE `picturesoftaskdone` ENABLE KEYS */;
+LOCK TABLES `PicturesOfTaskDone` WRITE;
+/*!40000 ALTER TABLE `PicturesOfTaskDone` DISABLE KEYS */;
+/*!40000 ALTER TABLE `PicturesOfTaskDone` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `picturesoftasks`
+-- Table structure for table `PicturesOfTasks`
 --
 
-DROP TABLE IF EXISTS `picturesoftasks`;
+DROP TABLE IF EXISTS `PicturesOfTasks`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `picturesoftasks` (
+CREATE TABLE `PicturesOfTasks` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `CreatedAt` datetime(6) NOT NULL,
   `UpdatedAt` datetime(6) DEFAULT NULL,
@@ -152,27 +152,27 @@ CREATE TABLE `picturesoftasks` (
   PRIMARY KEY (`Id`),
   KEY `IX_PicturesOfTasks_FileName` (`FileName`),
   KEY `IX_PicturesOfTasks_WorkOrderId` (`WorkOrderId`),
-  CONSTRAINT `FK_PicturesOfTasks_WorkOrders_WorkOrderId` FOREIGN KEY (`WorkOrderId`) REFERENCES `workorders` (`Id`) ON DELETE CASCADE
+  CONSTRAINT `FK_PicturesOfTasks_WorkOrders_WorkOrderId` FOREIGN KEY (`WorkOrderId`) REFERENCES `WorkOrders` (`Id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `picturesoftasks`
+-- Dumping data for table `PicturesOfTasks`
 --
 
-LOCK TABLES `picturesoftasks` WRITE;
-/*!40000 ALTER TABLE `picturesoftasks` DISABLE KEYS */;
-/*!40000 ALTER TABLE `picturesoftasks` ENABLE KEYS */;
+LOCK TABLES `PicturesOfTasks` WRITE;
+/*!40000 ALTER TABLE `PicturesOfTasks` DISABLE KEYS */;
+/*!40000 ALTER TABLE `PicturesOfTasks` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `pluginconfigurationvalues`
+-- Table structure for table `PluginConfigurationValues`
 --
 
-DROP TABLE IF EXISTS `pluginconfigurationvalues`;
+DROP TABLE IF EXISTS `PluginConfigurationValues`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `pluginconfigurationvalues` (
+CREATE TABLE `PluginConfigurationValues` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `CreatedAt` datetime(6) NOT NULL,
   `UpdatedAt` datetime(6) DEFAULT NULL,
@@ -187,23 +187,23 @@ CREATE TABLE `pluginconfigurationvalues` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `pluginconfigurationvalues`
+-- Dumping data for table `PluginConfigurationValues`
 --
 
-LOCK TABLES `pluginconfigurationvalues` WRITE;
-/*!40000 ALTER TABLE `pluginconfigurationvalues` DISABLE KEYS */;
-INSERT INTO `pluginconfigurationvalues` VALUES (1,'2020-09-23 09:31:15.933797','2020-09-23 09:31:15.933893','created',1,0,1,'WorkOrdersBaseSettings:LogLevel','4'),(2,'2020-09-23 09:31:15.947254','2020-09-23 09:31:16.421590','created',1,1,2,'WorkOrdersBaseSettings:NewTaskId','1'),(3,'2020-09-23 09:31:15.951586','2020-09-23 09:31:16.983321','created',1,1,2,'WorkOrdersBaseSettings:TaskListId','3'),(4,'2020-09-23 09:31:15.956650','2020-09-23 09:31:15.956650','created',1,0,1,'WorkOrdersBaseSettings:LogLimit','25000'),(5,'2020-09-23 09:31:15.960782','2020-09-23 09:31:15.960782','created',1,0,1,'WorkOrdersBaseSettings:SdkConnectionString','...'),(6,'2020-09-23 09:31:15.965009','2020-09-23 09:31:15.965009','created',1,0,1,'WorkOrdersBaseSettings:MaxParallelism','1'),(7,'2020-09-23 09:31:15.968796','2020-09-23 09:31:15.968796','created',1,0,1,'WorkOrdersBaseSettings:NumberOfWorkers','1'),(8,'2020-09-23 09:31:15.972383','2020-09-23 09:31:15.972383','created',1,0,1,'WorkOrdersBaseSettings:FolderId','0');
-/*!40000 ALTER TABLE `pluginconfigurationvalues` ENABLE KEYS */;
+LOCK TABLES `PluginConfigurationValues` WRITE;
+/*!40000 ALTER TABLE `PluginConfigurationValues` DISABLE KEYS */;
+INSERT INTO `PluginConfigurationValues` VALUES (1,'2020-09-23 09:31:15.933797','2020-09-23 09:31:15.933893','created',1,0,1,'WorkOrdersBaseSettings:LogLevel','4'),(2,'2020-09-23 09:31:15.947254','2020-09-23 09:31:16.421590','created',1,1,2,'WorkOrdersBaseSettings:NewTaskId','1'),(3,'2020-09-23 09:31:15.951586','2020-09-23 09:31:16.983321','created',1,1,2,'WorkOrdersBaseSettings:TaskListId','3'),(4,'2020-09-23 09:31:15.956650','2020-09-23 09:31:15.956650','created',1,0,1,'WorkOrdersBaseSettings:LogLimit','25000'),(5,'2020-09-23 09:31:15.960782','2020-09-23 09:31:15.960782','created',1,0,1,'WorkOrdersBaseSettings:SdkConnectionString','...'),(6,'2020-09-23 09:31:15.965009','2020-09-23 09:31:15.965009','created',1,0,1,'WorkOrdersBaseSettings:MaxParallelism','1'),(7,'2020-09-23 09:31:15.968796','2020-09-23 09:31:15.968796','created',1,0,1,'WorkOrdersBaseSettings:NumberOfWorkers','1'),(8,'2020-09-23 09:31:15.972383','2020-09-23 09:31:15.972383','created',1,0,1,'WorkOrdersBaseSettings:FolderId','0');
+/*!40000 ALTER TABLE `PluginConfigurationValues` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `pluginconfigurationvalueversions`
+-- Table structure for table `PluginConfigurationValueVersions`
 --
 
-DROP TABLE IF EXISTS `pluginconfigurationvalueversions`;
+DROP TABLE IF EXISTS `PluginConfigurationValueVersions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `pluginconfigurationvalueversions` (
+CREATE TABLE `PluginConfigurationValueVersions` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `CreatedAt` datetime(6) NOT NULL,
   `UpdatedAt` datetime(6) DEFAULT NULL,
@@ -218,23 +218,23 @@ CREATE TABLE `pluginconfigurationvalueversions` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `pluginconfigurationvalueversions`
+-- Dumping data for table `PluginConfigurationValueVersions`
 --
 
-LOCK TABLES `pluginconfigurationvalueversions` WRITE;
-/*!40000 ALTER TABLE `pluginconfigurationvalueversions` DISABLE KEYS */;
-INSERT INTO `pluginconfigurationvalueversions` VALUES (1,'2020-09-23 09:31:16.411177','2020-09-23 09:31:16.411177','created',1,1,1,'WorkOrdersBaseSettings:NewTaskId','0'),(2,'2020-09-23 09:31:16.983225','2020-09-23 09:31:16.983225','created',1,1,1,'WorkOrdersBaseSettings:TaskListId','0');
-/*!40000 ALTER TABLE `pluginconfigurationvalueversions` ENABLE KEYS */;
+LOCK TABLES `PluginConfigurationValueVersions` WRITE;
+/*!40000 ALTER TABLE `PluginConfigurationValueVersions` DISABLE KEYS */;
+INSERT INTO `PluginConfigurationValueVersions` VALUES (1,'2020-09-23 09:31:16.411177','2020-09-23 09:31:16.411177','created',1,1,1,'WorkOrdersBaseSettings:NewTaskId','0'),(2,'2020-09-23 09:31:16.983225','2020-09-23 09:31:16.983225','created',1,1,1,'WorkOrdersBaseSettings:TaskListId','0');
+/*!40000 ALTER TABLE `PluginConfigurationValueVersions` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `plugingrouppermissions`
+-- Table structure for table `PluginGroupPermissions`
 --
 
-DROP TABLE IF EXISTS `plugingrouppermissions`;
+DROP TABLE IF EXISTS `PluginGroupPermissions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `plugingrouppermissions` (
+CREATE TABLE `PluginGroupPermissions` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `CreatedAt` datetime(6) NOT NULL,
   `UpdatedAt` datetime(6) DEFAULT NULL,
@@ -247,28 +247,28 @@ CREATE TABLE `plugingrouppermissions` (
   `IsEnabled` tinyint(1) NOT NULL,
   PRIMARY KEY (`Id`),
   KEY `IX_PluginGroupPermissions_PermissionId` (`PermissionId`),
-  CONSTRAINT `FK_PluginGroupPermissions_PluginPermissions_PermissionId` FOREIGN KEY (`PermissionId`) REFERENCES `pluginpermissions` (`Id`) ON DELETE CASCADE
+  CONSTRAINT `FK_PluginGroupPermissions_PluginPermissions_PermissionId` FOREIGN KEY (`PermissionId`) REFERENCES `PluginPermissions` (`Id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `plugingrouppermissions`
+-- Dumping data for table `PluginGroupPermissions`
 --
 
-LOCK TABLES `plugingrouppermissions` WRITE;
-/*!40000 ALTER TABLE `plugingrouppermissions` DISABLE KEYS */;
-INSERT INTO `plugingrouppermissions` VALUES (1,'2020-09-23 09:31:16.015310','2020-09-23 09:31:16.015311','created',0,0,1,1,1,1);
-/*!40000 ALTER TABLE `plugingrouppermissions` ENABLE KEYS */;
+LOCK TABLES `PluginGroupPermissions` WRITE;
+/*!40000 ALTER TABLE `PluginGroupPermissions` DISABLE KEYS */;
+INSERT INTO `PluginGroupPermissions` VALUES (1,'2020-09-23 09:31:16.015310','2020-09-23 09:31:16.015311','created',0,0,1,1,1,1);
+/*!40000 ALTER TABLE `PluginGroupPermissions` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `plugingrouppermissionversions`
+-- Table structure for table `PluginGroupPermissionVersions`
 --
 
-DROP TABLE IF EXISTS `plugingrouppermissionversions`;
+DROP TABLE IF EXISTS `PluginGroupPermissionVersions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `plugingrouppermissionversions` (
+CREATE TABLE `PluginGroupPermissionVersions` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `CreatedAt` datetime(6) NOT NULL,
   `UpdatedAt` datetime(6) DEFAULT NULL,
@@ -285,23 +285,23 @@ CREATE TABLE `plugingrouppermissionversions` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `plugingrouppermissionversions`
+-- Dumping data for table `PluginGroupPermissionVersions`
 --
 
-LOCK TABLES `plugingrouppermissionversions` WRITE;
-/*!40000 ALTER TABLE `plugingrouppermissionversions` DISABLE KEYS */;
-INSERT INTO `plugingrouppermissionversions` VALUES (1,'2020-09-23 09:31:16.015310','2020-09-23 09:31:16.015311','created',0,0,1,1,1,1,1);
-/*!40000 ALTER TABLE `plugingrouppermissionversions` ENABLE KEYS */;
+LOCK TABLES `PluginGroupPermissionVersions` WRITE;
+/*!40000 ALTER TABLE `PluginGroupPermissionVersions` DISABLE KEYS */;
+INSERT INTO `PluginGroupPermissionVersions` VALUES (1,'2020-09-23 09:31:16.015310','2020-09-23 09:31:16.015311','created',0,0,1,1,1,1,1);
+/*!40000 ALTER TABLE `PluginGroupPermissionVersions` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `pluginpermissions`
+-- Table structure for table `PluginPermissions`
 --
 
-DROP TABLE IF EXISTS `pluginpermissions`;
+DROP TABLE IF EXISTS `PluginPermissions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `pluginpermissions` (
+CREATE TABLE `PluginPermissions` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `CreatedAt` datetime(6) NOT NULL,
   `UpdatedAt` datetime(6) DEFAULT NULL,
@@ -316,23 +316,23 @@ CREATE TABLE `pluginpermissions` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `pluginpermissions`
+-- Dumping data for table `PluginPermissions`
 --
 
-LOCK TABLES `pluginpermissions` WRITE;
-/*!40000 ALTER TABLE `pluginpermissions` DISABLE KEYS */;
-INSERT INTO `pluginpermissions` VALUES (1,'2020-09-23 09:31:15.981114',NULL,'created',1,0,1,'Access WorkOrder Plugin','work_orders_plugin_access');
-/*!40000 ALTER TABLE `pluginpermissions` ENABLE KEYS */;
+LOCK TABLES `PluginPermissions` WRITE;
+/*!40000 ALTER TABLE `PluginPermissions` DISABLE KEYS */;
+INSERT INTO `PluginPermissions` VALUES (1,'2020-09-23 09:31:15.981114',NULL,'created',1,0,1,'Access WorkOrder Plugin','work_orders_plugin_access');
+/*!40000 ALTER TABLE `PluginPermissions` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `workorders`
+-- Table structure for table `WorkOrders`
 --
 
-DROP TABLE IF EXISTS `workorders`;
+DROP TABLE IF EXISTS `WorkOrders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `workorders` (
+CREATE TABLE `WorkOrders` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `CreatedAt` datetime(6) NOT NULL,
   `UpdatedAt` datetime(6) DEFAULT NULL,
@@ -350,23 +350,23 @@ CREATE TABLE `workorders` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `workorders`
+-- Dumping data for table `WorkOrders`
 --
 
-LOCK TABLES `workorders` WRITE;
-/*!40000 ALTER TABLE `workorders` DISABLE KEYS */;
-INSERT INTO `workorders` VALUES (1,'2020-09-21 10:16:16.172400','2020-09-21 10:16:16.172400','created',13238,13238,1,'sas','2020-09-22 13:24:16.000000','2020-09-23 13:24:23.000000',13220,'hhhhh'),(2,'2020-09-22 10:16:16.172408','2020-09-22 10:16:16.172408','created',13220,13220,1,'zzzzzz','2020-09-24 10:16:16.172408','2020-09-24 10:16:16.172408',13238,'asddas');
-/*!40000 ALTER TABLE `workorders` ENABLE KEYS */;
+LOCK TABLES `WorkOrders` WRITE;
+/*!40000 ALTER TABLE `WorkOrders` DISABLE KEYS */;
+INSERT INTO `WorkOrders` VALUES (1,'2020-09-21 10:16:16.172400','2020-09-21 10:16:16.172400','created',13238,13238,1,'sas','2020-09-22 13:24:16.000000','2020-09-23 13:24:23.000000',13220,'hhhhh'),(2,'2020-09-22 10:16:16.172408','2020-09-22 10:16:16.172408','created',13220,13220,1,'zzzzzz','2020-09-24 10:16:16.172408','2020-09-24 10:16:16.172408',13238,'asddas');
+/*!40000 ALTER TABLE `WorkOrders` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `workorderstemplatecases`
+-- Table structure for table `WorkOrdersTemplateCases`
 --
 
-DROP TABLE IF EXISTS `workorderstemplatecases`;
+DROP TABLE IF EXISTS `WorkOrdersTemplateCases`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `workorderstemplatecases` (
+CREATE TABLE `WorkOrdersTemplateCases` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `CreatedAt` datetime(6) NOT NULL,
   `UpdatedAt` datetime(6) DEFAULT NULL,
@@ -381,27 +381,27 @@ CREATE TABLE `workorderstemplatecases` (
   `WorkOrderId` int NOT NULL,
   PRIMARY KEY (`Id`),
   KEY `IX_WorkOrdersTemplateCases_WorkOrderId` (`WorkOrderId`),
-  CONSTRAINT `FK_WorkOrdersTemplateCases_WorkOrders_WorkOrderId` FOREIGN KEY (`WorkOrderId`) REFERENCES `workorders` (`Id`) ON DELETE CASCADE
+  CONSTRAINT `FK_WorkOrdersTemplateCases_WorkOrders_WorkOrderId` FOREIGN KEY (`WorkOrderId`) REFERENCES `WorkOrders` (`Id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `workorderstemplatecases`
+-- Dumping data for table `WorkOrdersTemplateCases`
 --
 
-LOCK TABLES `workorderstemplatecases` WRITE;
-/*!40000 ALTER TABLE `workorderstemplatecases` DISABLE KEYS */;
-/*!40000 ALTER TABLE `workorderstemplatecases` ENABLE KEYS */;
+LOCK TABLES `WorkOrdersTemplateCases` WRITE;
+/*!40000 ALTER TABLE `WorkOrdersTemplateCases` DISABLE KEYS */;
+/*!40000 ALTER TABLE `WorkOrdersTemplateCases` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `workorderversions`
+-- Table structure for table `WorkOrderVersions`
 --
 
-DROP TABLE IF EXISTS `workorderversions`;
+DROP TABLE IF EXISTS `WorkOrderVersions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `workorderversions` (
+CREATE TABLE `WorkOrderVersions` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `CreatedAt` datetime(6) NOT NULL,
   `UpdatedAt` datetime(6) DEFAULT NULL,
@@ -420,12 +420,12 @@ CREATE TABLE `workorderversions` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `workorderversions`
+-- Dumping data for table `WorkOrderVersions`
 --
 
-LOCK TABLES `workorderversions` WRITE;
-/*!40000 ALTER TABLE `workorderversions` DISABLE KEYS */;
-/*!40000 ALTER TABLE `workorderversions` ENABLE KEYS */;
+LOCK TABLES `WorkOrderVersions` WRITE;
+/*!40000 ALTER TABLE `WorkOrderVersions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `WorkOrderVersions` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
