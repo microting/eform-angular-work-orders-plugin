@@ -79,6 +79,14 @@ namespace WorkOrders.Pn.Services
                 {
                     workOrdersSettings.FolderId = null;
                 }
+                if (option.FolderTasksId > 0)
+                {
+                    workOrdersSettings.FolderTasksId = option.FolderTasksId;
+                }
+                else
+                {
+                    workOrdersSettings.FolderTasksId = null;
+                }
                 
                 return new OperationDataResult<WorkOrdersSettingsModel>(true, workOrdersSettings);
             }
@@ -122,6 +130,35 @@ namespace WorkOrders.Pn.Services
                     await _options.UpdateDb(settings =>
                         {
                             settings.FolderId = folderId;
+                        },
+                        _dbContext,
+                        _userService.UserId);
+
+                    return new OperationResult(
+                        true,
+                        _workOrdersLocalizationService.GetString("FolderUpdatedSuccessfully"));
+                }
+
+                throw new ArgumentException($"{nameof(folderId)} is 0");
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+                _logger.LogError(e.Message);
+                return new OperationResult(false,
+                    _workOrdersLocalizationService.GetString("ErrorWhileUpdatingFolder"));
+            }
+        }
+
+        public async Task<OperationResult> UpdateTaskFolder(int folderId)
+        {
+            try
+            {
+                if (folderId > 0)
+                {
+                    await _options.UpdateDb(settings =>
+                        {
+                            settings.FolderTasksId = folderId;
                         },
                         _dbContext,
                         _userService.UserId);

@@ -30,6 +30,9 @@ export class WorkOrdersSettingsComponent implements OnInit, OnDestroy {
   foldersSubTree$: Subscription;
   foldersSub$: Subscription;
   folderUpdateSub$: Subscription;
+  tasksFolder: boolean;
+
+  // tslint:disable-next-line:max-line-length
   constructor(private settingsService: WorkOrdersSettingsService, private sitesService: SitesService, private foldersService: FoldersService) {}
 
   ngOnInit(): void {
@@ -71,7 +74,12 @@ export class WorkOrdersSettingsComponent implements OnInit, OnDestroy {
         this.foldersDto = operation.model;
         this.workOrdersSettingsModel.folderId === null ?
           this.workOrdersSettingsModel.folderName = null :
-          this.workOrdersSettingsModel.folderName = this.foldersDto.find(x => x.id === this.workOrdersSettingsModel.folderId).name;
+          this.workOrdersSettingsModel.folderName = this.foldersDto.find(x =>
+            x.id === this.workOrdersSettingsModel.folderId).name;
+        this.workOrdersSettingsModel.folderTasksId === null ?
+          this.workOrdersSettingsModel.folderTasksName = null :
+          this.workOrdersSettingsModel.folderTasksName = this.foldersDto.find(x =>
+            x.id === this.workOrdersSettingsModel.folderTasksId).name;
       }
     });
   }
@@ -85,16 +93,28 @@ export class WorkOrdersSettingsComponent implements OnInit, OnDestroy {
   }
 
   openFoldersModal() {
+    this.tasksFolder = false;
     this.foldersModal.show(this.workOrdersSettingsModel.folderId);
+  }
+  openTasksFoldersModal() {
+    this.tasksFolder = true;
+    this.foldersModal.show(this.workOrdersSettingsModel.folderTasksId);
   }
 
   onFolderSelected(folderDto: FolderDto) {
-    debugger;
-    this.folderUpdateSub$ = this.settingsService.updateSettingsFolder(folderDto.id).subscribe((operation) => {
-      if (operation && operation.success) {
-        this.getSettings();
-      }
-    });
+    if (this.tasksFolder) {
+      this.folderUpdateSub$ = this.settingsService.updateSettingsTasksFolder(folderDto.id).subscribe((operation) => {
+        if (operation && operation.success) {
+          this.getSettings();
+        }
+      });
+    } else {
+      this.folderUpdateSub$ = this.settingsService.updateSettingsFolder(folderDto.id).subscribe((operation) => {
+        if (operation && operation.success) {
+          this.getSettings();
+        }
+      });
+    }
   }
 
   ngOnDestroy(): void {}

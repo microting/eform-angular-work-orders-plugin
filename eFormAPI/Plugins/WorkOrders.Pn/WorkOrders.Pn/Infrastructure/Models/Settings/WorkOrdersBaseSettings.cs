@@ -10,5 +10,6 @@
         public int NewTaskId { get; set; }
         public int TaskListId { get; set; }
         public int FolderId { get; set; }
+        public int FolderTasksId { get; set; }
     }
 }

@@ -35,6 +35,12 @@ namespace WorkOrders.Pn.Controllers
             return await _workOrdersSettingsService.UpdateFolder(folderId);
         }
 
+        [HttpPost("api/workorders-pn/settings/tasksfolder")]
+        public async Task<OperationResult> UpdateTaskFolder([FromBody] int folderId)
+        {
+            return await _workOrdersSettingsService.UpdateTaskFolder(folderId);
+        }
+
         [HttpDelete("api/workorders-pn/settings/sites/{siteId}")]
         public async Task<OperationResult> DeleteSiteFromSettingsAsync(int siteId)
         {
