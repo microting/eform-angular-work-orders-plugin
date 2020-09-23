@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Microting.eForm.Infrastructure.Models;
 using WorkOrders.Pn.Abstractions;
 using WorkOrders.Pn.Infrastructure.Models;
 using CollectionExtensions = Castle.Core.Internal.CollectionExtensions;
@@ -44,7 +43,6 @@ namespace WorkOrders.Pn.Services
         public async Task<OperationDataResult<WorkOrdersModel>> GetWorkOrdersAsync(WorkOrdersRequestModel pnRequestModel)
         {
             TimeZoneInfo timeZoneInfo = await _userService.GetCurrentUserTimeZoneInfo();
-
             try
             {
                 WorkOrdersModel workOrdersModel = new WorkOrdersModel();
