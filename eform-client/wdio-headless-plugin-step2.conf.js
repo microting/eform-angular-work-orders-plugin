@@ -12,9 +12,9 @@ exports.config = {
     //
     specs: [
         'e2e/Tests/workorders-settings/application-settings.plugins-page.spec.ts',
-        'e2e/Tests/workorders-general/workorders-settings/workorders-settings.site.spec.ts',
-        'e2e/Tests/workorders-general/workorders-settings/workorders-settings.folder.spec.ts',
-        'e2e/Tests/workorders-general/workorders-page/workorders.get.spec.ts'
+        'e2e/Tests/workorders-general/workorders-settings.site.spec.ts',
+        'e2e/Tests/workorders-general/workorders-settings.folder.spec.ts',
+        'e2e/Tests/workorders-general/workorders.get.spec.ts'
     ],
     suites: {
         settings: [
