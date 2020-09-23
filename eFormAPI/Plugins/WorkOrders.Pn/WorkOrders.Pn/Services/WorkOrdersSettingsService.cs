@@ -106,13 +106,14 @@ namespace WorkOrders.Pn.Services
             var result = await _dbContext.PluginConfigurationValues.SingleAsync(x => x.Name == "WorkOrdersBaseSettings:NewTaskId");
             var folderResult = await _dbContext.PluginConfigurationValues.SingleAsync(x => x.Name == "WorkOrdersBaseSettings:FolderId");
             var theCore = await _core.GetCore();
-            MainElement mainElement = await theCore.TemplateRead(int.Parse(result.Value));
+            int folderId = (int)theCore.dbContextHelper.GetDbContext().folders.Single(x => x.Id == int.Parse(result.Value)).MicrotingUid;
+            MainElement mainElement = await theCore.TemplateRead(folderId);
             mainElement.Label = "Ny opgave";
             mainElement.CheckListFolderName = folderResult.Value;
             await using IDbContextTransaction transaction = await _dbContext.Database.BeginTransactionAsync();
             try
             {
-                int? caseId = await theCore.CaseCreate(mainElement, "", siteId, int.Parse(folderResult.Value));
+                int? caseId = await theCore.CaseCreate(mainElement, "", siteId, int.Parse(result.Value));
                 AssignedSite assignedSite = new AssignedSite() { SiteId = siteId, CaseId = (int)caseId};
 
                 await assignedSite.Create(_dbContext);
