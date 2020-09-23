@@ -101,23 +101,21 @@ namespace WorkOrders.Pn.Services
 
         public async Task<OperationResult> AddSiteToSettingsAsync(int siteId)
         {
-            using (IDbContextTransaction transaction = await _dbContext.Database.BeginTransactionAsync())
+            await using IDbContextTransaction transaction = await _dbContext.Database.BeginTransactionAsync();
+            try
             {
-                try
-                {
-                    AssignedSite assignedSite = new AssignedSite() { SiteId = siteId };
-                    await assignedSite.Create(_dbContext);
-                    transaction.Commit();
-                    return new OperationResult(true, _workOrdersLocalizationService.GetString("SiteAddedSuccessfully"));
-                }
-                catch (Exception e)
-                {
-                    await transaction.RollbackAsync();
-                    Trace.TraceError(e.Message);
-                    _logger.LogError(e.Message);
-                    return new OperationResult(false,
-                        _workOrdersLocalizationService.GetString("ErrorWhileAddingSiteToSettings"));
-                }
+                AssignedSite assignedSite = new AssignedSite() { SiteId = siteId };
+                await assignedSite.Create(_dbContext);
+                await transaction.CommitAsync();
+                return new OperationResult(true, _workOrdersLocalizationService.GetString("SiteAddedSuccessfully"));
+            }
+            catch (Exception e)
+            {
+                await transaction.RollbackAsync();
+                Trace.TraceError(e.Message);
+                _logger.LogError(e.Message);
+                return new OperationResult(false,
+                    _workOrdersLocalizationService.GetString("ErrorWhileAddingSiteToSettings"));
             }
         }
 
