@@ -202,7 +202,7 @@ namespace WorkOrders.Pn.Helpers
                     ),
                     new CheckBox(
                         371269,
-                        false,
+                        true,
                         false,
                         "Opgaven er udført",
                         "",
@@ -214,7 +214,7 @@ namespace WorkOrders.Pn.Helpers
                     ),
                     new Picture(
                         371270,
-                        true,
+                        false,
                         false,
                         "Evt. billede af den udførte opgave",
                         "<br>",
