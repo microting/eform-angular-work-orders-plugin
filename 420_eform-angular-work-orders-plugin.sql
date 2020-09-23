@@ -26,7 +26,7 @@ CREATE TABLE `__efmigrationshistory` (
   `MigrationId` varchar(95) NOT NULL,
   `ProductVersion` varchar(32) NOT NULL,
   PRIMARY KEY (`MigrationId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -50,14 +50,14 @@ CREATE TABLE `assignedsites` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `CreatedAt` datetime(6) NOT NULL,
   `UpdatedAt` datetime(6) DEFAULT NULL,
-  `WorkflowState` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `WorkflowState` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `CreatedByUserId` int NOT NULL,
   `UpdatedByUserId` int NOT NULL,
   `Version` int NOT NULL,
   `SiteId` int NOT NULL,
   PRIMARY KEY (`Id`),
   KEY `IX_AssignedSites_SiteId` (`SiteId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -80,14 +80,14 @@ CREATE TABLE `assignedsiteversions` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `CreatedAt` datetime(6) NOT NULL,
   `UpdatedAt` datetime(6) DEFAULT NULL,
-  `WorkflowState` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `WorkflowState` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `CreatedByUserId` int NOT NULL,
   `UpdatedByUserId` int NOT NULL,
   `Version` int NOT NULL,
   `SiteId` int NOT NULL,
   PRIMARY KEY (`Id`),
   KEY `IX_AssignedSiteVersions_SiteId` (`SiteId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -110,17 +110,17 @@ CREATE TABLE `picturesoftaskdone` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `CreatedAt` datetime(6) NOT NULL,
   `UpdatedAt` datetime(6) DEFAULT NULL,
-  `WorkflowState` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `WorkflowState` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `CreatedByUserId` int NOT NULL,
   `UpdatedByUserId` int NOT NULL,
   `Version` int NOT NULL,
-  `FileName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `FileName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `WorkOrderId` int NOT NULL,
   PRIMARY KEY (`Id`),
   KEY `IX_PicturesOfTaskDone_FileName` (`FileName`),
   KEY `IX_PicturesOfTaskDone_WorkOrderId` (`WorkOrderId`),
   CONSTRAINT `FK_PicturesOfTaskDone_WorkOrders_WorkOrderId` FOREIGN KEY (`WorkOrderId`) REFERENCES `workorders` (`Id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -143,17 +143,17 @@ CREATE TABLE `picturesoftasks` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `CreatedAt` datetime(6) NOT NULL,
   `UpdatedAt` datetime(6) DEFAULT NULL,
-  `WorkflowState` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `WorkflowState` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `CreatedByUserId` int NOT NULL,
   `UpdatedByUserId` int NOT NULL,
   `Version` int NOT NULL,
-  `FileName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `FileName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `WorkOrderId` int NOT NULL,
   PRIMARY KEY (`Id`),
   KEY `IX_PicturesOfTasks_FileName` (`FileName`),
   KEY `IX_PicturesOfTasks_WorkOrderId` (`WorkOrderId`),
   CONSTRAINT `FK_PicturesOfTasks_WorkOrders_WorkOrderId` FOREIGN KEY (`WorkOrderId`) REFERENCES `workorders` (`Id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -176,14 +176,14 @@ CREATE TABLE `pluginconfigurationvalues` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `CreatedAt` datetime(6) NOT NULL,
   `UpdatedAt` datetime(6) DEFAULT NULL,
-  `WorkflowState` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `WorkflowState` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `CreatedByUserId` int NOT NULL,
   `UpdatedByUserId` int NOT NULL,
   `Version` int NOT NULL,
-  `Name` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
-  `Value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `Name` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `Value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -207,14 +207,14 @@ CREATE TABLE `pluginconfigurationvalueversions` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `CreatedAt` datetime(6) NOT NULL,
   `UpdatedAt` datetime(6) DEFAULT NULL,
-  `WorkflowState` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `WorkflowState` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `CreatedByUserId` int NOT NULL,
   `UpdatedByUserId` int NOT NULL,
   `Version` int NOT NULL,
-  `Name` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
-  `Value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `Name` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `Value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -238,7 +238,7 @@ CREATE TABLE `plugingrouppermissions` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `CreatedAt` datetime(6) NOT NULL,
   `UpdatedAt` datetime(6) DEFAULT NULL,
-  `WorkflowState` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `WorkflowState` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `CreatedByUserId` int NOT NULL,
   `UpdatedByUserId` int NOT NULL,
   `Version` int NOT NULL,
@@ -248,7 +248,7 @@ CREATE TABLE `plugingrouppermissions` (
   PRIMARY KEY (`Id`),
   KEY `IX_PluginGroupPermissions_PermissionId` (`PermissionId`),
   CONSTRAINT `FK_PluginGroupPermissions_PluginPermissions_PermissionId` FOREIGN KEY (`PermissionId`) REFERENCES `pluginpermissions` (`Id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -272,7 +272,7 @@ CREATE TABLE `plugingrouppermissionversions` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `CreatedAt` datetime(6) NOT NULL,
   `UpdatedAt` datetime(6) DEFAULT NULL,
-  `WorkflowState` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `WorkflowState` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `CreatedByUserId` int NOT NULL,
   `UpdatedByUserId` int NOT NULL,
   `Version` int NOT NULL,
@@ -281,7 +281,7 @@ CREATE TABLE `plugingrouppermissionversions` (
   `IsEnabled` tinyint(1) NOT NULL,
   `PluginGroupPermissionId` int NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -305,14 +305,14 @@ CREATE TABLE `pluginpermissions` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `CreatedAt` datetime(6) NOT NULL,
   `UpdatedAt` datetime(6) DEFAULT NULL,
-  `WorkflowState` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `WorkflowState` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `CreatedByUserId` int NOT NULL,
   `UpdatedByUserId` int NOT NULL,
   `Version` int NOT NULL,
-  `PermissionName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
-  `ClaimName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `PermissionName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `ClaimName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -336,17 +336,17 @@ CREATE TABLE `workorders` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `CreatedAt` datetime(6) NOT NULL,
   `UpdatedAt` datetime(6) DEFAULT NULL,
-  `WorkflowState` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `WorkflowState` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `CreatedByUserId` int NOT NULL,
   `UpdatedByUserId` int NOT NULL,
   `Version` int NOT NULL,
-  `Description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `Description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `CorrectedAtLatest` datetime(6) NOT NULL,
   `DoneAt` datetime(6) NOT NULL,
   `DoneBySiteId` int NOT NULL,
-  `DescriptionOfTaskDone` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `DescriptionOfTaskDone` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -370,7 +370,7 @@ CREATE TABLE `workorderstemplatecases` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `CreatedAt` datetime(6) NOT NULL,
   `UpdatedAt` datetime(6) DEFAULT NULL,
-  `WorkflowState` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `WorkflowState` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `CreatedByUserId` int NOT NULL,
   `UpdatedByUserId` int NOT NULL,
   `Version` int NOT NULL,
@@ -382,7 +382,7 @@ CREATE TABLE `workorderstemplatecases` (
   PRIMARY KEY (`Id`),
   KEY `IX_WorkOrdersTemplateCases_WorkOrderId` (`WorkOrderId`),
   CONSTRAINT `FK_WorkOrdersTemplateCases_WorkOrders_WorkOrderId` FOREIGN KEY (`WorkOrderId`) REFERENCES `workorders` (`Id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -405,18 +405,18 @@ CREATE TABLE `workorderversions` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `CreatedAt` datetime(6) NOT NULL,
   `UpdatedAt` datetime(6) DEFAULT NULL,
-  `WorkflowState` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `WorkflowState` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `CreatedByUserId` int NOT NULL,
   `UpdatedByUserId` int NOT NULL,
   `Version` int NOT NULL,
-  `Description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `Description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `CorrectedAtLatest` datetime(6) NOT NULL,
   `DoneAt` datetime(6) NOT NULL,
   `DoneBySiteId` int NOT NULL,
-  `DescriptionOfTaskDone` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `DescriptionOfTaskDone` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `WorkOrderId` int NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
