@@ -11,11 +11,6 @@ namespace WorkOrders.Pn.Infrastructure.Data.Seed.Data
         {
             new PluginConfigurationValue()
             {
-                Name = "WorkOrdersBaseSettings:LogLevel",
-                Value = "4"
-            },
-            new PluginConfigurationValue()
-            {
                 Name = "WorkOrdersBaseSettings:NewTaskId",
                 Value = "0",
             },
@@ -23,16 +18,6 @@ namespace WorkOrders.Pn.Infrastructure.Data.Seed.Data
             {
                 Name = "WorkOrdersBaseSettings:TaskListId",
                 Value = "0",
-            },
-            new PluginConfigurationValue()
-            {
-                Name = "WorkOrdersBaseSettings:LogLimit",
-                Value = "25000"
-            },
-            new PluginConfigurationValue()
-            {
-                Name = "WorkOrdersBaseSettings:SdkConnectionString",
-                Value = "..."
             },
             new PluginConfigurationValue()
             {
@@ -47,6 +32,11 @@ namespace WorkOrders.Pn.Infrastructure.Data.Seed.Data
             new PluginConfigurationValue()
             {
                 Name = "WorkOrdersBaseSettings:FolderId",
+                Value = "0"
+            },
+            new PluginConfigurationValue()
+            {
+                Name = "WorkOrdersBaseSettings:FolderTasksId",
                 Value = "0"
             },
         };

@@ -11,7 +11,7 @@ namespace WorkOrders.Pn.Infrastructure.Models
         public string CreatedBy { get; set; }
         public string Description { get; set; }
         public DateTime CorrectedAtLatest { get; set; }
-        public DateTime DoneAt { get; set; }
+        public DateTime? DoneAt { get; set; }
         public int DoneBySiteId { get; set; }
         public string DoneBy { get; set; }
         public string DescriptionOfTaskDone { get; set; }

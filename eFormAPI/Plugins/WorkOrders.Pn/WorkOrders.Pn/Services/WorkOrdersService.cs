@@ -24,25 +24,29 @@ namespace WorkOrders.Pn.Services
         private readonly WorkOrderPnDbContext _dbContext;
         private readonly IWorkOrdersLocalizationService _workOrdersLocalizationService;
         private readonly IEFormCoreService _coreService;
+        private readonly IUserService _userService;
 
         public WorkOrdersService(
-            WorkOrderPnDbContext dbContext, 
+            WorkOrderPnDbContext dbContext,
             IWorkOrdersLocalizationService workOrdersLocalizationService,
             ILogger<WorkOrdersService> logger,
-            IEFormCoreService coreService)
+            IEFormCoreService coreService,
+            IUserService userService)
         {
             _dbContext = dbContext;
             _workOrdersLocalizationService = workOrdersLocalizationService;
             _logger = logger;
             _coreService = coreService;
+            _userService = userService;
         }
 
         public async Task<OperationDataResult<WorkOrdersModel>> GetWorkOrdersAsync(WorkOrdersRequestModel pnRequestModel)
         {
+            TimeZoneInfo timeZoneInfo = await _userService.GetCurrentUserTimeZoneInfo();
             try
             {
                 WorkOrdersModel workOrdersModel = new WorkOrdersModel();
-                IQueryable<WorkOrder> workOrdersQuery= _dbContext.WorkOrders.Where(x => 
+                IQueryable<WorkOrder> workOrdersQuery= _dbContext.WorkOrders.Where(x =>
                     x.WorkflowState != Constants.WorkflowStates.Removed).AsQueryable();
                 if(!CollectionExtensions.IsNullOrEmpty(pnRequestModel.SearchString) && pnRequestModel.SearchString != "")
                 {
@@ -52,7 +56,7 @@ namespace WorkOrders.Pn.Services
                 }
                 if (!string.IsNullOrEmpty(pnRequestModel.Sort))
                 {
-                    if (pnRequestModel.IsSortDsc) 
+                    if (pnRequestModel.IsSortDsc)
                     {
                         workOrdersQuery = workOrdersQuery.CustomOrderByDescending(pnRequestModel.Sort);
                     }
@@ -74,11 +78,11 @@ namespace WorkOrders.Pn.Services
                 List<WorkOrderModel> workOrderList = await workOrdersQuery.Select(x => new WorkOrderModel()
                 {
                     Id = x.Id,
-                    CreatedAt = x.CreatedAt,
+                    CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(x.CreatedAt, timeZoneInfo),
                     CreatedByUserId = x.CreatedByUserId,
                     Description = x.Description,
                     CorrectedAtLatest = x.CorrectedAtLatest,
-                    DoneAt = x.DoneAt,
+                    DoneAt = x.DoneAt != null ? TimeZoneInfo.ConvertTimeFromUtc((DateTime)x.DoneAt, timeZoneInfo) : (DateTime?) null,
                     DoneBySiteId = x.DoneBySiteId,
                     DescriptionOfTaskDone = x.DescriptionOfTaskDone,
                     PicturesOfTask = x.PicturesOfTasks
@@ -106,7 +110,7 @@ namespace WorkOrders.Pn.Services
                         .FirstOrDefault();
                 }
 
-                workOrdersModel.Total = await _dbContext.WorkOrders.CountAsync(x => 
+                workOrdersModel.Total = await _dbContext.WorkOrders.CountAsync(x =>
                             x.WorkflowState != Constants.WorkflowStates.Removed);
                 workOrdersModel.WorkOrders = workOrderList;
 

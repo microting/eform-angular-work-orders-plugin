@@ -30,7 +30,7 @@ namespace WorkOrders.Pn.Helpers
 
             List<Template_Dto> templatesDto = await core.TemplateItemReadAll(false,
                 "",
-                "eform-angular-workorders-plugin-newtask",
+                "eform-angular-work-orders-plugin-newtask",
                 false,
                 "",
                 new List<int>(),
@@ -47,7 +47,7 @@ namespace WorkOrders.Pn.Helpers
                 {
                     Id = WorkOrderEformConsts.NewTaskId,
                     Repeated = 0,
-                    Label = "eform-angular-workorders-plugin-newtask",
+                    Label = "eform-angular-work-orders-plugin-newtask",
                     StartDate = new DateTime(2020, 09, 14),
                     EndDate = new DateTime(2030, 09, 14),
                     Language = "da",
@@ -151,7 +151,7 @@ namespace WorkOrders.Pn.Helpers
 
             List<Template_Dto> templatesDto = await core.TemplateItemReadAll(false,
                     "",
-                    "eform-angular-workorders-plugin-tasklist",
+                    "eform-angular-work-orders-plugin-tasklist",
                     false,
                     "",
                     new List<int>(),
@@ -168,7 +168,7 @@ namespace WorkOrders.Pn.Helpers
                 {
                     Id = WorkOrderEformConsts.TaskListId,
                     Repeated = 0,
-                    Label = "eform-angular-workorders-plugin-tasklist",
+                    Label = "eform-angular-work-orders-plugin-tasklist",
                     StartDate = new DateTime(2020, 09, 14),
                     EndDate = new DateTime(2030, 09, 14),
                     Language = "da",
@@ -202,7 +202,7 @@ namespace WorkOrders.Pn.Helpers
                     ),
                     new CheckBox(
                         371269,
-                        false,
+                        true,
                         false,
                         "Opgaven er udført",
                         "",
@@ -214,7 +214,7 @@ namespace WorkOrders.Pn.Helpers
                     ),
                     new Picture(
                         371270,
-                        true,
+                        false,
                         false,
                         "Evt. billede af den udførte opgave",
                         "<br>",
