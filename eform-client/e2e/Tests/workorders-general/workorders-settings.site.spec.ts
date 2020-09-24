@@ -6,6 +6,9 @@ import workOrdersPage from '../../Page objects/WorkOrders/WorkOrders.page';
 
 const expect = require('chai').expect;
 
+const name = Guid.create().toString();
+const surname = Guid.create().toString();
+
 describe('Work Order Settings Site', function () {
   before(function () {
     loginPage.open('/');
@@ -13,8 +16,6 @@ describe('Work Order Settings Site', function () {
     myEformsPage.Navbar.goToDeviceUsersPage();
     $('#newDeviceUserBtn').waitForDisplayed({timeout: 20000});
 
-    const name = Guid.create().toString();
-    const surname = Guid.create().toString();
     deviceUsersPage.createNewDeviceUser(name, surname);
   });
   it('Assign Site', function() {
@@ -25,6 +26,8 @@ describe('Work Order Settings Site', function () {
     browser.pause(5000);
     $('#selectDeviceUser').waitForDisplayed({timeout: 20000});
     $('#selectDeviceUser').click();
+    browser.pause(1000);
+    $('#selectDeviceUser input').setValue(name);
     browser.pause(5000);
     $$('#selectDeviceUser .ng-option')[0].click();
     $('#siteAssignBtnSave').click();
