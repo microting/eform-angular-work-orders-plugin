@@ -16,6 +16,7 @@ class WorkOrdersPage extends PageWithNavbarPage {
   }
 
   public goToWorkOrdersSettingsPage() {
+    browser.pause(5000);
     myEformsPage.Navbar.goToPluginsPage();
     this.workOrderSettingsBtn.waitForDisplayed({ timeout: 20000 });
     this.workOrderSettingsBtn.click();
@@ -28,6 +29,7 @@ class WorkOrdersPage extends PageWithNavbarPage {
     $('#selectDeviceUser').waitForDisplayed({ timeout: 20000 });
     $('#selectDeviceUser').click();
     $('#selectDeviceUser input').setValue(name);
+    browser.pause(5000);
     $$('#selectDeviceUser .ng-option')[0].click();
     $('#siteAssignBtnSave').click();
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
@@ -64,16 +66,34 @@ class WorkOrdersPage extends PageWithNavbarPage {
   }
 
   public get ordersBtn() {
-    return $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Orders')]`);
+    return $(
+      `//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Orders')]`
+    );
   }
 
   cancelAddingDeviceUser() {
-    $('#addNewSiteBtn').waitForDisplayed({timeout: 20000});
+    $('#addNewSiteBtn').waitForDisplayed({ timeout: 20000 });
     $('#addNewSiteBtn').click();
-    $('#selectDeviceUser').waitForDisplayed({timeout: 20000});
+    $('#selectDeviceUser').waitForDisplayed({ timeout: 20000 });
     $('#selectDeviceUser').click();
     $$('#selectDeviceUser .ng-option')[0].click();
     $('#siteAssignBtnSaveCancel').click();
+  }
+
+  public selectFirstFolder() {
+    $('#folderSelectorLabel').waitForDisplayed({timeout: 20000});
+    $('#folderSelectorLabel').click();
+    $('#folderTreeName').waitForDisplayed({timeout: 20000});
+    $$('#folderTreeName')[ $$('#folderTreeName').length - 1].click();
+    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
+  }
+
+  public selectSecondFolder() {
+    $('#folderSelectorLabel').waitForDisplayed({timeout: 20000});
+    $('#folderSelectorLabel').click();
+    $('#folderTreeName').waitForDisplayed({timeout: 20000});
+    $$('#folderTreeName')[ $$('#folderTreeName').length - 2].click();
+    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
   }
 }
 

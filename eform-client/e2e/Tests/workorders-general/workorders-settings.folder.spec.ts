@@ -16,25 +16,27 @@ describe('Work Orders Settings Folder', function () {
     const description = Guid.create().toString();
     foldersPage.createNewFolder(name, description);
 
+    const name2 = Guid.create().toString();
+    const description2 = Guid.create().toString();
+    foldersPage.createNewFolder(name2, description2);
+
     workOrdersPage.goToWorkOrdersSettingsPage();
   });
   it('Assign Folder', function () {
-    $('#folderSelectorLabel').waitForDisplayed({timeout: 20000});
     $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
+    $('#folderSelectorLabel').waitForDisplayed({timeout: 20000});
     const oldFolder = $('#folderSelectorInput').getValue();
-    $('#folderSelectorLabel').click();
-    $('#folderTreeName').waitForDisplayed({timeout: 20000});
-    $$('#folderTreeName')[ $$('#folderTreeName').length - 1].click();
+    workOrdersPage.selectFirstFolder();
     $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
     const newFolder = $('#folderSelectorInput').getValue();
     expect(oldFolder).not.equal(newFolder);
   });
   it('Change Assigned Folder', function () {
+    workOrdersPage.goToWorkOrdersSettingsPage();
+    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
     $('#folderSelectorLabel').waitForDisplayed({timeout: 20000});
     const oldFolder = $('#folderSelectorInput').getValue();
-    $('#folderSelectorLabel').click();
-    $('#folderTreeName').waitForDisplayed({timeout: 20000});
-    $$('#folderTreeName')[ $$('#folderTreeName').length - 2].click();
+    workOrdersPage.selectSecondFolder();
     $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
     const newFolder = $('#folderSelectorInput').getValue();
     expect(oldFolder).not.equal(newFolder);
