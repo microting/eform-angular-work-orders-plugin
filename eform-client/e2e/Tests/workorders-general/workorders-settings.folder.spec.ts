@@ -12,17 +12,9 @@ describe('Work Orders Settings Folder', function () {
     loginPage.login();
     myEformsPage.Navbar.goToFolderPage();
     $('#newFolderBtn').waitForDisplayed({timeout: 20000});
-  });
-  it('Create Folder', function () {
     const name = Guid.create().toString();
     const description = Guid.create().toString();
-    const rowCountBeforeCreation = foldersPage.rowNum;
     foldersPage.createNewFolder(name, description);
-    const name1 = Guid.create().toString();
-    const description1 = Guid.create().toString();
-    foldersPage.createNewFolder(name1, description1);
-    const rowCountAfterCreation = foldersPage.rowNum;
-    expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after creating new folder').equal(rowCountBeforeCreation + 2);
   });
   it('Assign Folder', function () {
     workOrdersPage.goToWorkOrdersSettingsPage();

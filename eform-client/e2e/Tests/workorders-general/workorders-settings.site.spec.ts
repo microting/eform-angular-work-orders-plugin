@@ -12,19 +12,12 @@ describe('Work Order Settings Site', function () {
     loginPage.login();
     myEformsPage.Navbar.goToDeviceUsersPage();
     $('#newDeviceUserBtn').waitForDisplayed({timeout: 20000});
-  });
-  it('Create Device User', function () {
+
     const name = Guid.create().toString();
     const surname = Guid.create().toString();
-    const rowCountBeforeCreation = deviceUsersPage.rowNum;
     deviceUsersPage.createNewDeviceUser(name, surname);
-    const rowCountAfterCreation = deviceUsersPage.rowNum;
-    expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after creating new user').equal(rowCountBeforeCreation + 1);
-    const lastDeviceUser: DeviceUsersRowObject = deviceUsersPage.getDeviceUser(deviceUsersPage.rowNum);
-    expect(lastDeviceUser.firstName, 'Name of created user is incorrect').equal(name);
-    expect(lastDeviceUser.lastName, 'Last name of created user is incorrect').equal(surname);
   });
-  it('Add Site', function() {
+  it('Assign Site', function() {
     workOrdersPage.goToWorkOrdersSettingsPage();
     $('#addNewSiteBtn').waitForDisplayed({timeout: 20000});
     const rowCountBeforeCreation = workOrdersPage.rowNum;
