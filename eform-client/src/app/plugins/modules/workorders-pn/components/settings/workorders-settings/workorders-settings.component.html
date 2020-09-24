@@ -61,6 +61,7 @@
         </td>
         <td id="workOrderSiteActions">
           <button mdbBtn class="btn-danger btn-icon mb-2"
+                  id="removeSiteBtn"
                   (click)="showRemoveSiteModal(siteDto)"
                   mdbTooltip="{{ 'Remove site' | translate }}">
             <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>

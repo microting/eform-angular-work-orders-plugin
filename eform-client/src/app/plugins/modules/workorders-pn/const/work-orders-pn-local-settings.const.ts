@@ -8,7 +8,7 @@ export const WorkOrdersPnLocalSettings = [
       name: 'WorkOrdersList',
       settings: new PageSettingsModel({
         pageSize: 10,
-        sort: '',
+        sort: 'Id',
         isSortDsc: false
       })
     }
