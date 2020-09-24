@@ -28,7 +28,6 @@ class WorkOrdersPage extends PageWithNavbarPage {
     $('#selectDeviceUser').waitForDisplayed({ timeout: 20000 });
     $('#selectDeviceUser').click();
     $('#selectDeviceUser input').setValue(name);
-    $$('#selectDeviceUser .ng-option')[0].waitForDisplayed({ timeout: 20000 });
     $$('#selectDeviceUser .ng-option')[0].click();
     $('#siteAssignBtnSave').click();
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
@@ -65,9 +64,7 @@ class WorkOrdersPage extends PageWithNavbarPage {
   }
 
   public get ordersBtn() {
-    return $(
-      `/ /*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Orders')]`
-    );
+    return $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Orders')]`);
   }
 
   cancelAddingDeviceUser() {

@@ -15,9 +15,10 @@ describe('Work Orders Settings Folder', function () {
     const name = Guid.create().toString();
     const description = Guid.create().toString();
     foldersPage.createNewFolder(name, description);
+
+    workOrdersPage.goToWorkOrdersSettingsPage();
   });
   it('Assign Folder', function () {
-    workOrdersPage.goToWorkOrdersSettingsPage();
     $('#folderSelectorLabel').waitForDisplayed({timeout: 20000});
     $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
     const oldFolder = $('#folderSelectorInput').getValue();
@@ -29,7 +30,6 @@ describe('Work Orders Settings Folder', function () {
     expect(oldFolder).not.equal(newFolder);
   });
   it('Change Assigned Folder', function () {
-    workOrdersPage.goToWorkOrdersSettingsPage();
     $('#folderSelectorLabel').waitForDisplayed({timeout: 20000});
     const oldFolder = $('#folderSelectorInput').getValue();
     $('#folderSelectorLabel').click();

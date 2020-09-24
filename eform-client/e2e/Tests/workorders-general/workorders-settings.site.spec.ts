@@ -17,9 +17,10 @@ describe('Work Order Settings', function () {
     myEformsPage.Navbar.goToDeviceUsersPage();
     $('#newDeviceUserBtn').waitForDisplayed({timeout: 20000});
     deviceUsersPage.createNewDeviceUser(name, surname);
+
+    workOrdersPage.goToWorkOrdersSettingsPage();
   });
   it('Assign Site', function() {
-    workOrdersPage.goToWorkOrdersSettingsPage();
     const rowCountBeforeCreation = workOrdersPage.rowNum;
     workOrdersPage.assignDeviceUser(name);
     const rowCountAfterCreation = workOrdersPage.rowNum;
