@@ -31,6 +31,7 @@ describe('Work Order Settings Site', function () {
     $('#addNewSiteBtn').click();
     $('#selectDeviceUser').waitForDisplayed({timeout: 20000});
     $('#selectDeviceUser').click();
+    browser.pause(2000);
     $$('#selectDeviceUser .ng-option')[0].click();
     $('#siteAssignBtnSave').click();
     $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
@@ -38,7 +39,7 @@ describe('Work Order Settings Site', function () {
     expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after adding site').equal(rowCountBeforeCreation + 1);
   });
   it('Cancel Removing Site', function () {
-    $('#removeSiteBtn').waitForEnabled({timeout: 20000});
+    $('#addNewSiteBtn').waitForDisplayed({timeout: 20000});
     const rowCountBefore = workOrdersPage.rowNum;
     $$('#removeSiteBtn')[$$('#removeSiteBtn').length - 1].click();
     $('#removeSiteSaveCancelBtn').waitForDisplayed({timeout: 20000});
@@ -47,7 +48,7 @@ describe('Work Order Settings Site', function () {
     expect(rowCountAfter, 'Number of rows has changed').equal(rowCountBefore);
   });
   it('Remove Site', function () {
-    $('#removeSiteBtn').waitForEnabled({timeout: 20000});
+    $('#addNewSiteBtn').waitForDisplayed({timeout: 20000});
     const rowCountBefore = workOrdersPage.rowNum;
     $$('#removeSiteBtn')[$$('#removeSiteBtn').length - 1].click();
     $('#removeSiteSaveBtn').waitForDisplayed({timeout: 20000});

@@ -14,7 +14,6 @@ class WorkOrdersPage extends PageWithNavbarPage {
     return $$('#workOrderId')[0].getText();
   }
   public goToWorkOrdersSettingsPage() {
-    loginPage.open('/');
     myEformsPage.Navbar.goToPluginsPage();
     this.workOrderSettingsBtn.waitForDisplayed({timeout: 20000});
     this.workOrderSettingsBtn.click();

@@ -27,6 +27,7 @@ describe('Work Orders Settings Folder', function () {
   it('Assign Folder', function () {
     workOrdersPage.goToWorkOrdersSettingsPage();
     $('#folderSelectorLabel').waitForDisplayed({timeout: 20000});
+    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
     const oldFolder = $('#folderSelectorInput').getValue();
     $('#folderSelectorLabel').click();
     $('#folderTreeName').waitForDisplayed({timeout: 20000});
