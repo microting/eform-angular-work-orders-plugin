@@ -33,6 +33,7 @@ class WorkOrdersPage extends PageWithNavbarPage {
     $$('#selectDeviceUser .ng-option')[0].click();
     $('#siteAssignBtnSave').click();
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
+    browser.pause(10000);
   }
 
   public removeAssignedDeviceUser() {
