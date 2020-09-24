@@ -163,22 +163,22 @@ namespace WorkOrders.Pn
         private async void SeedWorkOrderForms(IServiceCollection serviceCollection, WorkOrderPnDbContext dbContext)
         {
             ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
-            //IPluginDbOptions<WorkOrdersBaseSettings> pluginDbOptions = serviceProvider.GetRequiredService<IPluginDbOptions<WorkOrdersBaseSettings>>();
+            IPluginDbOptions<WorkOrdersBaseSettings> pluginDbOptions = serviceProvider.GetRequiredService<IPluginDbOptions<WorkOrdersBaseSettings>>();
 
             Core core = await serviceProvider.GetRequiredService<IEFormCoreService>().GetCore();
             // WorkOrderPnDbContext context = serviceProvider.GetRequiredService<WorkOrderPnDbContext>();
 
-            //if (pluginDbOptions.Value.NewTaskId == 0)
-            //{
+            if (pluginDbOptions.Value.NewTaskId == 0)
+            {
                 int newTaskId = await SeedHelper.CreateNewTaskEform(core);
-                //await pluginDbOptions.UpdateDb(settings => settings.NewTaskId = newTaskId, dbContext, 1);
-            //}
+                await pluginDbOptions.UpdateDb(settings => settings.NewTaskId = newTaskId, dbContext, 1);
+            }
 
-            //if (pluginDbOptions.Value.TaskListId == 0)
-            //{
+            if (pluginDbOptions.Value.TaskListId == 0)
+            {
                 int taskListId = await SeedHelper.CreateTaskListEform(core);
-                //await pluginDbOptions.UpdateDb(settings => settings.TaskListId = taskListId, dbContext, 1);
-            //}
+                await pluginDbOptions.UpdateDb(settings => settings.TaskListId = taskListId, dbContext, 1);
+            }
         }
     }
 }
