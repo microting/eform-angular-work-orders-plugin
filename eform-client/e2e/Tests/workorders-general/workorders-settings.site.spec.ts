@@ -13,10 +13,8 @@ describe('Work Order Settings', function () {
   before(function () {
     loginPage.open('/');
     loginPage.login();
-
-    myEformsPage.Navbar.goToDeviceUsersPage();
-    $('#newDeviceUserBtn').waitForDisplayed({timeout: 20000});
-    deviceUsersPage.createNewDeviceUser(name, surname);
+    
+    deviceUsersPage.createDeviceUserFromScratch(name, surname);
 
     workOrdersPage.goToWorkOrdersSettingsPage();
   });
