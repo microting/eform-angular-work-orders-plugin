@@ -29,9 +29,10 @@ describe('Work Order Settings Site', function () {
     $('#addNewSiteBtn').waitForDisplayed({timeout: 20000});
     const rowCountBeforeCreation = workOrdersPage.rowNum;
     $('#addNewSiteBtn').click();
+    browser.pause(5000);
     $('#selectDeviceUser').waitForDisplayed({timeout: 20000});
     $('#selectDeviceUser').click();
-    browser.pause(2000);
+    browser.pause(5000);
     $$('#selectDeviceUser .ng-option')[0].click();
     $('#siteAssignBtnSave').click();
     $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
