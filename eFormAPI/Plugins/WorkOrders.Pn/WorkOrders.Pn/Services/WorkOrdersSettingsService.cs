@@ -195,7 +195,7 @@ namespace WorkOrders.Pn.Services
                 AssignedSite assignedSite = await _dbContext.AssignedSites.FirstOrDefaultAsync(x => x.SiteId == siteId
                         && x.WorkflowState != Constants.WorkflowStates.Removed);
                 var theCore = await _core.GetCore();
-                await theCore.CaseDelete(assignedSite.CaseId);
+                await theCore.CaseDelete((int)assignedSite.CaseId);
                 await assignedSite.Delete(_dbContext);
 
                 return new OperationResult(true,
