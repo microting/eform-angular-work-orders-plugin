@@ -53,7 +53,8 @@ namespace WorkOrders.Pn.Helpers
                     Language = "da",
                     MultiApproval = false,
                     FastNavigation = false,
-                    DisplayOrder = 0
+                    DisplayOrder = 0,
+                    EnableQuickSync = true
                 };
 
                 List<DataItem> dataItems = new List<DataItem>
@@ -174,7 +175,8 @@ namespace WorkOrders.Pn.Helpers
                     Language = "da",
                     MultiApproval = false,
                     FastNavigation = false,
-                    DisplayOrder = 0
+                    DisplayOrder = 0,
+                    EnableQuickSync = true
                 };
 
                 List<DataItem> dataItems = new List<DataItem>
