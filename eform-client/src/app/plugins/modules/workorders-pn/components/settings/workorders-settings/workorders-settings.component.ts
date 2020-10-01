@@ -10,6 +10,7 @@ import {SiteNameDto} from 'src/app/common/models';
 import {FolderDto} from 'src/app/common/models/dto/folder.dto';
 import {FoldersService} from 'src/app/common/services/advanced/folders.service';
 import { WorkOrdersFoldersModalComponent } from '../workorders-folders-modal/workorders-folders-modal.component';
+import {composeFolderName} from 'src/app/common/helpers/folder-name.helper';
 
 @AutoUnsubscribe()
 @Component({
@@ -49,6 +50,7 @@ export class WorkOrdersSettingsComponent implements OnInit, OnDestroy {
       });
   }
 
+
   getSites() {
     this.sitesSub$ = this.sitesService.getAllSites().subscribe((data) => {
       if (data && data.success) {
@@ -71,7 +73,7 @@ export class WorkOrdersSettingsComponent implements OnInit, OnDestroy {
         this.foldersDto = operation.model;
         this.workOrdersSettingsModel.folderId === null ?
           this.workOrdersSettingsModel.folderName = null :
-          this.workOrdersSettingsModel.folderName = this.foldersDto.find(x => x.id === this.workOrdersSettingsModel.folderId).name;
+          this.workOrdersSettingsModel.folderName = composeFolderName(this.workOrdersSettingsModel.folderId, this.foldersDto);
       }
     });
   }
