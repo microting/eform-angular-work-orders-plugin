@@ -50,6 +50,7 @@ namespace WorkOrders.Pn
             services.AddTransient<IWorkOrdersLocalizationService, WorkOrdersLocalizationService>();
             services.AddSingleton<IRebusService, RebusService>();
             services.AddControllers();
+            SeedWorkOrderForms(services);
         }
 
         public void AddPluginConfig(IConfigurationBuilder builder, string connectionString)
@@ -88,8 +89,6 @@ namespace WorkOrders.Pn
 
             // Seed database
             SeedDatabase(connectionString);
-            // Seed EForms
-            SeedWorkOrderForms(services, context);
         }
 
         public void Configure(IApplicationBuilder appBuilder)
@@ -160,24 +159,24 @@ namespace WorkOrders.Pn
             _bus.SendLocal(new eFormCaseUpdated(caseId));
         }
 
-        private async void SeedWorkOrderForms(IServiceCollection serviceCollection, WorkOrderPnDbContext dbContext)
+        private async void SeedWorkOrderForms(IServiceCollection serviceCollection)
         {
             ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
             IPluginDbOptions<WorkOrdersBaseSettings> pluginDbOptions = serviceProvider.GetRequiredService<IPluginDbOptions<WorkOrdersBaseSettings>>();
 
             Core core = await serviceProvider.GetRequiredService<IEFormCoreService>().GetCore();
-            // WorkOrderPnDbContext context = serviceProvider.GetRequiredService<WorkOrderPnDbContext>();
+            WorkOrderPnDbContext context = serviceProvider.GetRequiredService<WorkOrderPnDbContext>();
 
             if (pluginDbOptions.Value.NewTaskId == 0)
             {
                 int newTaskId = await SeedHelper.CreateNewTaskEform(core);
-                await pluginDbOptions.UpdateDb(settings => settings.NewTaskId = newTaskId, dbContext, 1);
+                await pluginDbOptions.UpdateDb(settings => settings.NewTaskId = newTaskId, context, 1);
             }
 
             if (pluginDbOptions.Value.TaskListId == 0)
             {
                 int taskListId = await SeedHelper.CreateTaskListEform(core);
-                await pluginDbOptions.UpdateDb(settings => settings.TaskListId = taskListId, dbContext, 1);
+                await pluginDbOptions.UpdateDb(settings => settings.TaskListId = taskListId, context, 1);
             }
         }
     }

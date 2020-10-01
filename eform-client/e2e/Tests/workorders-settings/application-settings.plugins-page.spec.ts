@@ -27,7 +27,7 @@ describe('Application settings page - site header section', function () {
     pluginPage.pluginSettingsBtn.click();
     $('#pluginOKBtn').waitForDisplayed({timeout: 40000});
     pluginPage.pluginOKBtn.click();
-    browser.pause(50000); // We need to wait 50 seconds for the plugin to create db etc.
+    browser.pause(100000); // We need to wait 100 seconds for the plugin to create db etc.
     loginPage.open('/');
 
     loginPage.login();

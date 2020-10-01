@@ -10,5 +10,6 @@ namespace WorkOrders.Pn.Abstractions
         Task<OperationResult> AddSiteToSettingsAsync(int siteId);
         Task<OperationResult> RemoveSiteFromSettingsAsync(int siteId);
         Task<OperationResult> UpdateFolder(int folderId);
+        Task<OperationResult> UpdateTaskFolder(int folderId);
     }
 }

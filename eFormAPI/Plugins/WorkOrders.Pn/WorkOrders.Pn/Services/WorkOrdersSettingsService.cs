@@ -9,7 +9,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microting.eForm.Infrastructure;
 using Microting.eForm.Infrastructure.Constants;
+using Microting.eForm.Infrastructure.Models;
 using WorkOrders.Pn.Abstractions;
 using WorkOrders.Pn.Infrastructure.Models;
 using WorkOrders.Pn.Infrastructure.Models.Settings;
@@ -79,6 +81,14 @@ namespace WorkOrders.Pn.Services
                 {
                     workOrdersSettings.FolderId = null;
                 }
+                if (option.FolderTasksId > 0)
+                {
+                    workOrdersSettings.FolderTasksId = option.FolderTasksId;
+                }
+                else
+                {
+                    workOrdersSettings.FolderTasksId = null;
+                }
                 
                 return new OperationDataResult<WorkOrdersSettingsModel>(true, workOrdersSettings);
             }
@@ -93,23 +103,30 @@ namespace WorkOrders.Pn.Services
 
         public async Task<OperationResult> AddSiteToSettingsAsync(int siteId)
         {
-            using (IDbContextTransaction transaction = await _dbContext.Database.BeginTransactionAsync())
+            var result = await _dbContext.PluginConfigurationValues.SingleAsync(x => x.Name == "WorkOrdersBaseSettings:NewTaskId");
+            var folderResult = await _dbContext.PluginConfigurationValues.SingleAsync(x => x.Name == "WorkOrdersBaseSettings:FolderId");
+            var theCore = await _core.GetCore();
+            string folderId = theCore.dbContextHelper.GetDbContext().folders.Single(x => x.Id == int.Parse(folderResult.Value)).MicrotingUid.ToString();
+            MainElement mainElement = await theCore.TemplateRead(int.Parse(result.Value));
+            mainElement.Label = "Ny opgave";
+            mainElement.CheckListFolderName = folderId;
+            await using IDbContextTransaction transaction = await _dbContext.Database.BeginTransactionAsync();
+            try
             {
-                try
-                {
-                    AssignedSite assignedSite = new AssignedSite() { SiteId = siteId };
-                    await assignedSite.Create(_dbContext);
-                    transaction.Commit();
-                    return new OperationResult(true, _workOrdersLocalizationService.GetString("SiteAddedSuccessfully"));
-                }
-                catch (Exception e)
-                {
-                    await transaction.RollbackAsync();
-                    Trace.TraceError(e.Message);
-                    _logger.LogError(e.Message);
-                    return new OperationResult(false,
-                        _workOrdersLocalizationService.GetString("ErrorWhileAddingSiteToSettings"));
-                }
+                int? caseId = await theCore.CaseCreate(mainElement, "", siteId, int.Parse(folderResult.Value));
+                AssignedSite assignedSite = new AssignedSite() { SiteId = siteId, CaseId = (int)caseId};
+
+                await assignedSite.Create(_dbContext);
+                await transaction.CommitAsync();
+                return new OperationResult(true, _workOrdersLocalizationService.GetString("SiteAddedSuccessfully"));
+            }
+            catch (Exception e)
+            {
+                await transaction.RollbackAsync();
+                Trace.TraceError(e.Message);
+                _logger.LogError(e.Message);
+                return new OperationResult(false,
+                    _workOrdersLocalizationService.GetString("ErrorWhileAddingSiteToSettings"));
             }
         }
 
@@ -142,12 +159,43 @@ namespace WorkOrders.Pn.Services
             }
         }
 
+        public async Task<OperationResult> UpdateTaskFolder(int folderId)
+        {
+            try
+            {
+                if (folderId > 0)
+                {
+                    await _options.UpdateDb(settings =>
+                        {
+                            settings.FolderTasksId = folderId;
+                        },
+                        _dbContext,
+                        _userService.UserId);
+
+                    return new OperationResult(
+                        true,
+                        _workOrdersLocalizationService.GetString("FolderUpdatedSuccessfully"));
+                }
+
+                throw new ArgumentException($"{nameof(folderId)} is 0");
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+                _logger.LogError(e.Message);
+                return new OperationResult(false,
+                    _workOrdersLocalizationService.GetString("ErrorWhileUpdatingFolder"));
+            }
+        }
+
         public async Task<OperationResult> RemoveSiteFromSettingsAsync(int siteId)
         {
             try
             {
                 AssignedSite assignedSite = await _dbContext.AssignedSites.FirstOrDefaultAsync(x => x.SiteId == siteId
                         && x.WorkflowState != Constants.WorkflowStates.Removed);
+                var theCore = await _core.GetCore();
+                await theCore.CaseDelete((int)assignedSite.CaseId);
                 await assignedSite.Delete(_dbContext);
 
                 return new OperationResult(true,
