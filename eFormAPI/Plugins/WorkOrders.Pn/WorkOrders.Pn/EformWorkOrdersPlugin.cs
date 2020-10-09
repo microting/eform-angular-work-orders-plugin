@@ -72,16 +72,8 @@ namespace WorkOrders.Pn
         public void ConfigureDbContext(IServiceCollection services, string connectionString)
         {
             _connectionString = connectionString;
-            if (connectionString.ToLower().Contains("convert zero datetime"))
-            {
-                services.AddDbContext<WorkOrderPnDbContext>(o => o.UseMySql(connectionString,
-                    b => b.MigrationsAssembly(PluginAssembly().FullName)));
-            }
-            else
-            {
-                services.AddDbContext<WorkOrderPnDbContext>(o => o.UseSqlServer(connectionString,
-                    b => b.MigrationsAssembly(PluginAssembly().FullName)));
-            }
+            services.AddDbContext<WorkOrderPnDbContext>(o => o.UseMySql(connectionString,
+                b => b.MigrationsAssembly(PluginAssembly().FullName)));
 
             WorkOrderPnContextFactory contextFactory = new WorkOrderPnContextFactory();
             WorkOrderPnDbContext context = contextFactory.CreateDbContext(new[] { connectionString });
