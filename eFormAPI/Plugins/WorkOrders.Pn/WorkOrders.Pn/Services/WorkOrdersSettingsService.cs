@@ -110,6 +110,8 @@ namespace WorkOrders.Pn.Services
             MainElement mainElement = await theCore.TemplateRead(int.Parse(result.Value));
             mainElement.Label = "Ny opgave";
             mainElement.CheckListFolderName = folderId;
+            mainElement.EndDate = DateTime.UtcNow.AddYears(10);
+            mainElement.Repeated = 0;
             await using IDbContextTransaction transaction = await _dbContext.Database.BeginTransactionAsync();
             try
             {
