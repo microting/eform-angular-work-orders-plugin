@@ -10,7 +10,7 @@ import {
   SettingsAddSiteModalComponent,
   SettingsRemoveSiteModalComponent,
   WorkOrdersImagesModalComponent,
-  WorkOrdersFoldersModalComponent
+  WorkOrdersFoldersModalComponent, WorkOrdersDeleteComponent
 } from './components';
 import { SharedPnModule } from 'src/app/plugins/modules/shared/shared-pn.module';
 import {
@@ -52,7 +52,8 @@ import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-sha
     SettingsAddSiteModalComponent,
     SettingsRemoveSiteModalComponent,
     WorkOrdersImagesModalComponent,
-    WorkOrdersFoldersModalComponent
+    WorkOrdersFoldersModalComponent,
+    WorkOrdersDeleteComponent
   ],
   providers: [WorkOrdersService, WorkOrdersSettingsService],
 })

@@ -46,7 +46,7 @@ namespace WorkOrders.Pn.Services
             try
             {
                 WorkOrdersModel workOrdersModel = new WorkOrdersModel();
-                IQueryable<WorkOrder> workOrdersQuery= _dbContext.WorkOrders.Where(x =>
+                IQueryable<WorkOrder> workOrdersQuery = _dbContext.WorkOrders.Where(x =>
                     x.WorkflowState != Constants.WorkflowStates.Removed).AsQueryable();
                 if(!CollectionExtensions.IsNullOrEmpty(pnRequestModel.SearchString) && pnRequestModel.SearchString != "")
                 {
@@ -123,6 +123,32 @@ namespace WorkOrders.Pn.Services
                 return new OperationDataResult<WorkOrdersModel>(false,
                     _workOrdersLocalizationService.GetString("ErrorWhileObtainingWorkOrders"));
             }
+        }
+
+        public async Task<OperationResult> Delete(int id)
+        {
+            var core = await _coreService.GetCore();
+            var workOrder = await _dbContext.WorkOrders.SingleOrDefaultAsync(x => x.Id == id);
+            if (workOrder != null)
+            {
+                if (workOrder.DoneAt == null)
+                {
+                    List<WorkOrdersTemplateCases> wotListToDelete = await _dbContext.WorkOrdersTemplateCases.Where(x =>
+                        x.WorkOrderId == workOrder.Id).ToListAsync();
+
+                    foreach(WorkOrdersTemplateCases wotToDelete in wotListToDelete)
+                    {
+                        await core.CaseDelete(wotToDelete.CaseId);
+                        wotToDelete.WorkflowState = Constants.WorkflowStates.Retracted;
+                        await wotToDelete.Update(_dbContext);
+                    }
+                }
+                await workOrder.Delete(_dbContext);
+                return new OperationResult(true);
+            }
+
+            return new OperationDataResult<WorkOrdersModel>(false,
+                _workOrdersLocalizationService.GetString("ErrorWhileObtainingWorkOrders"));
         }
     }
 }
