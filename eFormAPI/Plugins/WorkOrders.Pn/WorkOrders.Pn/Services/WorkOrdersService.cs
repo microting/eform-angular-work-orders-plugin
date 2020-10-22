@@ -133,10 +133,10 @@ namespace WorkOrders.Pn.Services
             {
                 if (workOrder.DoneAt == null)
                 {
-                    List<WorkOrdersTemplateCases> wotListToDelete = await _dbContext.WorkOrdersTemplateCases.Where(x =>
+                    List<WorkOrdersTemplateCase> wotListToDelete = await _dbContext.WorkOrdersTemplateCases.Where(x =>
                         x.WorkOrderId == workOrder.Id).ToListAsync();
 
-                    foreach(WorkOrdersTemplateCases wotToDelete in wotListToDelete)
+                    foreach(WorkOrdersTemplateCase wotToDelete in wotListToDelete)
                     {
                         await core.CaseDelete(wotToDelete.CaseId);
                         wotToDelete.WorkflowState = Constants.WorkflowStates.Retracted;
