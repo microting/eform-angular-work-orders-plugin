@@ -120,20 +120,20 @@ namespace WorkOrders.Pn.Services
             mainElement.CheckListFolderName = folderId;
             mainElement.EndDate = DateTime.UtcNow.AddYears(10);
             mainElement.Repeated = 0;
-            await using IDbContextTransaction transaction = await _dbContext.Database.BeginTransactionAsync();
+            //await using IDbContextTransaction transaction = await _dbContext.Database.BeginTransactionAsync();
             try
             {
                 int? caseId = await theCore.CaseCreate(mainElement, "", siteId, int.Parse(folderResult.Value));
                 AssignedSite assignedSite = new AssignedSite() { SiteId = siteId, CaseId = (int)caseId};
 
                 await assignedSite.Create(_dbContext);
-                await transaction.CommitAsync();
+                //await transaction.CommitAsync();
                 await _bus.SendLocal(new SiteAdded(siteId));
                 return new OperationResult(true, _workOrdersLocalizationService.GetString("SiteAddedSuccessfully"));
             }
             catch (Exception e)
             {
-                await transaction.RollbackAsync();
+                //await transaction.RollbackAsync();
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
                 return new OperationResult(false,

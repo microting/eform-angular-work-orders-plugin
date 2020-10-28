@@ -113,7 +113,11 @@ using WorkOrders.Pn.Messages;
                 folderId = result;
             }
 
-            List<WorkOrder> workOrders = await _dbContext.WorkOrders.Where(x => x.DoneAt == null).ToListAsync();
+            List<WorkOrder> workOrders = await _dbContext.WorkOrders.Where(x =>
+                x.DoneAt == null &&
+                x.WorkflowState != Constants.WorkflowStates.Removed &&
+                x.MicrotingId != 0 &&
+                x.CheckUId != 0).ToListAsync();
 
             foreach (WorkOrder workOrder in workOrders)
             {
@@ -163,6 +167,10 @@ using WorkOrders.Pn.Messages;
 
                 DataElement dataElement = (DataElement)mainElement.ElementList[0];
                 mainElement.Label = fields[1].FieldValues[0].Value;
+                mainElement.PushMessageTitle = mainElement.Label;
+                mainElement.PushMessageBody = string.IsNullOrEmpty(fields[2].FieldValues[0].Value)
+                    ? ""
+                    : "Senest udbedret d.: " + DateTime.Parse(fields[2].FieldValues[0].Value).ToString("dd-MM-yyyy");
                 dataElement.Label = fields[1].FieldValues[0].Value;
                 dataElement.Description.InderValue = "<strong>Senest udbedret d.: "; // Needs i18n support "Corrected at the latest:"
                 dataElement.Description.InderValue += string.IsNullOrEmpty(fields[2].FieldValues[0].Value)

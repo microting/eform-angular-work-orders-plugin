@@ -6,6 +6,7 @@ using Microting.WorkOrderBase.Infrastructure.Data.Factories;
 using Rebus.Bus;
 using System.Threading.Tasks;
 using WorkOrders.Pn.Abstractions;
+using WorkOrders.Pn.Infrastructure.Helpers;
 using WorkOrders.Pn.Installers;
 
 namespace WorkOrders.Pn.Services
@@ -30,8 +31,9 @@ namespace WorkOrders.Pn.Services
                 new RebusInstaller(connectionString, 1, 1));
 
             Core _core = await _coreHelper.GetCore();
+            DbContextHelper dbContextHelper = new DbContextHelper(connectionString);
             _container.Register(Castle.MicroKernel.Registration.Component.For<Core>().Instance(_core));
-            _container.Register(Castle.MicroKernel.Registration.Component.For<WorkOrderPnDbContext>().Instance(GetContext()));
+            _container.Register(Castle.MicroKernel.Registration.Component.For<DbContextHelper>().Instance(dbContextHelper));
             _bus = _container.Resolve<IBus>();
         }
 
