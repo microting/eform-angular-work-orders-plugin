@@ -120,6 +120,8 @@ namespace WorkOrders.Pn.Services
             mainElement.CheckListFolderName = folderId;
             mainElement.EndDate = DateTime.UtcNow.AddYears(10);
             mainElement.Repeated = 0;
+            mainElement.PushMessageTitle = mainElement.Label;
+
             //await using IDbContextTransaction transaction = await _dbContext.Database.BeginTransactionAsync();
             try
             {

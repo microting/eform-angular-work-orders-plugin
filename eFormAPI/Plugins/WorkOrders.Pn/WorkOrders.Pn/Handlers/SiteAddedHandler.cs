@@ -181,7 +181,7 @@ using WorkOrders.Pn.Messages;
                 dataElement.DataItemList[0].Description.InderValue = workOrder.Description;
 
                 // Read html and template
-                var resourceString = "ServiceWorkOrdersPlugin.Resources.Templates.page.html";
+                var resourceString = "WorkOrders.Pn.Resources.Templates.page.html";
                 var assembly = Assembly.GetExecutingAssembly();
                 string html;
                 await using (var resourceStream = assembly.GetManifestResourceStream(resourceString))
@@ -191,7 +191,7 @@ using WorkOrders.Pn.Messages;
                 }
 
                 // Read docx stream
-                resourceString = "ServiceWorkOrdersPlugin.Resources.Templates.file.docx";
+                resourceString = "WorkOrders.Pn.Resources.Templates.file.docx";
                 var docxFileResourceStream = assembly.GetManifestResourceStream(resourceString);
                 if (docxFileResourceStream == null)
                 {

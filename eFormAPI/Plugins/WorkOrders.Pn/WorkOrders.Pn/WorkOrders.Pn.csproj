@@ -27,6 +27,8 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\localization.json" />
+    <EmbeddedResource Include="Resources\Templates\file.docx" />
+    <EmbeddedResource Include="Resources\Templates\page.html" />
   </ItemGroup>
-  
+
 </Project>
