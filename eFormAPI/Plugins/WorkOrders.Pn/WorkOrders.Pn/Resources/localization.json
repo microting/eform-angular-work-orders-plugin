@@ -100,14 +100,14 @@
   {
     "Key": "WorkOrders",
     "LocalizedValue": {
-      "da": "Work orders",
+      "da": "Opgavestyring",
       "en-US": "Work orders"
     }
   },
   {
     "Key": "Orders",
     "LocalizedValue": {
-      "da": "Orders",
+      "da": "Oversigt",
       "en-US": "Orders"
     }
   },

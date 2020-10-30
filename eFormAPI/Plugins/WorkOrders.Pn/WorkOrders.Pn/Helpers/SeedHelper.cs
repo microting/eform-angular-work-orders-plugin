@@ -73,7 +73,7 @@ namespace WorkOrders.Pn.Helpers
                     ),
                     new Text(
                         371264,
-                        false,
+                        true,
                         false,
                         "Beskrivelse af opgaven",
                         "",
