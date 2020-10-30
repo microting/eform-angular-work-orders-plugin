@@ -27,6 +27,8 @@ namespace WorkOrders.Pn
 {
     using eFormCore;
     using Infrastructure.Data.Seed;
+    using Microting.eFormApi.BasePn.Infrastructure.Consts;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
 
     public class EformWorkOrdersPlugin : IEformPlugin
     {
@@ -103,6 +105,103 @@ namespace WorkOrders.Pn
             });
         }
 
+        public List<PluginMenuItemModel> GetNavigationMenu(IServiceProvider serviceProvider)
+        {
+            var pluginMenu = new List<PluginMenuItemModel>()
+                {
+                    new PluginMenuItemModel
+                    {
+                        Name = "Dropdown",
+                        E2EId = "work-orders-pn",
+                        Link = "",
+                        Type = MenuItemTypeEnum.Dropdown,
+                        Position = 0,
+                        Translations = new List<PluginMenuTranslationModel>()
+                        {
+                            new PluginMenuTranslationModel
+                            {
+                                 LocaleName = LocaleNames.English,
+                                 Name = "Work orders",
+                                 Language = LanguageNames.English,
+                            },
+                            new PluginMenuTranslationModel
+                            {
+                                 LocaleName = LocaleNames.German,
+                                 Name = "Arbeitsanweisungen",
+                                 Language = LanguageNames.German,
+                            },
+                            new PluginMenuTranslationModel
+                            {
+                                 LocaleName = LocaleNames.Danish,
+                                 Name = "Arbejdsordrer",
+                                 Language = LanguageNames.Danish,
+                            }
+                        },
+                        ChildItems = new List<PluginMenuItemModel>
+                        {
+                            new PluginMenuItemModel
+                            {
+                                Name = "Orders",
+                                E2EId = "work-orders-pn-orders",
+                                Link = "/plugins/work-orders-pn/orders",
+                                Type = MenuItemTypeEnum.Link,
+                                Position = 0,
+                                MenuTemplate = new PluginMenuTemplateModel()
+                                {
+                                    Name = "Orders",
+                                    E2EId = "work-orders-pn-orders",
+                                    DefaultLink = "/plugins/work-orders-pn/orders",
+                                    Permissions = new List<PluginMenuTemplatePermissionModel>(),
+                                    Translations = new List<PluginMenuTranslationModel>
+                                    {
+                                        new PluginMenuTranslationModel
+                                        {
+                                            LocaleName = LocaleNames.English,
+                                            Name = "Orders",
+                                            Language = LanguageNames.English,
+                                        },
+                                        new PluginMenuTranslationModel
+                                        {
+                                            LocaleName = LocaleNames.German,
+                                            Name = "Aufträge",
+                                            Language = LanguageNames.German,
+                                        },
+                                        new PluginMenuTranslationModel
+                                        {
+                                            LocaleName = LocaleNames.Danish,
+                                            Name = "Orders",
+                                            Language = LanguageNames.Danish,
+                                        },
+                                    }
+                                },
+                                Translations = new List<PluginMenuTranslationModel>
+                                    {
+                                        new PluginMenuTranslationModel
+                                        {
+                                            LocaleName = LocaleNames.English,
+                                            Name = "Orders",
+                                            Language = LanguageNames.English,
+                                        },
+                                        new PluginMenuTranslationModel
+                                        {
+                                            LocaleName = LocaleNames.German,
+                                            Name = "Aufträge",
+                                            Language = LanguageNames.German,
+                                        },
+                                        new PluginMenuTranslationModel
+                                        {
+                                            LocaleName = LocaleNames.Danish,
+                                            Name = "Orders",
+                                            Language = LanguageNames.Danish,
+                                        },
+                                    }
+                            }
+                        }
+                    }
+                };
+
+            return pluginMenu;
+        }
         public MenuModel HeaderMenu(IServiceProvider serviceProvider)
         {
             IWorkOrdersLocalizationService localizationService = serviceProvider
