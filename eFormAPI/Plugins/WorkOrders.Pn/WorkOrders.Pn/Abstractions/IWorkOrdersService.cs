@@ -7,5 +7,6 @@ namespace WorkOrders.Pn.Abstractions
     public interface IWorkOrdersService
     {
         Task<OperationDataResult<WorkOrdersModel>> GetWorkOrdersAsync(WorkOrdersRequestModel model);
+        Task<OperationResult> Delete(int id);
     }
 }

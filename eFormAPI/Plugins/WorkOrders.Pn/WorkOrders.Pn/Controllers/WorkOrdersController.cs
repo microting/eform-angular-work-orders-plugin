@@ -23,5 +23,12 @@ namespace WorkOrders.Pn.Controllers
         {
             return await _workOrdersService.GetWorkOrdersAsync(requestModel);
         }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<OperationResult> Delete(int id)
+        {
+            return await _workOrdersService.Delete(id);
+        }
     }
 }

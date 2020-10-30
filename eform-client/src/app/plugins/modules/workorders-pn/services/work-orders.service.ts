@@ -9,6 +9,7 @@ import {
   OperationResult,
 } from '../../../../common/models';
 import { WorkOrdersModel, WorkOrdersRequestModel } from '../models';
+import {ItemsPlanningPnPlanningsMethods} from 'src/app/plugins/modules/items-planning-pn/services';
 
 export let WorkOrdersMethods = {
   WorkOrders: 'api/workorders-pn',
@@ -28,5 +29,9 @@ export class WorkOrdersService extends BaseService {
     model: WorkOrdersRequestModel
   ): Observable<OperationDataResult<WorkOrdersModel>> {
     return this.post(WorkOrdersMethods.WorkOrders, model);
+  }
+
+  deleteWorkOrder(id: number): Observable<OperationResult> {
+    return this.delete(WorkOrdersMethods.WorkOrders + '/' + id);
   }
 }

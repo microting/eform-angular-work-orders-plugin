@@ -12,9 +12,12 @@ using System.Threading.Tasks;
 using Microting.eForm.Infrastructure;
 using Microting.eForm.Infrastructure.Constants;
 using Microting.eForm.Infrastructure.Models;
+using Rebus.Bus;
+using ServiceWorkOrdersPlugin.Handlers;
 using WorkOrders.Pn.Abstractions;
 using WorkOrders.Pn.Infrastructure.Models;
 using WorkOrders.Pn.Infrastructure.Models.Settings;
+using WorkOrders.Pn.Messages;
 
 namespace WorkOrders.Pn.Services
 {
@@ -30,13 +33,16 @@ namespace WorkOrders.Pn.Services
         private readonly IEFormCoreService _core;
         private readonly IPluginDbOptions<WorkOrdersBaseSettings> _options;
         private readonly IUserService _userService;
+        private readonly IRebusService _rebusService;
+        private readonly IBus _bus;
 
         public WorkOrdersSettingsService(WorkOrderPnDbContext dbContext, 
             ILogger<WorkOrdersSettingsService> logger,
             IWorkOrdersLocalizationService workOrdersLocalizationService,
             IEFormCoreService core,
             IPluginDbOptions<WorkOrdersBaseSettings> options,
-            IUserService userService)
+            IUserService userService,
+            IRebusService rebusService)
         {
             _dbContext = dbContext;
             _logger = logger;
@@ -44,6 +50,8 @@ namespace WorkOrders.Pn.Services
             _core = core;
             _options = options;
             _userService = userService;
+            _rebusService = rebusService;
+            _bus = rebusService.GetBus();
         }
 
         public async Task<OperationDataResult<WorkOrdersSettingsModel>> GetAllSettingsAsync()
@@ -112,19 +120,22 @@ namespace WorkOrders.Pn.Services
             mainElement.CheckListFolderName = folderId;
             mainElement.EndDate = DateTime.UtcNow.AddYears(10);
             mainElement.Repeated = 0;
-            await using IDbContextTransaction transaction = await _dbContext.Database.BeginTransactionAsync();
+            mainElement.PushMessageTitle = mainElement.Label;
+
+            //await using IDbContextTransaction transaction = await _dbContext.Database.BeginTransactionAsync();
             try
             {
                 int? caseId = await theCore.CaseCreate(mainElement, "", siteId, int.Parse(folderResult.Value));
                 AssignedSite assignedSite = new AssignedSite() { SiteId = siteId, CaseId = (int)caseId};
 
                 await assignedSite.Create(_dbContext);
-                await transaction.CommitAsync();
+                //await transaction.CommitAsync();
+                await _bus.SendLocal(new SiteAdded(siteId));
                 return new OperationResult(true, _workOrdersLocalizationService.GetString("SiteAddedSuccessfully"));
             }
             catch (Exception e)
             {
-                await transaction.RollbackAsync();
+                //await transaction.RollbackAsync();
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
                 return new OperationResult(false,

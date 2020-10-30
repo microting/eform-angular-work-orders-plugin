@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonImageModel, PageSettingsModel } from 'src/app/common/models';
-import { WorkOrdersModel, WorkOrdersRequestModel } from '../../../models';
+import {WorkOrderModel, WorkOrdersModel, WorkOrdersRequestModel} from '../../../models';
 import { Subject, Subscription } from 'rxjs';
 import { PluginClaimsHelper } from 'src/app/common/helpers';
 import {
@@ -12,6 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { WorkOrdersService } from '../../../services';
 import { debounceTime } from 'rxjs/operators';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
+import {PlanningPnModel} from 'src/app/plugins/modules/items-planning-pn/models/plannings';
 
 @AutoUnsubscribe()
 @Component({
@@ -20,8 +21,8 @@ import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
   styleUrls: ['./workorders-page.component.scss'],
 })
 export class WorkOrdersPageComponent implements OnInit, OnDestroy {
-  @ViewChild('imagesModalComponent', { static: false })
-  imagesModalComponent: any;
+  @ViewChild('imagesModalComponent', { static: false }) imagesModalComponent;
+  @ViewChild('deleteWorkOrderModal', { static: false }) deleteWorkOrderModal;
   localPageSettings: PageSettingsModel = new PageSettingsModel();
   workOrdersRequestModel: WorkOrdersRequestModel = new WorkOrdersRequestModel();
   workOrdersModel: WorkOrdersModel = new WorkOrdersModel();
@@ -70,6 +71,10 @@ export class WorkOrdersPageComponent implements OnInit, OnDestroy {
       'WorkOrdersList'
     );
     this.getWorkOrders();
+  }
+
+  showDeleteWorkOrderModal(workOrderModel: WorkOrderModel) {
+    this.deleteWorkOrderModal.show(workOrderModel);
   }
 
   getWorkOrders() {
