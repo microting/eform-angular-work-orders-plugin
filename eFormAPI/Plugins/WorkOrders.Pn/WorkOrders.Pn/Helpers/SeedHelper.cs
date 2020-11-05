@@ -90,7 +90,7 @@ namespace WorkOrders.Pn.Helpers
                     ),
                     new Date(
                         371265,
-                        false,
+                        true,
                         false,
                         "Senest udbedret d.",
                         "",
