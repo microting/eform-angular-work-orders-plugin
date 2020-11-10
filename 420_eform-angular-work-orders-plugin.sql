@@ -35,7 +35,7 @@ CREATE TABLE `__EFMigrationsHistory` (
 
 LOCK TABLES `__EFMigrationsHistory` WRITE;
 /*!40000 ALTER TABLE `__EFMigrationsHistory` DISABLE KEYS */;
-INSERT INTO `__EFMigrationsHistory` VALUES ('20200916141603_Init','3.1.8');
+INSERT INTO `__EFMigrationsHistory` VALUES ('20200916141603_Init','3.1.8'),('20200921180012_MakingDoneAtNullable','3.1.8'),('20200923191200_AddingCaseIdToAssignedSite','3.1.8'),('20201021172700_AddingAttributesToWorkOrders','3.1.8'),('20201022082742_AddingSdkSiteIdToWorkOrderTemplateCase','3.1.8');
 /*!40000 ALTER TABLE `__EFMigrationsHistory` ENABLE KEYS */;
 UNLOCK TABLES;
 
