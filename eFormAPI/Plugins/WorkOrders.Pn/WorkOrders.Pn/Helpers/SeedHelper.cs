@@ -4,6 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microting.eForm.Infrastructure.Constants;
+
 // ReSharper disable StringLiteralTypo
 
 namespace WorkOrders.Pn.Helpers
@@ -59,13 +62,35 @@ namespace WorkOrders.Pn.Helpers
 
                 List<DataItem> dataItems = new List<DataItem>
                 {
+                    new EntitySelect(
+                        371261, 
+                        false, 
+                        false, 
+                        "Opgave område",
+                        "", 
+                        Constants.FieldColors.Default, 
+                        0, 
+                        false,
+                        0, 
+                        0),
+                    new EntitySelect(
+                        371262, 
+                        false, 
+                        false, 
+                        "Opgave tildelt til",
+                        "", 
+                        Constants.FieldColors.Default, 
+                        0, 
+                        false,
+                        0, 
+                        0),
                     new Picture(
                         371263,
                         false,
                         false,
-                        "Billede af opgaven",
+                        "Opgave billede",
                         "<br>",
-                        "e8eaf6",
+                        Constants.FieldColors.Default,
                         0,
                         false,
                         0,
@@ -75,9 +100,9 @@ namespace WorkOrders.Pn.Helpers
                         371264,
                         true,
                         false,
-                        "Beskrivelse af opgaven",
+                        "Opgave beskrivelse",
                         "",
-                        "e8eaf6",
+                        Constants.FieldColors.Default,
                         1,
                         false,
                         "",
@@ -92,9 +117,9 @@ namespace WorkOrders.Pn.Helpers
                         371265,
                         true,
                         false,
-                        "Senest udbedret d.",
+                        "Senest udføres senest",
                         "",
-                        "e8eaf6",
+                        Constants.FieldColors.Default,
                         2,
                         false,
                         new DateTime(),
@@ -105,12 +130,12 @@ namespace WorkOrders.Pn.Helpers
                         371266,
                         false,
                         false,
-                        "GEM & SEND",
+                        "Tryk for at oprette opgave",
                         "",
-                        "e8eaf6",
+                        Constants.FieldColors.Green,
                         2,
                         false,
-                        "GEM & SEND"
+                        "Opret opgave"
                     )
                 };
 
