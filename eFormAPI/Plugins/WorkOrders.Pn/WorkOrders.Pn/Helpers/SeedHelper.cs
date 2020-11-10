@@ -16,6 +16,53 @@ namespace WorkOrders.Pn.Helpers
 
     public class SeedHelper
     {
+        private static async Task<int> CreateTaskAreaList(Core core)
+        {
+            EntityGroupList model = await core.Advanced_EntityGroupAll(
+                "id",
+                "eform-angular-work-orders-plugin-editable-TaskArea",
+                0, 1, Constants.FieldTypes.EntitySelect,
+                false,
+                Constants.WorkflowStates.NotRemoved);
+
+            EntityGroup group;
+
+            if (!model.EntityGroups.Any())
+            {
+                group = await core.EntityGroupCreate(Constants.FieldTypes.EntitySelect,
+                    "eform-angular-work-orders-plugin-editable-TaskArea");
+            }
+            else
+            {
+                group = model.EntityGroups.First();
+            }
+
+            return int.Parse(group.MicrotingUUID);
+        }
+
+        private static async Task<int> CreateWorkerList(Core core)
+        {
+            EntityGroupList model = await core.Advanced_EntityGroupAll(
+                "id",
+                "eform-angular-work-orders-plugin-editable-Worker",
+                0, 1, Constants.FieldTypes.EntitySelect,
+                false,
+                Constants.WorkflowStates.NotRemoved);
+
+            EntityGroup group;
+
+            if (!model.EntityGroups.Any())
+            {
+                group = await core.EntityGroupCreate(Constants.FieldTypes.EntitySelect,
+                    "eform-angular-work-orders-plugin-editable-Worker");
+            }
+            else
+            {
+                group = model.EntityGroups.First();
+            }
+            return int.Parse(group.MicrotingUUID);
+        }
+
         public static async Task<int> CreateNewTaskEform(Core core)
         {
 
@@ -30,6 +77,8 @@ namespace WorkOrders.Pn.Helpers
             {
                 timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standard Time");
             }
+            int taskAreaListId = await CreateTaskAreaList(core);
+            int workerListId = await CreateWorkerList(core);
 
             List<Template_Dto> templatesDto = await core.TemplateItemReadAll(false,
                 "",
@@ -72,7 +121,7 @@ namespace WorkOrders.Pn.Helpers
                         0, 
                         false,
                         0, 
-                        0),
+                        taskAreaListId),
                     new EntitySelect(
                         371262, 
                         false, 
@@ -83,7 +132,7 @@ namespace WorkOrders.Pn.Helpers
                         0, 
                         false,
                         0, 
-                        0),
+                        workerListId),
                     new Picture(
                         371263,
                         false,
