@@ -21,24 +21,32 @@ describe('Work Order Settings', function () {
   it('Assign Site', function() {
     const rowCountBeforeCreation = workOrdersPage.rowNum;
     workOrdersPage.assignDeviceUser(name);
+    loginPage.open('/');
+    workOrdersPage.goToWorkOrdersSettingsPage();
     const rowCountAfterCreation = workOrdersPage.rowNum;
     expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after adding site').equal(rowCountBeforeCreation + 1);
   });
   it('Cancel Removing Site', function () {
     const rowCountBefore = workOrdersPage.rowNum;
     workOrdersPage.cancelRemovingDeviceUser();
+    loginPage.open('/');
+    workOrdersPage.goToWorkOrdersSettingsPage();
     const rowCountAfter = workOrdersPage.rowNum;
     expect(rowCountAfter, 'Number of rows has changed').equal(rowCountBefore);
   });
   it('Remove Site', function () {
     const rowCountBefore = workOrdersPage.rowNum;
     workOrdersPage.removeAssignedDeviceUser();
+    loginPage.open('/');
+    workOrdersPage.goToWorkOrdersSettingsPage();
     const rowCountAfter = workOrdersPage.rowNum;
     expect(rowCountAfter, 'Number of rows has changed').equal(rowCountBefore - 1);
   });
   it('Cancel Adding Site', function() {
     const rowCountBefore = workOrdersPage.rowNum;
     workOrdersPage.cancelAddingDeviceUser();
+    loginPage.open('/');
+    workOrdersPage.goToWorkOrdersSettingsPage();
     const rowCountAfter = workOrdersPage.rowNum;
     expect(rowCountAfter, 'Number of rows has changed').equal(rowCountBefore);
   });
