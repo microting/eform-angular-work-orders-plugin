@@ -67,9 +67,7 @@ class WorkOrdersPage extends PageWithNavbarPage {
   }
 
   public get ordersBtn() {
-    return $(
-      `//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Orders')]`
-    );
+    return $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Oversigt')]`);
   }
 
   cancelAddingDeviceUser() {
