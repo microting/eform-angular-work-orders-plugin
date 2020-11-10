@@ -13,7 +13,7 @@ describe('Work Order Settings', function () {
   before(function () {
     loginPage.open('/');
     loginPage.login();
-    
+
     deviceUsersPage.createDeviceUserFromScratch(name, surname);
 
     workOrdersPage.goToWorkOrdersSettingsPage();

@@ -73,7 +73,9 @@ class WorkOrdersPage extends PageWithNavbarPage {
   }
 
   cancelAddingDeviceUser() {
+    $('#spinner-animation').waitForDisplayed({ timeout: 30000, reverse: true });
     $('#addNewSiteBtn').waitForDisplayed({ timeout: 20000 });
+    $('#addNewSiteBtn').waitForClickable({ timeout: 20000 });
     $('#addNewSiteBtn').click();
     $('#selectDeviceUser').waitForDisplayed({ timeout: 20000 });
     $('#selectDeviceUser').click();
