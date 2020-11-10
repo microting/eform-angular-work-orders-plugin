@@ -95,5 +95,9 @@ jobs:
     - name: The job has failed
       if: ${{ failure() }}
       run: |
+        mysql -u root -h 127.0.0.1 --password=secretpassword -e 'describe `420_eform-angular-work-orders-plugin.AssignedSites`'
+        mysql -u root -h 127.0.0.1 --password=secretpassword -e 'describe `420_eform-angular-work-orders-plugin.AssignedSiteVersions`'
+        mysql -u root -h 127.0.0.1 --password=secretpassword -e 'select * from `420_eform-angular-work-orders-plugin.AssignedSites`'
+        mysql -u root -h 127.0.0.1 --password=secretpassword -e 'select * from `420_eform-angular-work-orders-plugin.AssignedSiteVersions`'
         cat dotnet_log
         cat eform-angular-frontend/eform-client/npm_log
