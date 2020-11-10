@@ -17,7 +17,6 @@ describe('Application settings page - site header section', function () {
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
 
     const plugin = pluginsPage.getFirstPluginRowObj();
-    // expect(plugin.id).equal(1);
     expect(plugin.name).equal('Microting Work Orders Plugin');
     expect(plugin.version).equal('1.0.0.0');
 
