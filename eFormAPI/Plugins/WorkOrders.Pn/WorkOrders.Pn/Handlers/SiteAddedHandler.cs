@@ -123,15 +123,28 @@ using WorkOrders.Pn.Messages;
             {
                 Console.WriteLine("[INF] EFormCompletedHandler.Handle: message.CheckId == createNewTaskEFormId");
                 ReplyElement replyElement = await _sdkCore.CaseRead(workOrder.MicrotingId, workOrder.CheckUId);
+                var doneBy = _sdkCore.dbContextHelper.GetDbContext().workers
+                    .Single(x => x.Id == replyElement.DoneById).full_name();
                 CheckListValue checkListValue = (CheckListValue)replyElement.ElementList[0];
                 List<Field> fields = checkListValue.DataItemList.Select(di => di as Field).ToList();
 
                 var picturesOfTasks = new List<string>();
                 if (fields.Any())
                 {
-                    if(fields[0].FieldValues.Count > 0)
+                    // field[0] - picture of the task
+                    if (!string.IsNullOrEmpty(fields[3]?.FieldValues[0]?.Value))
                     {
-                        foreach(FieldValue fieldValue in fields[0].FieldValues)
+                        workOrder.Description = fields[3].FieldValues[0].Value;
+                    }
+
+                    if (!string.IsNullOrEmpty(fields[4]?.FieldValues[0]?.Value))
+                    {
+                        workOrder.CorrectedAtLatest = DateTime.Parse(fields[4].FieldValues[0].Value);
+                    }
+
+                    if(fields[2].FieldValues.Count > 0)
+                    {
+                        foreach(FieldValue fieldValue in fields[2].FieldValues)
                         {
                             if (fieldValue.UploadedDataObj != null)
                             {
@@ -139,17 +152,6 @@ using WorkOrders.Pn.Messages;
                             }
                         }
                     }
-                }
-
-                foreach (var picturesOfTask in picturesOfTasks)
-                {
-                    var pictureOfTask = new PicturesOfTask
-                    {
-                        FileName = picturesOfTask,
-                        WorkOrderId = workOrder.Id,
-                    };
-
-                    await pictureOfTask.Create(_dbContext);
                 }
 
                 var folderResult = await _dbContext.PluginConfigurationValues.SingleAsync(x => x.Name == "WorkOrdersBaseSettings:FolderTasksId");
@@ -166,19 +168,26 @@ using WorkOrders.Pn.Messages;
                 mainElement.DisplayOrder = (workOrder.CorrectedAtLatest - startDate).Days;
 
                 DataElement dataElement = (DataElement)mainElement.ElementList[0];
-                mainElement.Label = fields[1].FieldValues[0].Value;
+                mainElement.Label = fields[3].FieldValues[0].Value;
                 mainElement.PushMessageTitle = mainElement.Label;
-                mainElement.PushMessageBody = string.IsNullOrEmpty(fields[2].FieldValues[0].Value)
+                mainElement.PushMessageBody = string.IsNullOrEmpty(fields[4].FieldValues[0].Value)
                     ? ""
-                    : "Senest udbedret d.: " + DateTime.Parse(fields[2].FieldValues[0].Value).ToString("dd-MM-yyyy");
-                dataElement.Label = fields[1].FieldValues[0].Value;
-                dataElement.Description.InderValue = "<strong>Senest udbedret d.: "; // Needs i18n support "Corrected at the latest:"
-                dataElement.Description.InderValue += string.IsNullOrEmpty(fields[2].FieldValues[0].Value)
+                    : "Udføres senest: " + DateTime.Parse(fields[4].FieldValues[0].Value).ToString("dd-MM-yyyy");
+                dataElement.Label = fields[3].FieldValues[0].Value;
+                dataElement.Description.InderValue += string.IsNullOrEmpty(fields[0].FieldValues[0].ValueReadable)
+                    ? "" :
+                    $"<strong>Område:</strong> {fields[0].FieldValues[0].ValueReadable}<br>";
+                dataElement.Description.InderValue += string.IsNullOrEmpty(fields[1].FieldValues[0].ValueReadable)
                     ? ""
-                    : DateTime.Parse(fields[2].FieldValues[0].Value).ToString("dd-MM-yyyy");
-                dataElement.Description.InderValue += "</strong>";
+                    :$"<strong>Tildelt til:</strong> {fields[1].FieldValues[0].ValueReadable}<br>";
+                dataElement.Description.InderValue += $"<strong>Oprettet af:</strong> {doneBy}<br>";
+                dataElement.Description.InderValue += "<strong>Udføres senest:</strong>"; // Needs i18n support "Corrected at the latest:"
+                dataElement.Description.InderValue += string.IsNullOrEmpty(fields[4].FieldValues[0].Value)
+                    ? ""
+                    : DateTime.Parse(fields[4].FieldValues[0].Value).ToString("dd-MM-yyyy");
 
-                dataElement.DataItemList[0].Description.InderValue = workOrder.Description;
+                dataElement.DataItemList[0].Description.InderValue = dataElement.Description.InderValue;
+                dataElement.DataItemList[0].Label = dataElement.Label;
 
                 // Read html and template
                 var resourceString = "WorkOrders.Pn.Resources.Templates.page.html";
