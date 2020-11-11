@@ -11,4 +11,6 @@ export class WorkOrderModel {
   picturesOfTask: string[] = [];
   picturesOfTaskDone: string[] = [];
   descriptionOfTaskDone: string;
+  assignedArea: string;
+  assignedWorker: string;
 }

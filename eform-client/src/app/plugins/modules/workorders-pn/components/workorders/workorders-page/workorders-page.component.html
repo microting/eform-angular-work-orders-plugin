@@ -62,6 +62,32 @@
           <th
             scope="col"
             class="table-header-sortable"
+            id="assignedAreaHeader"
+            (click)="sortTable(sortCols.assignedArea)"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'Area' | translate }}
+              <i class="material-icons text-black-50">{{
+                getSortIcon(sortCols.assignedArea)
+                }}</i>
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="assignedWorkerHeader"
+            (click)="sortTable(sortCols.assignedWorker)"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'Assigned worker' | translate }}
+              <i class="material-icons text-black-50">{{
+                getSortIcon(sortCols.assignedWorker)
+                }}</i>
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="table-header-sortable"
             id="descriptionHeader"
             (click)="sortTable(sortCols.description)"
           >
@@ -147,6 +173,12 @@
           </td>
           <td id="workOrderCreatedBy">
             {{ workOrder.createdBy }}
+          </td>
+          <td id="workOrderDescription">
+            {{ workOrder.assignedArea }}
+          </td>
+          <td id="workOrderDescription">
+            {{ workOrder.assignedWorker }}
           </td>
           <td id="workOrderDescription">
             {{ workOrder.description }}
