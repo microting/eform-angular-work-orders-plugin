@@ -30,7 +30,7 @@ namespace WorkOrders.Pn.Helpers
             if (!model.EntityGroups.Any())
             {
                 group = await core.EntityGroupCreate(Constants.FieldTypes.EntitySelect,
-                    "eform-angular-work-orders-plugin-editable-TaskArea");
+                    "eform-angular-work-orders-plugin-editable-TaskArea", "Områder");
             }
             else
             {
@@ -54,7 +54,7 @@ namespace WorkOrders.Pn.Helpers
             if (!model.EntityGroups.Any())
             {
                 group = await core.EntityGroupCreate(Constants.FieldTypes.EntitySelect,
-                    "eform-angular-work-orders-plugin-editable-Worker");
+                    "eform-angular-work-orders-plugin-editable-Worker", "Medarbejdere");
             }
             else
             {
