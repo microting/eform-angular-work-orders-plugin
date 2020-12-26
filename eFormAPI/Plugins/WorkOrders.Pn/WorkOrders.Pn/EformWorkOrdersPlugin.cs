@@ -16,12 +16,6 @@ using Rebus.Bus;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using WorkOrders.Pn.Abstractions;
-using WorkOrders.Pn.Helpers;
-using WorkOrders.Pn.Infrastructure.Data.Seed.Data;
-using WorkOrders.Pn.Infrastructure.Models.Settings;
-using WorkOrders.Pn.Messages;
-using WorkOrders.Pn.Services;
 
 namespace WorkOrders.Pn
 {
@@ -29,6 +23,12 @@ namespace WorkOrders.Pn
     using Infrastructure.Data.Seed;
     using Microting.eFormApi.BasePn.Infrastructure.Consts;
     using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
+    using Abstractions;
+    using Helpers;
+    using Infrastructure.Data.Seed.Data;
+    using Infrastructure.Models.Settings;
+    using Messages;
+    using Services;
 
     public class EformWorkOrdersPlugin : IEformPlugin
     {
@@ -68,7 +68,7 @@ namespace WorkOrders.Pn
         public void ConfigureOptionsServices(IServiceCollection services, IConfiguration configuration)
         {
             services.ConfigurePluginDbOptions<WorkOrdersBaseSettings>(
-                        configuration.GetSection("WorkOrdersBaseSettings"));
+                configuration.GetSection("WorkOrdersBaseSettings"));
         }
 
         public void ConfigureDbContext(IServiceCollection services, string connectionString)
@@ -78,7 +78,7 @@ namespace WorkOrders.Pn
                 b => b.MigrationsAssembly(PluginAssembly().FullName)));
 
             WorkOrderPnContextFactory contextFactory = new WorkOrderPnContextFactory();
-            WorkOrderPnDbContext context = contextFactory.CreateDbContext(new[] { connectionString });
+            WorkOrderPnDbContext context = contextFactory.CreateDbContext(new[] {connectionString});
             context.Database.Migrate();
 
             // Seed database
@@ -99,113 +99,129 @@ namespace WorkOrders.Pn
 
             appBuilder.UseAuthorization();
 
-            appBuilder.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            appBuilder.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
 
         public List<PluginMenuItemModel> GetNavigationMenu(IServiceProvider serviceProvider)
         {
             var pluginMenu = new List<PluginMenuItemModel>()
+            {
+                new PluginMenuItemModel
                 {
-                    new PluginMenuItemModel
+                    Name = "Dropdown",
+                    E2EId = "work-orders-pn",
+                    Link = "",
+                    Type = MenuItemTypeEnum.Dropdown,
+                    Position = 0,
+                    Translations = new List<PluginMenuTranslationModel>()
                     {
-                        Name = "Dropdown",
-                        E2EId = "work-orders-pn",
-                        Link = "",
-                        Type = MenuItemTypeEnum.Dropdown,
-                        Position = 0,
-                        Translations = new List<PluginMenuTranslationModel>()
+                        new PluginMenuTranslationModel
                         {
-                            new PluginMenuTranslationModel
-                            {
-                                 LocaleName = LocaleNames.English,
-                                 Name = "Work orders",
-                                 Language = LanguageNames.English,
-                            },
-                            new PluginMenuTranslationModel
-                            {
-                                 LocaleName = LocaleNames.German,
-                                 Name = "Arbeitsanweisungen",
-                                 Language = LanguageNames.German,
-                            },
-                            new PluginMenuTranslationModel
-                            {
-                                 LocaleName = LocaleNames.Danish,
-                                 Name = "Arbejdsordrer",
-                                 Language = LanguageNames.Danish,
-                            }
+                            LocaleName = LocaleNames.English,
+                            Name = "Work orders",
+                            Language = LanguageNames.English,
                         },
-                        ChildItems = new List<PluginMenuItemModel>
+                        new PluginMenuTranslationModel
                         {
-                            new PluginMenuItemModel
+                            LocaleName = LocaleNames.German,
+                            Name = "Arbeitsanweisungen",
+                            Language = LanguageNames.German,
+                        },
+                        new PluginMenuTranslationModel
+                        {
+                            LocaleName = LocaleNames.Danish,
+                            Name = "Arbejdsordrer",
+                            Language = LanguageNames.Danish,
+                        },
+                        new PluginMenuTranslationModel
+                        {
+                            LocaleName = LocaleNames.Ukrainian,
+                            Name = "Замовлення на роботу",
+                            Language = LanguageNames.Ukrainian,
+                        }
+                    },
+                    ChildItems = new List<PluginMenuItemModel>
+                    {
+                        new PluginMenuItemModel
+                        {
+                            Name = "Orders",
+                            E2EId = "work-orders-pn-orders",
+                            Link = "/plugins/work-orders-pn/orders",
+                            Type = MenuItemTypeEnum.Link,
+                            Position = 0,
+                            MenuTemplate = new PluginMenuTemplateModel()
                             {
                                 Name = "Orders",
                                 E2EId = "work-orders-pn-orders",
-                                Link = "/plugins/work-orders-pn/orders",
-                                Type = MenuItemTypeEnum.Link,
-                                Position = 0,
-                                MenuTemplate = new PluginMenuTemplateModel()
-                                {
-                                    Name = "Orders",
-                                    E2EId = "work-orders-pn-orders",
-                                    DefaultLink = "/plugins/work-orders-pn/orders",
-                                    Permissions = new List<PluginMenuTemplatePermissionModel>(),
-                                    Translations = new List<PluginMenuTranslationModel>
-                                    {
-                                        new PluginMenuTranslationModel
-                                        {
-                                            LocaleName = LocaleNames.English,
-                                            Name = "Orders",
-                                            Language = LanguageNames.English,
-                                        },
-                                        new PluginMenuTranslationModel
-                                        {
-                                            LocaleName = LocaleNames.German,
-                                            Name = "Aufträge",
-                                            Language = LanguageNames.German,
-                                        },
-                                        new PluginMenuTranslationModel
-                                        {
-                                            LocaleName = LocaleNames.Danish,
-                                            Name = "Orders",
-                                            Language = LanguageNames.Danish,
-                                        },
-                                    }
-                                },
+                                DefaultLink = "/plugins/work-orders-pn/orders",
+                                Permissions = new List<PluginMenuTemplatePermissionModel>(),
                                 Translations = new List<PluginMenuTranslationModel>
+                                {
+                                    new PluginMenuTranslationModel
                                     {
-                                        new PluginMenuTranslationModel
-                                        {
-                                            LocaleName = LocaleNames.English,
-                                            Name = "Orders",
-                                            Language = LanguageNames.English,
-                                        },
-                                        new PluginMenuTranslationModel
-                                        {
-                                            LocaleName = LocaleNames.German,
-                                            Name = "Aufträge",
-                                            Language = LanguageNames.German,
-                                        },
-                                        new PluginMenuTranslationModel
-                                        {
-                                            LocaleName = LocaleNames.Danish,
-                                            Name = "Orders",
-                                            Language = LanguageNames.Danish,
-                                        },
+                                        LocaleName = LocaleNames.English,
+                                        Name = "Orders",
+                                        Language = LanguageNames.English,
+                                    },
+                                    new PluginMenuTranslationModel
+                                    {
+                                        LocaleName = LocaleNames.German,
+                                        Name = "Aufträge",
+                                        Language = LanguageNames.German,
+                                    },
+                                    new PluginMenuTranslationModel
+                                    {
+                                        LocaleName = LocaleNames.Danish,
+                                        Name = "Orders",
+                                        Language = LanguageNames.Danish,
+                                    },
+                                    new PluginMenuTranslationModel
+                                    {
+                                        LocaleName = LocaleNames.Ukrainian,
+                                        Name = "Замовлення",
+                                        Language = LanguageNames.Ukrainian,
                                     }
+                                }
+                            },
+                            Translations = new List<PluginMenuTranslationModel>
+                            {
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.English,
+                                    Name = "Orders",
+                                    Language = LanguageNames.English,
+                                },
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.German,
+                                    Name = "Aufträge",
+                                    Language = LanguageNames.German,
+                                },
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.Danish,
+                                    Name = "Orders",
+                                    Language = LanguageNames.Danish,
+                                },
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.Ukrainian,
+                                    Name = "Замовлення",
+                                    Language = LanguageNames.Ukrainian,
+                                }
                             }
                         }
                     }
-                };
+                }
+            };
 
             return pluginMenu;
         }
+
         public MenuModel HeaderMenu(IServiceProvider serviceProvider)
         {
             IWorkOrdersLocalizationService localizationService = serviceProvider
-                            .GetService<IWorkOrdersLocalizationService>();
+                .GetService<IWorkOrdersLocalizationService>();
 
             MenuModel result = new MenuModel();
             result.LeftMenu.Add(new MenuItemModel()
@@ -213,7 +229,7 @@ namespace WorkOrders.Pn
                 Name = localizationService.GetString("WorkOrders"),
                 E2EId = "work-orders-pn",
                 Link = "",
-                Guards = new List<string>() { WorkOrdersClaims.AccessWorkOrdersPlugin },
+                Guards = new List<string>() {WorkOrdersClaims.AccessWorkOrdersPlugin},
                 MenuItems = new List<MenuItemModel>()
                 {
                     new MenuItemModel()
@@ -232,7 +248,7 @@ namespace WorkOrders.Pn
         {
             // Get DbContext
             WorkOrderPnContextFactory contextFactory = new WorkOrderPnContextFactory();
-            using WorkOrderPnDbContext context = contextFactory.CreateDbContext(new[] { connectionString });
+            using WorkOrderPnDbContext context = contextFactory.CreateDbContext(new[] {connectionString});
             // Seed configuration
             WorkOrdersPluginSeed.SeedData(context);
         }
@@ -240,7 +256,7 @@ namespace WorkOrders.Pn
         public PluginPermissionsManager GetPermissionsManager(string connectionString)
         {
             WorkOrderPnContextFactory contextFactory = new WorkOrderPnContextFactory();
-            WorkOrderPnDbContext context = contextFactory.CreateDbContext(new[] { connectionString });
+            WorkOrderPnDbContext context = contextFactory.CreateDbContext(new[] {connectionString});
 
             return new PluginPermissionsManager(context);
         }
@@ -253,7 +269,8 @@ namespace WorkOrders.Pn
         private async void SeedWorkOrderForms(IServiceCollection serviceCollection)
         {
             ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
-            IPluginDbOptions<WorkOrdersBaseSettings> pluginDbOptions = serviceProvider.GetRequiredService<IPluginDbOptions<WorkOrdersBaseSettings>>();
+            IPluginDbOptions<WorkOrdersBaseSettings> pluginDbOptions =
+                serviceProvider.GetRequiredService<IPluginDbOptions<WorkOrdersBaseSettings>>();
 
             Core core = await serviceProvider.GetRequiredService<IEFormCoreService>().GetCore();
             WorkOrderPnDbContext context = serviceProvider.GetRequiredService<WorkOrderPnDbContext>();

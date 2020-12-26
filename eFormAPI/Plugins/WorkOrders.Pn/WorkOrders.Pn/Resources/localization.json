@@ -3,133 +3,152 @@
     "Key": "ErrorWhileObtainingWorkOrders",
     "LocalizedValue": {
       "da": "Fejl under indhentning af arbejdsordrer",
-      "en-US": "Error while obtaining work orders"
+      "en-US": "Error while obtaining work orders",
+      "uk-UA": "Помилка при отриманні замовлень на виконання робіт"
     }
   },
   {
     "Key": "Settings",
     "LocalizedValue": {
       "da": "Indstillinger",
-      "en-US": "Settings"
+      "en-US": "Settings",
+      "uk-UA": "Налаштування"
     }
   },
   {
     "Key": "ErrorWhileObtainingWorkOrdersSettings",
     "LocalizedValue": {
       "da": "Fejl under indhentning af arbejdsordre indstillinger",
-      "en-US": "Error while obtaining work orders settings"
+      "en-US": "Error while obtaining work orders settings",
+      "uk-UA": "Помилка при отриманні налаштувань робочих завдань"
     }
   },
   {
     "Key": "Yes",
     "LocalizedValue": {
       "da": "Ja",
-      "en-US": "Yes"
+      "en-US": "Yes",
+      "uk-UA": "Так"
     }
   },
   {
     "Key": "No",
     "LocalizedValue": {
       "da": "Nej",
-      "en-US": "No"
+      "en-US": "No",
+      "uk-UA": "Ні"
     }
   },
   {
     "Key": "Deployed at",
     "LocalizedValue": {
       "da": "Udsendt d.",
-      "en-US": "Deployed at"
+      "en-US": "Deployed at",
+      "uk-UA": "Розгорнуто в"
     }
   },
   {
     "Key": "Date of doing",
     "LocalizedValue": {
       "da": "Udførelsesdato",
-      "en-US": "Date of doing"
+      "en-US": "Date of doing",
+      "uk-UA": "Дата виконання"
     }
   },
   {
     "Key": "Done by",
     "LocalizedValue": {
       "da": "Udført af",
-      "en-US": "Done by"
+      "en-US": "Done by",
+      "uk-UA": "Зроблено"
     }
   },
   {
     "Key": "Name",
     "LocalizedValue": {
       "da": "Navn",
-      "en-US": "Name"
+      "en-US": "Name",
+      "uk-UA": "Ім'я"
     }
   },
   {
     "Key": "Description",
     "LocalizedValue": {
       "da": "Beskrivelse",
-      "en-US": "Description"
+      "en-US": "Description",
+      "uk-UA": "Опис"
     }
   },
   {
     "Key": "SiteAddedSuccessfully",
     "LocalizedValue": {
       "da": "Site tilføjet med succes",
-      "en-US": "Site Added Successfully"
+      "en-US": "Site added successfully",
+      "uk-UA": "Місце успішно додано"
     }
   },
   {
     "Key": "ErrorWhileAddingSiteToSettings",
     "LocalizedValue": {
       "da": "Fejl under tilføjelse af websted til indstillinger",
-      "en-US": "Error While Adding Site To Settings"
+      "en-US": "Error while adding site to settings",
+      "uk-UA": "Помилка при додаванні місця в налаштування"
     }
   },
   {
     "Key": "SiteDeletedSuccessfully",
     "LocalizedValue": {
       "da": "Webstedet blev slettet med succes",
-      "en-US": "Site Deleted Successfully"
+      "en-US": "Site deleted successfully",
+      "uk-UA": "Місце успішно видалено"
     }
   },
   {
     "Key": "ErrorWhileDeletingSiteFromSettings",
     "LocalizedValue": {
       "da": "Fejl under sletning af websted fra indstillinger",
-      "en-US": "Error While Deleting Site From Settings"
+      "en-US": "Error while deleting site from settings",
+      "uk-UA": "Помилка при видаленні місця з налаштувань"
     }
   },
   {
     "Key": "WorkOrders",
     "LocalizedValue": {
       "da": "Opgavestyring",
-      "en-US": "Work orders"
+      "en-US": "Work orders",
+      "uk-UA": "Замовлення на роботу"
     }
   },
   {
     "Key": "Orders",
     "LocalizedValue": {
       "da": "Oversigt",
-      "en-US": "Orders"
+      "en-US": "Orders",
+      "uk-UA": "Замовлення"
     }
   },
   {
     "Key": "Settings",
     "LocalizedValue": {
-      "da": "Settings",
-      "en-US": "Settings"
+      "da": "Indstilling",
+      "en-US": "Settings",
+      "uk-UA": "Налаштування"
     }
   },
   {
     "Key": "FolderUpdatedSuccessfully",
     "LocalizedValue": {
       "da": "Mappe blev opdateret",
-      "en-US": "Folder updated successfully"
+      "en-US": "Folder updated successfully",
+      "uk-UA": "Папка успішно оновлена"
     }
   },
   {
     "Key": "ErrorWhileUpdatingFolder",
     "LocalizedValue": {
       "da": "Fejl under opdatering af mappe",
-      "en-US": "Error while updating folder"
+      "en-US": "Error while updating folder",
+      "uk-UA": "Помилка при оновленні папки"
     }
   }
 ]
