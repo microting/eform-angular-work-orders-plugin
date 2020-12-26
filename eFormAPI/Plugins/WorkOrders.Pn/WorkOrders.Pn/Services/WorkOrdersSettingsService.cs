@@ -114,7 +114,7 @@ namespace WorkOrders.Pn.Services
             var result = await _dbContext.PluginConfigurationValues.SingleAsync(x => x.Name == "WorkOrdersBaseSettings:NewTaskId");
             var folderResult = await _dbContext.PluginConfigurationValues.SingleAsync(x => x.Name == "WorkOrdersBaseSettings:FolderId");
             var theCore = await _core.GetCore();
-            string folderId = theCore.dbContextHelper.GetDbContext().folders.Single(x => x.Id == int.Parse(folderResult.Value)).MicrotingUid.ToString();
+            string folderId = theCore.dbContextHelper.GetDbContext().Folders.Single(x => x.Id == int.Parse(folderResult.Value)).MicrotingUid.ToString();
             MainElement mainElement = await theCore.TemplateRead(int.Parse(result.Value));
             mainElement.Label = "Ny opgave";
             mainElement.CheckListFolderName = folderId;
