@@ -155,7 +155,7 @@ using WorkOrders.Pn.Messages;
                 }
 
                 var folderResult = await _dbContext.PluginConfigurationValues.SingleAsync(x => x.Name == "WorkOrdersBaseSettings:FolderTasksId");
-                string folderMicrotingUid = _sdkCore.dbContextHelper.GetDbContext().folders.Single(x => x.Id == folderId)
+                string folderMicrotingUid = _sdkCore.dbContextHelper.GetDbContext().Folders.Single(x => x.Id == folderId)
                     .MicrotingUid.ToString();
 
                 MainElement mainElement = await _sdkCore.TemplateRead(taskListId);
