@@ -130,7 +130,7 @@ namespace WorkOrders.Pn
                         new PluginMenuTranslationModel
                         {
                             LocaleName = LocaleNames.Danish,
-                            Name = "Arbejdsordrer",
+                            Name = "Opgavestyring",
                             Language = LanguageNames.Danish,
                         },
                         new PluginMenuTranslationModel
@@ -172,7 +172,7 @@ namespace WorkOrders.Pn
                                     new PluginMenuTranslationModel
                                     {
                                         LocaleName = LocaleNames.Danish,
-                                        Name = "Orders",
+                                        Name = "Oversigt",
                                         Language = LanguageNames.Danish,
                                     },
                                     new PluginMenuTranslationModel
@@ -181,7 +181,7 @@ namespace WorkOrders.Pn
                                         Name = "Замовлення",
                                         Language = LanguageNames.Ukrainian,
                                     }
-                                }
+                                },
                             },
                             Translations = new List<PluginMenuTranslationModel>
                             {
@@ -200,7 +200,7 @@ namespace WorkOrders.Pn
                                 new PluginMenuTranslationModel
                                 {
                                     LocaleName = LocaleNames.Danish,
-                                    Name = "Orders",
+                                    Name = "Oversigt",
                                     Language = LanguageNames.Danish,
                                 },
                                 new PluginMenuTranslationModel

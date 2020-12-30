@@ -4,6 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microting.eForm.Infrastructure.Constants;
+
 // ReSharper disable StringLiteralTypo
 
 namespace WorkOrders.Pn.Helpers
@@ -13,6 +16,53 @@ namespace WorkOrders.Pn.Helpers
 
     public class SeedHelper
     {
+        private static async Task<int> CreateTaskAreaList(Core core)
+        {
+            EntityGroupList model = await core.Advanced_EntityGroupAll(
+                "id",
+                "eform-angular-work-orders-plugin-editable-TaskArea",
+                0, 1, Constants.FieldTypes.EntitySelect,
+                false,
+                Constants.WorkflowStates.NotRemoved);
+
+            EntityGroup group;
+
+            if (!model.EntityGroups.Any())
+            {
+                group = await core.EntityGroupCreate(Constants.FieldTypes.EntitySelect,
+                    "eform-angular-work-orders-plugin-editable-TaskArea", "Områder");
+            }
+            else
+            {
+                group = model.EntityGroups.First();
+            }
+
+            return int.Parse(group.MicrotingUUID);
+        }
+
+        private static async Task<int> CreateWorkerList(Core core)
+        {
+            EntityGroupList model = await core.Advanced_EntityGroupAll(
+                "id",
+                "eform-angular-work-orders-plugin-editable-Worker",
+                0, 1, Constants.FieldTypes.EntitySelect,
+                false,
+                Constants.WorkflowStates.NotRemoved);
+
+            EntityGroup group;
+
+            if (!model.EntityGroups.Any())
+            {
+                group = await core.EntityGroupCreate(Constants.FieldTypes.EntitySelect,
+                    "eform-angular-work-orders-plugin-editable-Worker", "Medarbejdere");
+            }
+            else
+            {
+                group = model.EntityGroups.First();
+            }
+            return int.Parse(group.MicrotingUUID);
+        }
+
         public static async Task<int> CreateNewTaskEform(Core core)
         {
 
@@ -27,6 +77,8 @@ namespace WorkOrders.Pn.Helpers
             {
                 timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standard Time");
             }
+            int taskAreaListId = await CreateTaskAreaList(core);
+            int workerListId = await CreateWorkerList(core);
 
             List<Template_Dto> templatesDto = await core.TemplateItemReadAll(false,
                 "",
@@ -59,13 +111,35 @@ namespace WorkOrders.Pn.Helpers
 
                 List<DataItem> dataItems = new List<DataItem>
                 {
+                    new EntitySelect(
+                        371261, 
+                        false, 
+                        false, 
+                        "Opgave område",
+                        "", 
+                        Constants.FieldColors.Default, 
+                        0, 
+                        false,
+                        0, 
+                        taskAreaListId),
+                    new EntitySelect(
+                        371262, 
+                        false, 
+                        false, 
+                        "Opgave tildelt til",
+                        "", 
+                        Constants.FieldColors.Default, 
+                        0, 
+                        false,
+                        0, 
+                        workerListId),
                     new Picture(
                         371263,
                         false,
                         false,
-                        "Billede af opgaven",
+                        "Opgave billede",
                         "<br>",
-                        "e8eaf6",
+                        Constants.FieldColors.Default,
                         0,
                         false,
                         0,
@@ -75,9 +149,9 @@ namespace WorkOrders.Pn.Helpers
                         371264,
                         true,
                         false,
-                        "Beskrivelse af opgaven",
+                        "Opgave beskrivelse",
                         "",
-                        "e8eaf6",
+                        Constants.FieldColors.Default,
                         1,
                         false,
                         "",
@@ -90,11 +164,11 @@ namespace WorkOrders.Pn.Helpers
                     ),
                     new Date(
                         371265,
+                        true,
                         false,
-                        false,
-                        "Senest udbedret d.",
+                        "Opgave udføres senest",
                         "",
-                        "e8eaf6",
+                        Constants.FieldColors.Default,
                         2,
                         false,
                         new DateTime(),
@@ -105,12 +179,12 @@ namespace WorkOrders.Pn.Helpers
                         371266,
                         false,
                         false,
-                        "GEM & SEND",
+                        "Tryk for at oprette opgave",
                         "",
-                        "e8eaf6",
+                        Constants.FieldColors.Green,
                         2,
                         false,
-                        "GEM & SEND"
+                        "Opret opgave"
                     )
                 };
 
@@ -187,7 +261,7 @@ namespace WorkOrders.Pn.Helpers
                         false,
                         "Beskrivelse af opgaven",
                         "",
-                        "e8eaf6",
+                        Constants.FieldColors.Yellow,
                         0,
                         false
                     ),
@@ -195,9 +269,9 @@ namespace WorkOrders.Pn.Helpers
                         371268,
                         false,
                         false,
-                        "Se billeder af opgaven",
+                        "Tryk på PDF for at se billeder af opgaven",
                         "",
-                        "e8eaf6",
+                        Constants.FieldColors.Default,
                         1,
                         false,
                         "https://eform.microting.com/app_files/uploads/20200914114927_14937_9fae9a0b11bda418201523437984027c.pdf"
@@ -206,9 +280,9 @@ namespace WorkOrders.Pn.Helpers
                         371269,
                         true,
                         false,
-                        "Opgaven er udført",
+                        "Sæt flueben når opgaven er udført",
                         "",
-                        "e8eaf6",
+                        Constants.FieldColors.Default,
                         2,
                         false,
                         false,
@@ -218,9 +292,9 @@ namespace WorkOrders.Pn.Helpers
                         371270,
                         false,
                         false,
-                        "Evt. billede af den udførte opgave",
+                        "Billede af udført opgave",
                         "<br>",
-                        "e8eaf6",
+                        Constants.FieldColors.Default,
                         3,
                         false,
                         0,
@@ -230,9 +304,9 @@ namespace WorkOrders.Pn.Helpers
                         371271,
                         false,
                         false,
-                        "Beskriv evt. den udførte opgave",
+                        "Beskrivelse af udført opgave",
                         "",
-                        "e8eaf6",
+                        Constants.FieldColors.Default,
                         4,
                         false,
                         "",
@@ -247,12 +321,12 @@ namespace WorkOrders.Pn.Helpers
                         371272,
                         false,
                         false,
-                        "GEM & SEND",
+                        "Tryk for at sende udført opgave",
                         "",
-                        "e8eaf6",
+                        Constants.FieldColors.Green,
                         5,
                         false,
-                        "GEM & SEND"
+                        "Opgave udført"
                     )
                 };
 

@@ -85,6 +85,8 @@ namespace WorkOrders.Pn.Services
                     DoneAt = x.DoneAt != null ? TimeZoneInfo.ConvertTimeFromUtc((DateTime)x.DoneAt, timeZoneInfo) : (DateTime?) null,
                     DoneBySiteId = x.DoneBySiteId,
                     DescriptionOfTaskDone = x.DescriptionOfTaskDone,
+                    AssignedArea = x.AssignedArea,
+                    AssignedWorker = x.AssignedWorker,
                     PicturesOfTask = x.PicturesOfTasks
                         .Select(y => y.FileName)
                         .ToList(),

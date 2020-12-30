@@ -6,5 +6,7 @@ export const WorkOrdersSortColumns = {
   correctedAtLatest: 'CorrectedAtLatest',
   doneAt: 'DoneAt',
   doneBy: 'DoneBy',
-  descriptionTaskDone: 'DescriptionTaskDone'
+  descriptionTaskDone: 'DescriptionTaskDone',
+  assignedArea: 'AssignedArea',
+  assignedWorker: 'AssignedWorker'
 };
