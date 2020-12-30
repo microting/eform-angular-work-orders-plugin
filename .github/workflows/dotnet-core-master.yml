@@ -10,6 +10,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Slack start job
+        uses: voxmedia/github-action-slack-notify-build@v1
+        id: slack
+        with:
+          channel_id: C019FKB95L7
+          status: STARTED
+          color: good
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
     - uses: actions/checkout@v2
       with:
         path: main
@@ -107,6 +116,7 @@ jobs:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
       uses: voxmedia/github-action-slack-notify-build@v1
       with:
+        message_id: ${{ steps.slack.outputs.message_id }}
         channel_id: C019FKB95L7
         status: SUCCESS
         color: good
@@ -117,6 +127,7 @@ jobs:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
       uses: voxmedia/github-action-slack-notify-build@v1
       with:
+        message_id: ${{ steps.slack.outputs.message_id }}
         channel_id: C019FKB95L7
         status: FAILED
         color: danger
