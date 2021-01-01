@@ -231,7 +231,7 @@ namespace ServiceWorkOrdersPlugin.Handlers
                 {
                     Site sdkSite = await sdkDbContext.Sites.SingleAsync(x => x.Id == site.SiteId);
                     Language language = await sdkDbContext.Languages.SingleAsync(x => x.Id == sdkSite.LanguageId);
-                    Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(language.Description);
+                    Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(language.LanguageCode);
                     MainElement mainElement = await _sdkCore.ReadeForm(taskListId, language);
                     mainElement.Repeated = 1;
                     mainElement.EndDate = DateTime.Now.AddYears(10).ToUniversalTime();
