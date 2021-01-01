@@ -24,6 +24,7 @@ describe('Work Order Settings', function () {
     workOrdersPage.assignDeviceUser(name);
     loginPage.open('/');
     workOrdersPage.goToWorkOrdersSettingsPage();
+    $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     const rowCountAfterCreation = workOrdersPage.rowNum;
     expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after adding site').equal(rowCountBeforeCreation + 1);
   });
