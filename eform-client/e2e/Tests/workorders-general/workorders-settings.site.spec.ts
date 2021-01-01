@@ -16,6 +16,7 @@ describe('Work Order Settings', function () {
 
     deviceUsersPage.createDeviceUserFromScratch(name, surname);
 
+    $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     workOrdersPage.goToWorkOrdersSettingsPage();
   });
   it('Assign Site', function() {
