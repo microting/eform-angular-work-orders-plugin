@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microting.eForm.Infrastructure;
 using Microting.eForm.Infrastructure.Constants;
+using Microting.eForm.Infrastructure.Data.Entities;
 using Microting.eForm.Infrastructure.Models;
 using Rebus.Bus;
 using ServiceWorkOrdersPlugin.Handlers;
@@ -36,7 +37,7 @@ namespace WorkOrders.Pn.Services
         private readonly IRebusService _rebusService;
         private readonly IBus _bus;
 
-        public WorkOrdersSettingsService(WorkOrderPnDbContext dbContext, 
+        public WorkOrdersSettingsService(WorkOrderPnDbContext dbContext,
             ILogger<WorkOrdersSettingsService> logger,
             IWorkOrdersLocalizationService workOrdersLocalizationService,
             IEFormCoreService core,
@@ -97,7 +98,7 @@ namespace WorkOrders.Pn.Services
                 {
                     workOrdersSettings.FolderTasksId = null;
                 }
-                
+
                 return new OperationDataResult<WorkOrdersSettingsModel>(true, workOrdersSettings);
             }
             catch (Exception e)
@@ -114,9 +115,24 @@ namespace WorkOrders.Pn.Services
             var result = await _dbContext.PluginConfigurationValues.SingleAsync(x => x.Name == "WorkOrdersBaseSettings:NewTaskId");
             var folderResult = await _dbContext.PluginConfigurationValues.SingleAsync(x => x.Name == "WorkOrdersBaseSettings:FolderId");
             var theCore = await _core.GetCore();
-            string folderId = theCore.dbContextHelper.GetDbContext().Folders.Single(x => x.Id == int.Parse(folderResult.Value)).MicrotingUid.ToString();
-            MainElement mainElement = await theCore.TemplateRead(int.Parse(result.Value));
-            mainElement.Label = "Ny opgave";
+            await using var sdkDbContext = theCore.dbContextHelper.GetDbContext();
+            string folderId = sdkDbContext.Folders.Single(x => x.Id == int.Parse(folderResult.Value)).MicrotingUid.ToString();
+            Site site = await sdkDbContext.Sites.SingleAsync(x => x.Id == siteId);
+            Language language = await sdkDbContext.Languages.SingleAsync(x => x.Id == site.LanguageId);
+            MainElement mainElement = await theCore.ReadeForm(int.Parse(result.Value), language);
+            switch (language.Name)
+            {
+                case "Danish":
+                    mainElement.Label = "Ny opgave";
+                    break;
+                case "English":
+                    mainElement.Label = "New task";
+                    break;
+                case "German":
+                    mainElement.Label = "Neue Aufgabe";
+                    break;
+            }
+
             mainElement.CheckListFolderName = folderId;
             mainElement.EndDate = DateTime.UtcNow.AddYears(10);
             mainElement.Repeated = 0;
