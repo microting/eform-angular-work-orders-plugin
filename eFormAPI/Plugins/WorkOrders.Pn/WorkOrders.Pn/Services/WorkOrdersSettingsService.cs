@@ -117,7 +117,7 @@ namespace WorkOrders.Pn.Services
             var theCore = await _core.GetCore();
             await using var sdkDbContext = theCore.dbContextHelper.GetDbContext();
             string folderId = sdkDbContext.Folders.Single(x => x.Id == int.Parse(folderResult.Value)).MicrotingUid.ToString();
-            Site site = await sdkDbContext.Sites.SingleAsync(x => x.Id == siteId);
+            Site site = await sdkDbContext.Sites.SingleAsync(x => x.MicrotingUid == siteId);
             Language language = await sdkDbContext.Languages.SingleAsync(x => x.Id == site.LanguageId);
             MainElement mainElement = await theCore.ReadeForm(int.Parse(result.Value), language);
             switch (language.Name)

@@ -12,7 +12,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { WorkOrdersService } from '../../../services';
 import { debounceTime } from 'rxjs/operators';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
-import {PlanningPnModel} from 'src/app/plugins/modules/items-planning-pn/models/plannings';
 
 @AutoUnsubscribe()
 @Component({
