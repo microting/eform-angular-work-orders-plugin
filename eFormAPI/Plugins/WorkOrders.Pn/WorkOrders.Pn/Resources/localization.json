@@ -160,5 +160,41 @@
       "de-DE": "Fehler beim Aktualisieren des Ordners",
       "uk-UA": "Помилка при оновленні папки"
     }
+  },
+  {
+    "Key": "DontAtTheLatst",
+    "LocalizedValue": {
+      "da": "Udføres senest",
+      "en-US": "Performed at the latest",
+      "de-DE": "Spätestens durchgeführt",
+      "UK-UA": "Виконується найпізніше"
+    }
+  },
+  {
+    "Key": "Area",
+    "LocalizedValue": {
+      "da": "Område",
+      "en-US": "Area",
+      "de-DE": "Gebiet",
+      "uk-UA": "Площа"
+    }
+  },
+  {
+    "Key": "AssignedTo",
+    "LocalizedValue": {
+      "da": "Tildelt til",
+      "en-US": "Assigned to",
+      "de-DE": "Zugewiesen an",
+      "UK-UA": "Присвоєно"
+    }
+  },
+  {
+    "Key": "TaskCreatedBy",
+    "LocalizeValue": {
+      "da": "Oprettet af",
+      "en-US": "Task created by",
+      "de-DE": "Aufgabe erstellt von",
+      "uk-UA": "Завдання, створене користувачем"
+    }
   }
 ]

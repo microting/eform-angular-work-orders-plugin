@@ -9,8 +9,9 @@ Build status
 | Language | C# part | Angular part |
 | ------------- |:-----:|:-----:|
 | English | 100% | 100%|
-| Danish | 0% | 0% |
-| German | 0% | 0% |
+| Danish | 100% | 100% |
+| German | 100% | 100% |
+| Ukrainian | 100% | 100% |
 
 # Plugin manual installation tutorial
 Extract zip content to a root application directory.

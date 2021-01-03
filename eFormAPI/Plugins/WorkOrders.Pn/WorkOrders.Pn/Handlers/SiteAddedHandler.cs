@@ -40,6 +40,7 @@ using Microting.eForm.Infrastructure.Models;
 using Microting.WorkOrderBase.Infrastructure.Data;
 using Microting.WorkOrderBase.Infrastructure.Data.Entities;
 using Rebus.Handlers;
+using WorkOrders.Pn.Abstractions;
 using WorkOrders.Pn.Infrastructure.Helpers;
 using WorkOrders.Pn.Messages;
 using CheckListValue = Microting.eForm.Infrastructure.Models.CheckListValue;
@@ -52,13 +53,16 @@ namespace ServiceWorkOrdersPlugin.Handlers
     {
         private readonly eFormCore.Core _sdkCore;
         private readonly WorkOrderPnDbContext _dbContext;
+        private readonly IWorkOrdersLocalizationService _workOrdersLocalizationService;
         private bool _s3Enabled;
         private bool _swiftEnabled;
 
-        public SiteAddedHandler(eFormCore.Core sdkCore, DbContextHelper dbContextHelper)
+        public SiteAddedHandler(eFormCore.Core sdkCore, DbContextHelper dbContextHelper,
+        IWorkOrdersLocalizationService workOrdersLocalizationService)
         {
             _dbContext = dbContextHelper.GetDbContext();
             _sdkCore = sdkCore;
+            _workOrdersLocalizationService = workOrdersLocalizationService;
         }
 
         public async Task Handle(SiteAdded message)
@@ -246,16 +250,16 @@ namespace ServiceWorkOrdersPlugin.Handlers
                     mainElement.PushMessageTitle = mainElement.Label;
                     mainElement.PushMessageBody = string.IsNullOrEmpty(fields[4].FieldValues[0].Value)
                         ? ""
-                        : "Udføres senest: " + DateTime.Parse(fields[4].FieldValues[0].Value).ToString("dd-MM-yyyy");
+                        : $"{_workOrdersLocalizationService.GetString("DontAtTheLatest")}: " + DateTime.Parse(fields[4].FieldValues[0].Value).ToString("dd-MM-yyyy");
                     dataElement.Label = fields[3].FieldValues[0].Value;
                     dataElement.Description.InderValue += string.IsNullOrEmpty(fields[0].FieldValues[0].ValueReadable)
                         ? "" :
-                        $"<strong>Område:</strong> {fields[0].FieldValues[0].ValueReadable}<br>";
+                        $"<strong>{_workOrdersLocalizationService.GetString("Area")}:</strong> {fields[0].FieldValues[0].ValueReadable}<br>";
                     dataElement.Description.InderValue += string.IsNullOrEmpty(fields[1].FieldValues[0].ValueReadable)
                         ? ""
-                        :$"<strong>Tildelt til:</strong> {fields[1].FieldValues[0].ValueReadable}<br>";
-                    dataElement.Description.InderValue += $"<strong>Oprettet af:</strong> {doneBy}<br>";
-                    dataElement.Description.InderValue += "<strong>Udføres senest:</strong>"; // Needs i18n support "Corrected at the latest:"
+                        :$"<strong>{_workOrdersLocalizationService.GetString("AssignedTo")}:</strong> {fields[1].FieldValues[0].ValueReadable}<br>";
+                    dataElement.Description.InderValue += $"<strong>{_workOrdersLocalizationService.GetString("TaskCreatedBy")}:</strong> {doneBy}<br>";
+                    dataElement.Description.InderValue += $"<strong>{_workOrdersLocalizationService.GetString("DontAtTheLatest")}:</strong>"; // Needs i18n support "Corrected at the latest:"
                     dataElement.Description.InderValue += string.IsNullOrEmpty(fields[4].FieldValues[0].Value)
                         ? ""
                         : DateTime.Parse(fields[4].FieldValues[0].Value).ToString("dd-MM-yyyy");
