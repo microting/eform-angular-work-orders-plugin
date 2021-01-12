@@ -4,8 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microting.eForm.Infrastructure.Constants;
+using Microting.eForm.Infrastructure.Data.Entities;
+using EntityGroup = Microting.eForm.Infrastructure.Models.EntityGroup;
 
 // ReSharper disable StringLiteralTypo
 
@@ -79,6 +82,7 @@ namespace WorkOrders.Pn.Helpers
             }
             int taskAreaListId = await CreateTaskAreaList(core);
             int workerListId = await CreateWorkerList(core);
+            Language language = await core.dbContextHelper.GetDbContext().Languages.FirstAsync();
 
             List<Template_Dto> templatesDto = await core.TemplateItemReadAll(false,
                 "",
@@ -86,7 +90,8 @@ namespace WorkOrders.Pn.Helpers
                 false,
                 "",
                 new List<int>(),
-                timeZoneInfo
+                timeZoneInfo,
+                language
                 );
 
             if (templatesDto.Count > 0)
@@ -224,13 +229,15 @@ namespace WorkOrders.Pn.Helpers
                 timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standard Time");
             }
 
+            Language language = await core.dbContextHelper.GetDbContext().Languages.FirstAsync();
             List<Template_Dto> templatesDto = await core.TemplateItemReadAll(false,
                     "",
                     "eform-angular-work-orders-plugin-tasklist",
                     false,
                     "",
                     new List<int>(),
-                    timeZoneInfo
+                    timeZoneInfo,
+                    language
                     );
 
             if (templatesDto.Count > 0)

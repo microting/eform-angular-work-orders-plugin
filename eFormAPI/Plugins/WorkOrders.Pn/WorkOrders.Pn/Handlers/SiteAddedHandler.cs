@@ -132,7 +132,9 @@ namespace ServiceWorkOrdersPlugin.Handlers
             foreach (WorkOrder workOrder in workOrders)
             {
                 Console.WriteLine("[INF] EFormCompletedHandler.Handle: message.CheckId == createNewTaskEFormId");
-                ReplyElement replyElement = await _sdkCore.CaseRead(workOrder.MicrotingId, workOrder.CheckUId);
+                Language language = await _sdkCore.dbContextHelper.GetDbContext().Languages
+                    .SingleAsync(x => x.LanguageCode == "da");
+                ReplyElement replyElement = await _sdkCore.CaseRead(workOrder.MicrotingId, workOrder.CheckUId, language);
                 var doneBy = _sdkCore.dbContextHelper.GetDbContext().Workers
                     .Single(x => x.Id == replyElement.DoneById).full_name();
                 CheckListValue checkListValue = (CheckListValue)replyElement.ElementList[0];
@@ -234,7 +236,7 @@ namespace ServiceWorkOrdersPlugin.Handlers
                 foreach (AssignedSite site in sites)
                 {
                     Site sdkSite = await sdkDbContext.Sites.SingleAsync(x => x.Id == site.SiteId);
-                    Language language = await sdkDbContext.Languages.SingleAsync(x => x.Id == sdkSite.LanguageId);
+                    language = await sdkDbContext.Languages.SingleAsync(x => x.Id == sdkSite.LanguageId);
                     Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(language.LanguageCode);
                     MainElement mainElement = await _sdkCore.ReadeForm(taskListId, language);
                     mainElement.Repeated = 1;
