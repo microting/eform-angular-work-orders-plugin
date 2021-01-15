@@ -104,7 +104,7 @@ namespace WorkOrders.Pn.Helpers
                 {
                     Id = WorkOrderEformConsts.NewTaskId,
                     Repeated = 0,
-                    Label = "eform-angular-work-orders-plugin-newtask",
+                    Label = "eform-angular-work-orders-plugin-newtask|eform-angular-work-orders-plugin-newtask|eform-angular-work-orders-plugin-newtask",
                     StartDate = new DateTime(2020, 09, 14),
                     EndDate = new DateTime(2030, 09, 14),
                     Language = "da",
@@ -232,7 +232,7 @@ namespace WorkOrders.Pn.Helpers
             Language language = await core.dbContextHelper.GetDbContext().Languages.FirstAsync();
             List<Template_Dto> templatesDto = await core.TemplateItemReadAll(false,
                     "",
-                    "eform-angular-work-orders-plugin-tasklist",
+                    "eform-angular-work-orders-plugin-tasklist|eform-angular-work-orders-plugin-tasklist|eform-angular-work-orders-plugin-tasklist",
                     false,
                     "",
                     new List<int>(),
