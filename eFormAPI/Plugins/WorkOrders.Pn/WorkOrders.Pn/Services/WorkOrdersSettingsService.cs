@@ -59,7 +59,7 @@ namespace WorkOrders.Pn.Services
         {
             try
             {
-                List<int> assignedSitesIds = await _dbContext.AssignedSites.Where(y => y.WorkflowState != Constants.WorkflowStates.Removed).Select(x => x.SiteId).ToListAsync();
+                List<int> assignedSitesIds = await _dbContext.AssignedSites.Where(y => y.WorkflowState != Constants.WorkflowStates.Removed).Select(x => x.SiteMicrotingUid).ToListAsync();
                 WorkOrdersSettingsModel workOrdersSettings = new WorkOrdersSettingsModel()
                 {
                     AssignedSites = new List<SiteNameModel>()
@@ -142,7 +142,7 @@ namespace WorkOrders.Pn.Services
             try
             {
                 int? caseId = await theCore.CaseCreate(mainElement, "", siteId, int.Parse(folderResult.Value));
-                AssignedSite assignedSite = new AssignedSite() { SiteId = siteId, CaseId = (int)caseId};
+                AssignedSite assignedSite = new AssignedSite() { SiteMicrotingUid = siteId, CaseMicrotingUid = (int)caseId};
 
                 await assignedSite.Create(_dbContext);
                 //await transaction.CommitAsync();
@@ -221,10 +221,10 @@ namespace WorkOrders.Pn.Services
         {
             try
             {
-                AssignedSite assignedSite = await _dbContext.AssignedSites.FirstOrDefaultAsync(x => x.SiteId == siteId
+                AssignedSite assignedSite = await _dbContext.AssignedSites.FirstOrDefaultAsync(x => x.SiteMicrotingUid == siteId
                         && x.WorkflowState != Constants.WorkflowStates.Removed);
                 var theCore = await _core.GetCore();
-                await theCore.CaseDelete((int)assignedSite.CaseId);
+                await theCore.CaseDelete((int)assignedSite.CaseMicrotingUid);
                 await assignedSite.Delete(_dbContext);
 
                 return new OperationResult(true,

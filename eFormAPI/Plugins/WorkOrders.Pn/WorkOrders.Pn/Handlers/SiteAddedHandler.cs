@@ -235,7 +235,7 @@ namespace ServiceWorkOrdersPlugin.Handlers
                 List<AssignedSite> sites = await _dbContext.AssignedSites.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed).ToListAsync();
                 foreach (AssignedSite site in sites)
                 {
-                    Site sdkSite = await sdkDbContext.Sites.SingleAsync(x => x.Id == site.SiteId);
+                    Site sdkSite = await sdkDbContext.Sites.SingleAsync(x => x.MicrotingUid == site.SiteMicrotingUid);
                     language = await sdkDbContext.Languages.SingleAsync(x => x.Id == sdkSite.LanguageId);
                     Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(language.LanguageCode);
                     MainElement mainElement = await _sdkCore.ReadeForm(taskListId, language);
@@ -276,10 +276,10 @@ namespace ServiceWorkOrdersPlugin.Handlers
                     var wotCase  = await _dbContext.WorkOrdersTemplateCases.SingleOrDefaultAsync(x =>
                         x.CheckId == workOrder.CheckId
                         && x.CheckUId == workOrder.CheckUId
-                        && x.SdkSiteId == site.SiteId);
+                        && x.SdkSiteId == site.SiteMicrotingUid);
                     if (wotCase == null)
                     {
-                        int? caseId = await _sdkCore.CaseCreate(mainElement, "", site.SiteId, folderId);
+                        int? caseId = await _sdkCore.CaseCreate(mainElement, "", site.SiteMicrotingUid, folderId);
                         wotCase = new WorkOrdersTemplateCase()
                         {
                             CheckId = workOrder.CheckId,
@@ -287,7 +287,7 @@ namespace ServiceWorkOrdersPlugin.Handlers
                             WorkOrderId = workOrder.Id,
                             CaseId = (int) caseId,
                             CaseUId = workOrder.MicrotingId,
-                            SdkSiteId = site.SiteId
+                            SdkSiteId = site.SiteMicrotingUid
                         };
                         await wotCase.Create(_dbContext);
                     }
