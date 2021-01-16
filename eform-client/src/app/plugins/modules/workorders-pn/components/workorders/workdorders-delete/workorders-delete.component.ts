@@ -22,7 +22,6 @@ export class WorkOrdersDeleteComponent implements OnInit {
   }
 
   deletePlanning() {
-    debugger;
     this.workOrdersService.deleteWorkOrder(this.workOrderModel.id).subscribe((data) => {
       if (data && data.success) {
         this.workOrderDeleted.emit();
