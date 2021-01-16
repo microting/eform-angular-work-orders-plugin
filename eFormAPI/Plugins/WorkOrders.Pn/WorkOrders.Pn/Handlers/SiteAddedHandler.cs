@@ -127,14 +127,14 @@ namespace ServiceWorkOrdersPlugin.Handlers
                 x.DoneAt == null &&
                 x.WorkflowState != Constants.WorkflowStates.Removed &&
                 x.MicrotingId != 0 &&
-                x.CheckUId != 0).ToListAsync();
+                x.CheckMicrotingUid != 0).ToListAsync();
 
             foreach (WorkOrder workOrder in workOrders)
             {
                 Console.WriteLine("[INF] EFormCompletedHandler.Handle: message.CheckId == createNewTaskEFormId");
                 Language language = await _sdkCore.dbContextHelper.GetDbContext().Languages
                     .SingleAsync(x => x.LanguageCode == "da");
-                ReplyElement replyElement = await _sdkCore.CaseRead(workOrder.MicrotingId, workOrder.CheckUId, language);
+                ReplyElement replyElement = await _sdkCore.CaseRead(workOrder.MicrotingId, workOrder.CheckMicrotingUid, language);
                 var doneBy = _sdkCore.dbContextHelper.GetDbContext().Workers
                     .Single(x => x.Id == replyElement.DoneById).full_name();
                 CheckListValue checkListValue = (CheckListValue)replyElement.ElementList[0];
@@ -275,19 +275,19 @@ namespace ServiceWorkOrdersPlugin.Handlers
                     }
                     var wotCase  = await _dbContext.WorkOrdersTemplateCases.SingleOrDefaultAsync(x =>
                         x.CheckId == workOrder.CheckId
-                        && x.CheckUId == workOrder.CheckUId
-                        && x.SdkSiteId == site.SiteMicrotingUid);
+                        && x.CheckMicrotingUid == workOrder.CheckMicrotingUid
+                        && x.SdkSiteMicrotingUid == site.SiteMicrotingUid);
                     if (wotCase == null)
                     {
                         int? caseId = await _sdkCore.CaseCreate(mainElement, "", site.SiteMicrotingUid, folderId);
                         wotCase = new WorkOrdersTemplateCase()
                         {
                             CheckId = workOrder.CheckId,
-                            CheckUId = workOrder.CheckUId,
+                            CheckMicrotingUid = workOrder.CheckMicrotingUid,
                             WorkOrderId = workOrder.Id,
                             CaseId = (int) caseId,
-                            CaseUId = workOrder.MicrotingId,
-                            SdkSiteId = site.SiteMicrotingUid
+                            CaseMicrotingUid = workOrder.MicrotingId,
+                            SdkSiteMicrotingUid = site.SiteMicrotingUid
                         };
                         await wotCase.Create(_dbContext);
                     }
