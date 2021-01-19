@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Castle.Windsor" Version="5.0.1" />
+    <PackageReference Include="Castle.Windsor" Version="5.1.1" />
     <PackageReference Include="HtmlToOpenXml.dll" Version="2.2.0" />
     <PackageReference Include="Microting.eForm" Version="4.2.3" />
     <PackageReference Include="Microting.eFormApi.BasePn" Version="2.0.80" />
