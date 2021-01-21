@@ -277,20 +277,18 @@ namespace ServiceWorkOrdersPlugin.Handlers
                         x.CheckId == workOrder.CheckId
                         && x.CheckMicrotingUid == workOrder.CheckMicrotingUid
                         && x.SdkSiteMicrotingUid == site.SiteMicrotingUid);
-                    if (wotCase == null)
+                    if (wotCase != null) continue;
+                    int? caseId = await _sdkCore.CaseCreate(mainElement, "", site.SiteMicrotingUid, folderId);
+                    wotCase = new WorkOrdersTemplateCase()
                     {
-                        int? caseId = await _sdkCore.CaseCreate(mainElement, "", site.SiteMicrotingUid, folderId);
-                        wotCase = new WorkOrdersTemplateCase()
-                        {
-                            CheckId = workOrder.CheckId,
-                            CheckMicrotingUid = workOrder.CheckMicrotingUid,
-                            WorkOrderId = workOrder.Id,
-                            CaseId = (int) caseId,
-                            CaseMicrotingUid = workOrder.MicrotingId,
-                            SdkSiteMicrotingUid = site.SiteMicrotingUid
-                        };
-                        await wotCase.Create(_dbContext);
-                    }
+                        CheckId = workOrder.CheckId,
+                        CheckMicrotingUid = workOrder.CheckMicrotingUid,
+                        WorkOrderId = workOrder.Id,
+                        CaseId = (int) caseId,
+                        CaseMicrotingUid = workOrder.MicrotingId,
+                        SdkSiteMicrotingUid = site.SiteMicrotingUid
+                    };
+                    await wotCase.Create(_dbContext);
                 }
             }
         }

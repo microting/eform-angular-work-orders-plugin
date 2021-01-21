@@ -9,12 +9,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Microting.eForm.Infrastructure;
 using Microting.eForm.Infrastructure.Constants;
 using Microting.eForm.Infrastructure.Data.Entities;
 using Microting.eForm.Infrastructure.Models;
 using Rebus.Bus;
-using ServiceWorkOrdersPlugin.Handlers;
 using WorkOrders.Pn.Abstractions;
 using WorkOrders.Pn.Infrastructure.Models;
 using WorkOrders.Pn.Infrastructure.Models.Settings;
@@ -22,7 +20,6 @@ using WorkOrders.Pn.Messages;
 
 namespace WorkOrders.Pn.Services
 {
-    using Microsoft.EntityFrameworkCore.Storage;
     using Microting.eForm.Dto;
     using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 
