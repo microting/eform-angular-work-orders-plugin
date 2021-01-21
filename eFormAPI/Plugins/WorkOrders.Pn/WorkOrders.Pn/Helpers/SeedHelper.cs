@@ -82,7 +82,7 @@ namespace WorkOrders.Pn.Helpers
             }
             int taskAreaListId = await CreateTaskAreaList(core);
             int workerListId = await CreateWorkerList(core);
-            Language language = await core.dbContextHelper.GetDbContext().Languages.FirstAsync();
+            Language language = await core.DbContextHelper.GetDbContext().Languages.FirstAsync();
 
             List<Template_Dto> templatesDto = await core.TemplateItemReadAll(false,
                 "",
@@ -227,7 +227,7 @@ namespace WorkOrders.Pn.Helpers
                 timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standard Time");
             }
 
-            Language language = await core.dbContextHelper.GetDbContext().Languages.FirstAsync();
+            Language language = await core.DbContextHelper.GetDbContext().Languages.FirstAsync();
             List<Template_Dto> templatesDto = await core.TemplateItemReadAll(false,
                     "",
                     "eform-angular-work-orders-plugin-tasklist",

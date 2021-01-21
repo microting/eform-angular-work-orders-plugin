@@ -132,10 +132,12 @@ namespace ServiceWorkOrdersPlugin.Handlers
             foreach (WorkOrder workOrder in workOrders)
             {
                 Console.WriteLine("[INF] EFormCompletedHandler.Handle: message.CheckId == createNewTaskEFormId");
-                Language language = await _sdkCore.dbContextHelper.GetDbContext().Languages
+                await using var sdkDbContext = _sdkCore.DbContextHelper.GetDbContext();
+
+                Language language = await sdkDbContext.Languages
                     .SingleAsync(x => x.LanguageCode == "da");
                 ReplyElement replyElement = await _sdkCore.CaseRead(workOrder.MicrotingId, workOrder.CheckMicrotingUid, language);
-                var doneBy = _sdkCore.dbContextHelper.GetDbContext().Workers
+                var doneBy = sdkDbContext.Workers
                     .Single(x => x.Id == replyElement.DoneById).full_name();
                 CheckListValue checkListValue = (CheckListValue)replyElement.ElementList[0];
                 List<Field> fields = checkListValue.DataItemList.Select(di => di as Field).ToList();
@@ -228,7 +230,6 @@ namespace ServiceWorkOrdersPlugin.Handlers
                 }
 
                 //var folderResult = await _dbContext.PluginConfigurationValues.SingleAsync(x => x.Name == "WorkOrdersBaseSettings:FolderTasksId");
-                await using var sdkDbContext = _sdkCore.dbContextHelper.GetDbContext();
                 string folderMicrotingUid = sdkDbContext.Folders.Single(x => x.Id == folderId)
                     .MicrotingUid.ToString();
 

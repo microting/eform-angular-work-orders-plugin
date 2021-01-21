@@ -112,7 +112,7 @@ namespace WorkOrders.Pn.Services
             var result = await _dbContext.PluginConfigurationValues.SingleAsync(x => x.Name == "WorkOrdersBaseSettings:NewTaskId");
             var folderResult = await _dbContext.PluginConfigurationValues.SingleAsync(x => x.Name == "WorkOrdersBaseSettings:FolderId");
             var theCore = await _core.GetCore();
-            await using var sdkDbContext = theCore.dbContextHelper.GetDbContext();
+            await using var sdkDbContext = theCore.DbContextHelper.GetDbContext();
             string folderId = sdkDbContext.Folders.Single(x => x.Id == int.Parse(folderResult.Value)).MicrotingUid.ToString();
             Site site = await sdkDbContext.Sites.SingleAsync(x => x.MicrotingUid == siteId);
             Language language = await sdkDbContext.Languages.SingleAsync(x => x.Id == site.LanguageId);
