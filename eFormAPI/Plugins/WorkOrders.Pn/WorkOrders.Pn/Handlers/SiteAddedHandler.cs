@@ -145,24 +145,49 @@ namespace ServiceWorkOrdersPlugin.Handlers
                 var picturesOfTasks = new List<string>();
                 if (fields.Any())
                 {
-                    // field[0] - picture of the task
-                    if (!string.IsNullOrEmpty(fields[3]?.FieldValues[0]?.Value))
+                    if (fields.Count == 4)
                     {
-                        workOrder.Description = fields[3].FieldValues[0].Value;
-                    }
-
-                    if (!string.IsNullOrEmpty(fields[4]?.FieldValues[0]?.Value))
-                    {
-                        workOrder.CorrectedAtLatest = DateTime.Parse(fields[4].FieldValues[0].Value);
-                    }
-
-                    if(fields[2].FieldValues.Count > 0)
-                    {
-                        foreach(FieldValue fieldValue in fields[2].FieldValues)
+                        if (!string.IsNullOrEmpty(fields[1]?.FieldValues[0]?.Value))
                         {
-                            if (fieldValue.UploadedDataObj != null)
+                            workOrder.Description = fields[1].FieldValues[0].Value;
+                        }
+
+                        if (!string.IsNullOrEmpty(fields[2]?.FieldValues[0]?.Value))
+                        {
+                            workOrder.CorrectedAtLatest = DateTime.Parse(fields[2].FieldValues[0].Value);
+                        }
+
+                        if (fields[0].FieldValues.Count > 0)
+                        {
+                            foreach (FieldValue fieldValue in fields[0].FieldValues)
                             {
-                                picturesOfTasks.Add(fieldValue.UploadedDataObj.FileName);
+                                if (fieldValue.UploadedDataObj != null)
+                                {
+                                    picturesOfTasks.Add(fieldValue.UploadedDataObj.FileName);
+                                }
+                            }
+                        }
+                    } else
+                    {
+                        // field[0] - picture of the task
+                        if (!string.IsNullOrEmpty(fields[3]?.FieldValues[0]?.Value))
+                        {
+                            workOrder.Description = fields[3].FieldValues[0].Value;
+                        }
+
+                        if (!string.IsNullOrEmpty(fields[4]?.FieldValues[0]?.Value))
+                        {
+                            workOrder.CorrectedAtLatest = DateTime.Parse(fields[4].FieldValues[0].Value);
+                        }
+
+                        if (fields[2].FieldValues.Count > 0)
+                        {
+                            foreach (FieldValue fieldValue in fields[2].FieldValues)
+                            {
+                                if (fieldValue.UploadedDataObj != null)
+                                {
+                                    picturesOfTasks.Add(fieldValue.UploadedDataObj.FileName);
+                                }
                             }
                         }
                     }
@@ -249,26 +274,46 @@ namespace ServiceWorkOrdersPlugin.Handlers
                     mainElement.DisplayOrder = (workOrder.CorrectedAtLatest - startDate).Days;
 
                     DataElement dataElement = (DataElement)mainElement.ElementList[0];
-                    mainElement.Label = fields[3].FieldValues[0].Value;
-                    mainElement.PushMessageTitle = mainElement.Label;
-                    mainElement.PushMessageBody = string.IsNullOrEmpty(fields[4].FieldValues[0].Value)
-                        ? ""
-                        : $"{_workOrdersLocalizationService.GetString("DontAtTheLatest")}: " + DateTime.Parse(fields[4].FieldValues[0].Value).ToString("dd-MM-yyyy");
-                    dataElement.Label = fields[3].FieldValues[0].Value;
-                    dataElement.Description.InderValue += string.IsNullOrEmpty(fields[0].FieldValues[0].ValueReadable)
-                        ? "" :
-                        $"<strong>{_workOrdersLocalizationService.GetString("Area")}:</strong> {fields[0].FieldValues[0].ValueReadable}<br>";
-                    dataElement.Description.InderValue += string.IsNullOrEmpty(fields[1].FieldValues[0].ValueReadable)
-                        ? ""
-                        :$"<strong>{_workOrdersLocalizationService.GetString("AssignedTo")}:</strong> {fields[1].FieldValues[0].ValueReadable}<br>";
-                    dataElement.Description.InderValue += $"<strong>{_workOrdersLocalizationService.GetString("TaskCreatedBy")}:</strong> {doneBy}<br>";
-                    dataElement.Description.InderValue += $"<strong>{_workOrdersLocalizationService.GetString("DontAtTheLatest")}:</strong>"; // Needs i18n support "Corrected at the latest:"
-                    dataElement.Description.InderValue += string.IsNullOrEmpty(fields[4].FieldValues[0].Value)
-                        ? ""
-                        : DateTime.Parse(fields[4].FieldValues[0].Value).ToString("dd-MM-yyyy");
+                    if (fields.Count == 4)
+                    {
+                        mainElement.Label = fields[1].FieldValues[0].Value;
+                        mainElement.PushMessageTitle = mainElement.Label;
+                        mainElement.PushMessageBody = string.IsNullOrEmpty(fields[2].FieldValues[0].Value)
+                            ? ""
+                            : $"{_workOrdersLocalizationService.GetString("DontAtTheLatest")}: " + DateTime.Parse(fields[2].FieldValues[0].Value).ToString("dd-MM-yyyy");
+                        dataElement.Label = fields[1].FieldValues[0].Value;
+                        dataElement.Description.InderValue += $"<strong>{_workOrdersLocalizationService.GetString("TaskCreatedBy")}:</strong> {doneBy}<br>";
+                        dataElement.Description.InderValue += $"<strong>{_workOrdersLocalizationService.GetString("DontAtTheLatest")}:</strong>"; // Needs i18n support "Corrected at the latest:"
+                        dataElement.Description.InderValue += string.IsNullOrEmpty(fields[2].FieldValues[0].Value)
+                            ? ""
+                            : DateTime.Parse(fields[2].FieldValues[0].Value).ToString("dd-MM-yyyy");
 
-                    dataElement.DataItemList[0].Description.InderValue = dataElement.Description.InderValue;
-                    dataElement.DataItemList[0].Label = dataElement.Label;
+                        dataElement.DataItemList[0].Description.InderValue = dataElement.Description.InderValue;
+                        dataElement.DataItemList[0].Label = dataElement.Label;
+                    }
+                    else
+                    {
+                        mainElement.Label = fields[3].FieldValues[0].Value;
+                        mainElement.PushMessageTitle = mainElement.Label;
+                        mainElement.PushMessageBody = string.IsNullOrEmpty(fields[4].FieldValues[0].Value)
+                            ? ""
+                            : $"{_workOrdersLocalizationService.GetString("DontAtTheLatest")}: " + DateTime.Parse(fields[4].FieldValues[0].Value).ToString("dd-MM-yyyy");
+                        dataElement.Label = fields[3].FieldValues[0].Value;
+                        dataElement.Description.InderValue += string.IsNullOrEmpty(fields[0].FieldValues[0].ValueReadable)
+                            ? "" :
+                            $"<strong>{_workOrdersLocalizationService.GetString("Area")}:</strong> {fields[0].FieldValues[0].ValueReadable}<br>";
+                        dataElement.Description.InderValue += string.IsNullOrEmpty(fields[1].FieldValues[0].ValueReadable)
+                            ? ""
+                            :$"<strong>{_workOrdersLocalizationService.GetString("AssignedTo")}:</strong> {fields[1].FieldValues[0].ValueReadable}<br>";
+                        dataElement.Description.InderValue += $"<strong>{_workOrdersLocalizationService.GetString("TaskCreatedBy")}:</strong> {doneBy}<br>";
+                        dataElement.Description.InderValue += $"<strong>{_workOrdersLocalizationService.GetString("DontAtTheLatest")}:</strong>"; // Needs i18n support "Corrected at the latest:"
+                        dataElement.Description.InderValue += string.IsNullOrEmpty(fields[4].FieldValues[0].Value)
+                            ? ""
+                            : DateTime.Parse(fields[4].FieldValues[0].Value).ToString("dd-MM-yyyy");
+
+                        dataElement.DataItemList[0].Description.InderValue = dataElement.Description.InderValue;
+                        dataElement.DataItemList[0].Label = dataElement.Label;
+                    }
 
                     if (hash != null)
                     {
