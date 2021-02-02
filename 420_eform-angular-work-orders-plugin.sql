@@ -170,7 +170,6 @@ CREATE TABLE `PluginConfigurationValueVersions` (
 
 LOCK TABLES `PluginConfigurationValueVersions` WRITE;
 /*!40000 ALTER TABLE `PluginConfigurationValueVersions` DISABLE KEYS */;
-INSERT INTO `PluginConfigurationValueVersions` VALUES (1,'2020-11-10 11:06:07.471212','2020-11-10 11:06:07.471213','created',1,1,1,'WorkOrdersBaseSettings:NewTaskId','0'),(2,'2020-11-10 11:06:07.716889','2020-11-10 11:06:07.716889','created',1,1,1,'WorkOrdersBaseSettings:TaskListId','0');
 /*!40000 ALTER TABLE `PluginConfigurationValueVersions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -201,7 +200,6 @@ CREATE TABLE `PluginConfigurationValues` (
 
 LOCK TABLES `PluginConfigurationValues` WRITE;
 /*!40000 ALTER TABLE `PluginConfigurationValues` DISABLE KEYS */;
-INSERT INTO `PluginConfigurationValues` VALUES (1,'2020-11-10 11:05:55.833755','2020-11-10 11:06:07.484036','created',1,1,2,'WorkOrdersBaseSettings:NewTaskId','1'),(2,'2020-11-10 11:05:55.936162','2020-11-10 11:06:07.717071','created',1,1,2,'WorkOrdersBaseSettings:TaskListId','3'),(3,'2020-11-10 11:05:55.942984','2020-11-10 11:05:55.942984','created',1,0,1,'WorkOrdersBaseSettings:MaxParallelism','1'),(4,'2020-11-10 11:05:55.946177','2020-11-10 11:05:55.946178','created',1,0,1,'WorkOrdersBaseSettings:NumberOfWorkers','1'),(5,'2020-11-10 11:05:55.949414','2020-11-10 11:05:55.949414','created',1,0,1,'WorkOrdersBaseSettings:FolderId','0'),(6,'2020-11-10 11:05:55.952371','2020-11-10 11:05:55.952371','created',1,0,1,'WorkOrdersBaseSettings:FolderTasksId','0');
 /*!40000 ALTER TABLE `PluginConfigurationValues` ENABLE KEYS */;
 UNLOCK TABLES;
 

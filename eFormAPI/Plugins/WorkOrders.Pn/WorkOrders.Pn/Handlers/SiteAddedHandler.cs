@@ -24,35 +24,45 @@ SOFTWARE.
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using ImageMagick;
 using Microsoft.EntityFrameworkCore;
 using Microting.eForm.Dto;
 using Microting.eForm.Helpers;
 using Microting.eForm.Infrastructure.Constants;
+using Microting.eForm.Infrastructure.Data.Entities;
 using Microting.eForm.Infrastructure.Models;
 using Microting.WorkOrderBase.Infrastructure.Data;
 using Microting.WorkOrderBase.Infrastructure.Data.Entities;
 using Rebus.Handlers;
+using WorkOrders.Pn.Abstractions;
 using WorkOrders.Pn.Infrastructure.Helpers;
 using WorkOrders.Pn.Messages;
+using CheckListValue = Microting.eForm.Infrastructure.Models.CheckListValue;
+using Field = Microting.eForm.Infrastructure.Models.Field;
+using FieldValue = Microting.eForm.Infrastructure.Models.FieldValue;
 
- namespace ServiceWorkOrdersPlugin.Handlers
+namespace ServiceWorkOrdersPlugin.Handlers
 {
     public class SiteAddedHandler : IHandleMessages<SiteAdded>
     {
         private readonly eFormCore.Core _sdkCore;
         private readonly WorkOrderPnDbContext _dbContext;
+        private readonly IWorkOrdersLocalizationService _workOrdersLocalizationService;
         private bool _s3Enabled;
         private bool _swiftEnabled;
 
-        public SiteAddedHandler(eFormCore.Core sdkCore, DbContextHelper dbContextHelper)
+        public SiteAddedHandler(eFormCore.Core sdkCore, DbContextHelper dbContextHelper,
+        IWorkOrdersLocalizationService workOrdersLocalizationService)
         {
             _dbContext = dbContextHelper.GetDbContext();
             _sdkCore = sdkCore;
+            _workOrdersLocalizationService = workOrdersLocalizationService;
         }
 
         public async Task Handle(SiteAdded message)
@@ -117,13 +127,17 @@ using WorkOrders.Pn.Messages;
                 x.DoneAt == null &&
                 x.WorkflowState != Constants.WorkflowStates.Removed &&
                 x.MicrotingId != 0 &&
-                x.CheckUId != 0).ToListAsync();
+                x.CheckMicrotingUid != 0).ToListAsync();
 
             foreach (WorkOrder workOrder in workOrders)
             {
                 Console.WriteLine("[INF] EFormCompletedHandler.Handle: message.CheckId == createNewTaskEFormId");
-                ReplyElement replyElement = await _sdkCore.CaseRead(workOrder.MicrotingId, workOrder.CheckUId);
-                var doneBy = _sdkCore.dbContextHelper.GetDbContext().workers
+                await using var sdkDbContext = _sdkCore.DbContextHelper.GetDbContext();
+
+                Language language = await sdkDbContext.Languages
+                    .SingleAsync(x => x.LanguageCode == "da");
+                ReplyElement replyElement = await _sdkCore.CaseRead(workOrder.MicrotingId, workOrder.CheckMicrotingUid, language);
+                var doneBy = sdkDbContext.Workers
                     .Single(x => x.Id == replyElement.DoneById).full_name();
                 CheckListValue checkListValue = (CheckListValue)replyElement.ElementList[0];
                 List<Field> fields = checkListValue.DataItemList.Select(di => di as Field).ToList();
@@ -131,63 +145,53 @@ using WorkOrders.Pn.Messages;
                 var picturesOfTasks = new List<string>();
                 if (fields.Any())
                 {
-                    // field[0] - picture of the task
-                    if (!string.IsNullOrEmpty(fields[3]?.FieldValues[0]?.Value))
+                    if (fields.Count == 4)
                     {
-                        workOrder.Description = fields[3].FieldValues[0].Value;
-                    }
-
-                    if (!string.IsNullOrEmpty(fields[4]?.FieldValues[0]?.Value))
-                    {
-                        workOrder.CorrectedAtLatest = DateTime.Parse(fields[4].FieldValues[0].Value);
-                    }
-
-                    if(fields[2].FieldValues.Count > 0)
-                    {
-                        foreach(FieldValue fieldValue in fields[2].FieldValues)
+                        if (!string.IsNullOrEmpty(fields[1]?.FieldValues[0]?.Value))
                         {
-                            if (fieldValue.UploadedDataObj != null)
+                            workOrder.Description = fields[1].FieldValues[0].Value;
+                        }
+
+                        if (!string.IsNullOrEmpty(fields[2]?.FieldValues[0]?.Value))
+                        {
+                            workOrder.CorrectedAtLatest = DateTime.Parse(fields[2].FieldValues[0].Value);
+                        }
+
+                        if (fields[0].FieldValues.Count > 0)
+                        {
+                            foreach (FieldValue fieldValue in fields[0].FieldValues)
                             {
-                                picturesOfTasks.Add(fieldValue.UploadedDataObj.FileName);
+                                if (fieldValue.UploadedDataObj != null)
+                                {
+                                    picturesOfTasks.Add(fieldValue.UploadedDataObj.FileName);
+                                }
+                            }
+                        }
+                    } else
+                    {
+                        // field[0] - picture of the task
+                        if (!string.IsNullOrEmpty(fields[3]?.FieldValues[0]?.Value))
+                        {
+                            workOrder.Description = fields[3].FieldValues[0].Value;
+                        }
+
+                        if (!string.IsNullOrEmpty(fields[4]?.FieldValues[0]?.Value))
+                        {
+                            workOrder.CorrectedAtLatest = DateTime.Parse(fields[4].FieldValues[0].Value);
+                        }
+
+                        if (fields[2].FieldValues.Count > 0)
+                        {
+                            foreach (FieldValue fieldValue in fields[2].FieldValues)
+                            {
+                                if (fieldValue.UploadedDataObj != null)
+                                {
+                                    picturesOfTasks.Add(fieldValue.UploadedDataObj.FileName);
+                                }
                             }
                         }
                     }
                 }
-
-                var folderResult = await _dbContext.PluginConfigurationValues.SingleAsync(x => x.Name == "WorkOrdersBaseSettings:FolderTasksId");
-                string folderMicrotingUid = _sdkCore.dbContextHelper.GetDbContext().Folders.Single(x => x.Id == folderId)
-                    .MicrotingUid.ToString();
-
-                MainElement mainElement = await _sdkCore.TemplateRead(taskListId);
-                mainElement.Repeated = 1;
-                mainElement.EndDate = DateTime.Now.AddYears(10).ToUniversalTime();
-                mainElement.StartDate = DateTime.Now.ToUniversalTime();
-                mainElement.CheckListFolderName = folderMicrotingUid;
-
-                DateTime startDate = new DateTime(2020, 1, 1);
-                mainElement.DisplayOrder = (workOrder.CorrectedAtLatest - startDate).Days;
-
-                DataElement dataElement = (DataElement)mainElement.ElementList[0];
-                mainElement.Label = fields[3].FieldValues[0].Value;
-                mainElement.PushMessageTitle = mainElement.Label;
-                mainElement.PushMessageBody = string.IsNullOrEmpty(fields[4].FieldValues[0].Value)
-                    ? ""
-                    : "Udføres senest: " + DateTime.Parse(fields[4].FieldValues[0].Value).ToString("dd-MM-yyyy");
-                dataElement.Label = fields[3].FieldValues[0].Value;
-                dataElement.Description.InderValue += string.IsNullOrEmpty(fields[0].FieldValues[0].ValueReadable)
-                    ? "" :
-                    $"<strong>Område:</strong> {fields[0].FieldValues[0].ValueReadable}<br>";
-                dataElement.Description.InderValue += string.IsNullOrEmpty(fields[1].FieldValues[0].ValueReadable)
-                    ? ""
-                    :$"<strong>Tildelt til:</strong> {fields[1].FieldValues[0].ValueReadable}<br>";
-                dataElement.Description.InderValue += $"<strong>Oprettet af:</strong> {doneBy}<br>";
-                dataElement.Description.InderValue += "<strong>Udføres senest:</strong>"; // Needs i18n support "Corrected at the latest:"
-                dataElement.Description.InderValue += string.IsNullOrEmpty(fields[4].FieldValues[0].Value)
-                    ? ""
-                    : DateTime.Parse(fields[4].FieldValues[0].Value).ToString("dd-MM-yyyy");
-
-                dataElement.DataItemList[0].Description.InderValue = dataElement.Description.InderValue;
-                dataElement.DataItemList[0].Label = dataElement.Label;
 
                 // Read html and template
                 var resourceString = "WorkOrders.Pn.Resources.Templates.page.html";
@@ -248,30 +252,89 @@ using WorkOrders.Pn.Messages;
 
                     // TODO Remove from file storage?
 
-                    ((ShowPdf)dataElement.DataItemList[1]).Value = hash;
                 }
+
+                //var folderResult = await _dbContext.PluginConfigurationValues.SingleAsync(x => x.Name == "WorkOrdersBaseSettings:FolderTasksId");
+                string folderMicrotingUid = sdkDbContext.Folders.Single(x => x.Id == folderId)
+                    .MicrotingUid.ToString();
 
                 List<AssignedSite> sites = await _dbContext.AssignedSites.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed).ToListAsync();
                 foreach (AssignedSite site in sites)
                 {
+                    Site sdkSite = await sdkDbContext.Sites.SingleAsync(x => x.MicrotingUid == site.SiteMicrotingUid);
+                    language = await sdkDbContext.Languages.SingleAsync(x => x.Id == sdkSite.LanguageId);
+                    Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(language.LanguageCode);
+                    MainElement mainElement = await _sdkCore.ReadeForm(taskListId, language);
+                    mainElement.Repeated = 1;
+                    mainElement.EndDate = DateTime.Now.AddYears(10).ToUniversalTime();
+                    mainElement.StartDate = DateTime.Now.ToUniversalTime();
+                    mainElement.CheckListFolderName = folderMicrotingUid;
+
+                    DateTime startDate = new DateTime(2020, 1, 1);
+                    mainElement.DisplayOrder = (workOrder.CorrectedAtLatest - startDate).Days;
+
+                    DataElement dataElement = (DataElement)mainElement.ElementList[0];
+                    if (fields.Count == 4)
+                    {
+                        mainElement.Label = fields[1].FieldValues[0].Value;
+                        mainElement.PushMessageTitle = mainElement.Label;
+                        mainElement.PushMessageBody = string.IsNullOrEmpty(fields[2].FieldValues[0].Value)
+                            ? ""
+                            : $"{_workOrdersLocalizationService.GetString("DontAtTheLatest")}: " + DateTime.Parse(fields[2].FieldValues[0].Value).ToString("dd-MM-yyyy");
+                        dataElement.Label = fields[1].FieldValues[0].Value;
+                        dataElement.Description.InderValue += $"<strong>{_workOrdersLocalizationService.GetString("TaskCreatedBy")}:</strong> {doneBy}<br>";
+                        dataElement.Description.InderValue += $"<strong>{_workOrdersLocalizationService.GetString("DontAtTheLatest")}:</strong>"; // Needs i18n support "Corrected at the latest:"
+                        dataElement.Description.InderValue += string.IsNullOrEmpty(fields[2].FieldValues[0].Value)
+                            ? ""
+                            : DateTime.Parse(fields[2].FieldValues[0].Value).ToString("dd-MM-yyyy");
+
+                        dataElement.DataItemList[0].Description.InderValue = dataElement.Description.InderValue;
+                        dataElement.DataItemList[0].Label = dataElement.Label;
+                    }
+                    else
+                    {
+                        mainElement.Label = fields[3].FieldValues[0].Value;
+                        mainElement.PushMessageTitle = mainElement.Label;
+                        mainElement.PushMessageBody = string.IsNullOrEmpty(fields[4].FieldValues[0].Value)
+                            ? ""
+                            : $"{_workOrdersLocalizationService.GetString("DontAtTheLatest")}: " + DateTime.Parse(fields[4].FieldValues[0].Value).ToString("dd-MM-yyyy");
+                        dataElement.Label = fields[3].FieldValues[0].Value;
+                        dataElement.Description.InderValue += string.IsNullOrEmpty(fields[0].FieldValues[0].ValueReadable)
+                            ? "" :
+                            $"<strong>{_workOrdersLocalizationService.GetString("Area")}:</strong> {fields[0].FieldValues[0].ValueReadable}<br>";
+                        dataElement.Description.InderValue += string.IsNullOrEmpty(fields[1].FieldValues[0].ValueReadable)
+                            ? ""
+                            :$"<strong>{_workOrdersLocalizationService.GetString("AssignedTo")}:</strong> {fields[1].FieldValues[0].ValueReadable}<br>";
+                        dataElement.Description.InderValue += $"<strong>{_workOrdersLocalizationService.GetString("TaskCreatedBy")}:</strong> {doneBy}<br>";
+                        dataElement.Description.InderValue += $"<strong>{_workOrdersLocalizationService.GetString("DontAtTheLatest")}:</strong>"; // Needs i18n support "Corrected at the latest:"
+                        dataElement.Description.InderValue += string.IsNullOrEmpty(fields[4].FieldValues[0].Value)
+                            ? ""
+                            : DateTime.Parse(fields[4].FieldValues[0].Value).ToString("dd-MM-yyyy");
+
+                        dataElement.DataItemList[0].Description.InderValue = dataElement.Description.InderValue;
+                        dataElement.DataItemList[0].Label = dataElement.Label;
+                    }
+
+                    if (hash != null)
+                    {
+                        ((ShowPdf) dataElement.DataItemList[1]).Value = hash;
+                    }
                     var wotCase  = await _dbContext.WorkOrdersTemplateCases.SingleOrDefaultAsync(x =>
                         x.CheckId == workOrder.CheckId
-                        && x.CheckUId == workOrder.CheckUId 
-                        && x.SdkSiteId == site.SiteId);
-                    if (wotCase == null)
+                        && x.CheckMicrotingUid == workOrder.CheckMicrotingUid
+                        && x.SdkSiteMicrotingUid == site.SiteMicrotingUid);
+                    if (wotCase != null) continue;
+                    int? caseId = await _sdkCore.CaseCreate(mainElement, "", site.SiteMicrotingUid, folderId);
+                    wotCase = new WorkOrdersTemplateCase()
                     {
-                        int? caseId = await _sdkCore.CaseCreate(mainElement, "", site.SiteId, folderId);
-                        wotCase = new WorkOrdersTemplateCase()
-                        {
-                            CheckId = workOrder.CheckId,
-                            CheckUId = workOrder.CheckUId,
-                            WorkOrderId = workOrder.Id,
-                            CaseId = (int) caseId,
-                            CaseUId = workOrder.MicrotingId,
-                            SdkSiteId = site.SiteId
-                        };
-                        await wotCase.Create(_dbContext);
-                    }
+                        CheckId = workOrder.CheckId,
+                        CheckMicrotingUid = workOrder.CheckMicrotingUid,
+                        WorkOrderId = workOrder.Id,
+                        CaseId = (int) caseId,
+                        CaseMicrotingUid = workOrder.MicrotingId,
+                        SdkSiteMicrotingUid = site.SiteMicrotingUid
+                    };
+                    await wotCase.Create(_dbContext);
                 }
             }
         }

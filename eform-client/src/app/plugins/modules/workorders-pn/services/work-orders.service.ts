@@ -9,7 +9,6 @@ import {
   OperationResult,
 } from '../../../../common/models';
 import { WorkOrdersModel, WorkOrdersRequestModel } from '../models';
-import {ItemsPlanningPnPlanningsMethods} from 'src/app/plugins/modules/items-planning-pn/services';
 
 export let WorkOrdersMethods = {
   WorkOrders: 'api/workorders-pn',

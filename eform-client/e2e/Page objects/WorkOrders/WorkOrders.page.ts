@@ -16,7 +16,6 @@ class WorkOrdersPage extends PageWithNavbarPage {
   }
 
   public goToWorkOrdersSettingsPage() {
-    browser.pause(5000);
     myEformsPage.Navbar.goToPluginsPage();
     this.workOrderSettingsBtn.waitForDisplayed({ timeout: 20000 });
     this.workOrderSettingsBtn.click();
@@ -29,7 +28,7 @@ class WorkOrdersPage extends PageWithNavbarPage {
     $('#selectDeviceUser').waitForDisplayed({ timeout: 20000 });
     $('#selectDeviceUser').click();
     $('#selectDeviceUser input').setValue(name);
-    browser.pause(5000);
+    browser.pause(500);
     $$('#selectDeviceUser .ng-option')[0].click();
     $('#siteAssignBtnSave').click();
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });

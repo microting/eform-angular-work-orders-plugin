@@ -16,24 +16,28 @@ namespace WorkOrders.Pn.Services
         private IBus _bus;
         private IWindsorContainer _container;
         private string _connectionString;
+        private readonly IWorkOrdersLocalizationService _workOrdersLocalizationService;
         private readonly IEFormCoreService _coreHelper;
 
-        public RebusService(IEFormCoreService coreHelper)
+        public RebusService(IEFormCoreService coreHelper,
+            IWorkOrdersLocalizationService workOrdersLocalizationService)
         {
             _coreHelper = coreHelper;
+            _workOrdersLocalizationService = workOrdersLocalizationService;
         }
 
         public async Task Start(string connectionString)
         {
             _connectionString = connectionString;
             _container = new WindsorContainer();
-            _container.Install(new RebusHandlerInstaller(), 
+            _container.Install(new RebusHandlerInstaller(),
                 new RebusInstaller(connectionString, 1, 1));
 
-            Core _core = await _coreHelper.GetCore();
+            Core core = await _coreHelper.GetCore();
             DbContextHelper dbContextHelper = new DbContextHelper(connectionString);
-            _container.Register(Castle.MicroKernel.Registration.Component.For<Core>().Instance(_core));
+            _container.Register(Castle.MicroKernel.Registration.Component.For<Core>().Instance(core));
             _container.Register(Castle.MicroKernel.Registration.Component.For<DbContextHelper>().Instance(dbContextHelper));
+            _container.Register(Castle.MicroKernel.Registration.Component.For<IWorkOrdersLocalizationService>().Instance(_workOrdersLocalizationService));
             _bus = _container.Resolve<IBus>();
         }
 
@@ -42,7 +46,7 @@ namespace WorkOrders.Pn.Services
             return _bus;
         }
 
-        private WorkOrderPnDbContext GetContext() 
+        private WorkOrderPnDbContext GetContext()
         {
             WorkOrderPnContextFactory contextFactory = new WorkOrderPnContextFactory();
             return contextFactory.CreateDbContext(new[] { _connectionString });

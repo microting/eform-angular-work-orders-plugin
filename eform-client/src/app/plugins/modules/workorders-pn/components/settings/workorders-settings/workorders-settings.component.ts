@@ -38,8 +38,6 @@ export class WorkOrdersSettingsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getSettings();
-    this.loadAllFoldersTree();
-    this.getSites();
   }
 
   getSettings() {
@@ -48,7 +46,8 @@ export class WorkOrdersSettingsComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         if (data && data.success) {
           this.workOrdersSettingsModel = data.model;
-          this.loadFlatFolders();
+
+          this.loadAllFoldersTree();
         }
       });
   }
@@ -58,6 +57,7 @@ export class WorkOrdersSettingsComponent implements OnInit, OnDestroy {
     this.sitesSub$ = this.sitesService.getAllSites().subscribe((data) => {
       if (data && data.success) {
         this.sites = data.model;
+        this.loadFlatFolders();
       }
     });
   }
@@ -66,6 +66,8 @@ export class WorkOrdersSettingsComponent implements OnInit, OnDestroy {
     this.foldersSubTree$ = this.foldersService.getAllFolders().subscribe((operation) => {
       if (operation && operation.success) {
         this.foldersTreeDto = operation.model;
+
+        this.getSites();
       }
     });
   }

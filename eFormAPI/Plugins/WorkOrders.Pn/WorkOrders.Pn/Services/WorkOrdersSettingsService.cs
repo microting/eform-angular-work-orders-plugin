@@ -9,11 +9,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Microting.eForm.Infrastructure;
 using Microting.eForm.Infrastructure.Constants;
+using Microting.eForm.Infrastructure.Data.Entities;
 using Microting.eForm.Infrastructure.Models;
 using Rebus.Bus;
-using ServiceWorkOrdersPlugin.Handlers;
 using WorkOrders.Pn.Abstractions;
 using WorkOrders.Pn.Infrastructure.Models;
 using WorkOrders.Pn.Infrastructure.Models.Settings;
@@ -21,7 +20,6 @@ using WorkOrders.Pn.Messages;
 
 namespace WorkOrders.Pn.Services
 {
-    using Microsoft.EntityFrameworkCore.Storage;
     using Microting.eForm.Dto;
     using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 
@@ -36,7 +34,7 @@ namespace WorkOrders.Pn.Services
         private readonly IRebusService _rebusService;
         private readonly IBus _bus;
 
-        public WorkOrdersSettingsService(WorkOrderPnDbContext dbContext, 
+        public WorkOrdersSettingsService(WorkOrderPnDbContext dbContext,
             ILogger<WorkOrdersSettingsService> logger,
             IWorkOrdersLocalizationService workOrdersLocalizationService,
             IEFormCoreService core,
@@ -58,7 +56,7 @@ namespace WorkOrders.Pn.Services
         {
             try
             {
-                List<int> assignedSitesIds = await _dbContext.AssignedSites.Where(y => y.WorkflowState != Constants.WorkflowStates.Removed).Select(x => x.SiteId).ToListAsync();
+                List<int> assignedSitesIds = await _dbContext.AssignedSites.Where(y => y.WorkflowState != Constants.WorkflowStates.Removed).Select(x => x.SiteMicrotingUid).ToListAsync();
                 WorkOrdersSettingsModel workOrdersSettings = new WorkOrdersSettingsModel()
                 {
                     AssignedSites = new List<SiteNameModel>()
@@ -97,7 +95,7 @@ namespace WorkOrders.Pn.Services
                 {
                     workOrdersSettings.FolderTasksId = null;
                 }
-                
+
                 return new OperationDataResult<WorkOrdersSettingsModel>(true, workOrdersSettings);
             }
             catch (Exception e)
@@ -114,9 +112,24 @@ namespace WorkOrders.Pn.Services
             var result = await _dbContext.PluginConfigurationValues.SingleAsync(x => x.Name == "WorkOrdersBaseSettings:NewTaskId");
             var folderResult = await _dbContext.PluginConfigurationValues.SingleAsync(x => x.Name == "WorkOrdersBaseSettings:FolderId");
             var theCore = await _core.GetCore();
-            string folderId = theCore.dbContextHelper.GetDbContext().Folders.Single(x => x.Id == int.Parse(folderResult.Value)).MicrotingUid.ToString();
-            MainElement mainElement = await theCore.TemplateRead(int.Parse(result.Value));
-            mainElement.Label = "Ny opgave";
+            await using var sdkDbContext = theCore.DbContextHelper.GetDbContext();
+            string folderId = sdkDbContext.Folders.Single(x => x.Id == int.Parse(folderResult.Value)).MicrotingUid.ToString();
+            Site site = await sdkDbContext.Sites.SingleAsync(x => x.MicrotingUid == siteId);
+            Language language = await sdkDbContext.Languages.SingleAsync(x => x.Id == site.LanguageId);
+            MainElement mainElement = await theCore.ReadeForm(int.Parse(result.Value), language);
+            switch (language.Name)
+            {
+                case "Danish":
+                    mainElement.Label = "Ny opgave";
+                    break;
+                case "English":
+                    mainElement.Label = "New task";
+                    break;
+                case "German":
+                    mainElement.Label = "Neue Aufgabe";
+                    break;
+            }
+
             mainElement.CheckListFolderName = folderId;
             mainElement.EndDate = DateTime.UtcNow.AddYears(10);
             mainElement.Repeated = 0;
@@ -126,7 +139,7 @@ namespace WorkOrders.Pn.Services
             try
             {
                 int? caseId = await theCore.CaseCreate(mainElement, "", siteId, int.Parse(folderResult.Value));
-                AssignedSite assignedSite = new AssignedSite() { SiteId = siteId, CaseId = (int)caseId};
+                AssignedSite assignedSite = new AssignedSite() { SiteMicrotingUid = siteId, CaseMicrotingUid = (int)caseId};
 
                 await assignedSite.Create(_dbContext);
                 //await transaction.CommitAsync();
@@ -205,10 +218,10 @@ namespace WorkOrders.Pn.Services
         {
             try
             {
-                AssignedSite assignedSite = await _dbContext.AssignedSites.FirstOrDefaultAsync(x => x.SiteId == siteId
+                AssignedSite assignedSite = await _dbContext.AssignedSites.FirstOrDefaultAsync(x => x.SiteMicrotingUid == siteId
                         && x.WorkflowState != Constants.WorkflowStates.Removed);
                 var theCore = await _core.GetCore();
-                await theCore.CaseDelete((int)assignedSite.CaseId);
+                await theCore.CaseDelete((int)assignedSite.CaseMicrotingUid);
                 await assignedSite.Delete(_dbContext);
 
                 return new OperationResult(true,

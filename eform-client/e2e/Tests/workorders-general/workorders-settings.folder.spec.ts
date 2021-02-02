@@ -28,6 +28,9 @@ describe('Work Orders Settings Folder', function () {
     const oldFolder = $('#folderSelectorInput').getValue();
     workOrdersPage.selectFirstFolder();
     $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
+    loginPage.open('/');
+    workOrdersPage.goToWorkOrdersSettingsPage();
+    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
     const newFolder = $('#folderSelectorInput').getValue();
     expect(oldFolder).not.equal(newFolder);
   });
@@ -37,6 +40,9 @@ describe('Work Orders Settings Folder', function () {
     $('#folderSelectorLabel').waitForDisplayed({timeout: 20000});
     const oldFolder = $('#folderSelectorInput').getValue();
     workOrdersPage.selectSecondFolder();
+    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
+    loginPage.open('/');
+    workOrdersPage.goToWorkOrdersSettingsPage();
     $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
     const newFolder = $('#folderSelectorInput').getValue();
     expect(oldFolder).not.equal(newFolder);
