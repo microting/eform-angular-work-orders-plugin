@@ -1,6 +1,7 @@
 # eform-angular-workorder-plugin
-Build status
-[![Build Status](https://travis-ci.org/microting/eform-angular-workorder-plugin.svg?branch=stable)](https://travis-ci.org/microting/eform-angular-workorder-plugin)
+[![.NET Core](https://github.com/microting/eform-angular-work-orders-plugin/actions/workflows/dotnet-core-master.yml/badge.svg)](https://github.com/microting/eform-angular-work-orders-plugin/actions/workflows/dotnet-core-master.yml)
+[![Maintainability](https://api.codeclimate.com/v1/badges/146b907917551424b041/maintainability)](https://codeclimate.com/github/microting/eform-angular-work-orders-plugin/maintainability)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/e16940fa6bc44dd3b47dd2b787749d39)](https://www.codacy.com/gh/microting/eform-angular-work-orders-plugin/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=microting/eform-angular-work-orders-plugin&amp;utm_campaign=Badge_Grade)
 
 ## NOTICE! this is not a standalone project and needs to be used with eForm Angular Frontend.
 
