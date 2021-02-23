@@ -1,4 +1,10 @@
-work-orders-#!/bin/bash
+#!/bin/bash
+while getopts s: flag
+do
+    case "${flag}" in
+        s) SKIP_REBUILD=${OPTARG};;
+    esac
+done
 
 if [ ! -d "/var/www/microting/eform-angular-work-orders-plugin" ]; then
   cd /var/www/microting
@@ -36,7 +42,9 @@ echo "Recompile angular"
 cd /var/www/microting/eform-angular-frontend/eform-client
 su ubuntu -c \
 "/var/www/microting/eform-angular-work-orders-plugin/testinginstallpn.sh"
-su ubuntu -c \
-"export NODE_OPTIONS=--max_old_space_size=8192 && GENERATE_SOURCEMAP=false npm run build"
+if [[ -z $SKIP_REBUILD ]]; then
+  su ubuntu -c \
+  "export NODE_OPTIONS=--max_old_space_size=8192 && GENERATE_SOURCEMAP=false npm run build"
+fi
 echo "Recompiling angular done"
 /root/rabbitmqadmin declare queue name=eform-angular-work-orders-plugin durable=true
