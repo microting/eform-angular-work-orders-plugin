@@ -57,6 +57,8 @@ jobs:
       run: dotnet build main/eFormAPI/Plugins/WorkOrders.Pn/WorkOrders.Pn.sln
     - name: Unit Tests
       run: dotnet test --no-restore -c Release -v n main/eFormAPI/Plugins/WorkOrders.Pn/WorkOrders.Pn.Test/WorkOrders.Pn.Test.csproj
+    - name: Sleep 15
+      run: sleep 15
     - name: Load DB dump
       run: |
         mysql -u root -h 127.0.0.1 --password=secretpassword -e 'create database `420_eform-angular-work-orders-plugin`'
