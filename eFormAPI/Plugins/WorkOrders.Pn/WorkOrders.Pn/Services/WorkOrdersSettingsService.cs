@@ -229,7 +229,7 @@ namespace WorkOrders.Pn.Services
 
                 foreach (WorkOrdersTemplateCase workOrdersTemplateCase in workOrdersTemplateCases)
                 {
-                    await theCore.CaseDelete(workOrdersTemplateCase.CaseMicrotingUid);
+                    await theCore.CaseDelete(workOrdersTemplateCase.CaseId);
                     await workOrdersTemplateCase.Delete(_dbContext);
                 }
 
