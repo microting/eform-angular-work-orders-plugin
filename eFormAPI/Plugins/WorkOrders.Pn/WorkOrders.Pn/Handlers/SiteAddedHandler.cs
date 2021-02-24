@@ -322,7 +322,8 @@ namespace ServiceWorkOrdersPlugin.Handlers
                     var wotCase  = await _dbContext.WorkOrdersTemplateCases.SingleOrDefaultAsync(x =>
                         x.CheckId == workOrder.CheckId
                         && x.CheckMicrotingUid == workOrder.CheckMicrotingUid
-                        && x.SdkSiteMicrotingUid == site.SiteMicrotingUid);
+                        && x.SdkSiteMicrotingUid == site.SiteMicrotingUid
+                        && x.WorkflowState != Constants.WorkflowStates.Removed);
                     if (wotCase != null) continue;
                     int? caseId = await _sdkCore.CaseCreate(mainElement, "", site.SiteMicrotingUid, folderId);
                     wotCase = new WorkOrdersTemplateCase()

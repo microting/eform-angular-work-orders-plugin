@@ -223,6 +223,15 @@ namespace WorkOrders.Pn.Services
                 var theCore = await _core.GetCore();
                 await theCore.CaseDelete((int)assignedSite.CaseMicrotingUid);
                 await assignedSite.Delete(_dbContext);
+                List<WorkOrdersTemplateCase> workOrdersTemplateCases = await _dbContext.WorkOrdersTemplateCases
+                    .Where(x => x.SdkSiteMicrotingUid == siteId && x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .ToListAsync();
+
+                foreach (WorkOrdersTemplateCase workOrdersTemplateCase in workOrdersTemplateCases)
+                {
+                    await theCore.CaseDelete(workOrdersTemplateCase.CaseMicrotingUid);
+                    await workOrdersTemplateCase.Delete(_dbContext);
+                }
 
                 return new OperationResult(true,
                     _workOrdersLocalizationService.GetString("SiteDeletedSuccessfully"));
