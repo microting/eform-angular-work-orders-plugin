@@ -1,5 +1,15 @@
 # Changelog
 
+## [v1.0.73](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.73) (2021-03-29)
+
+[Full Changelog](https://github.com/microting/eform-angular-work-orders-plugin/compare/v1.0.72...v1.0.73)
+
+**Implemented enhancements:**
+
+- Bump Microting.WorkOrderBase from 1.2.28 to 1.2.29 [\#92](https://github.com/microting/eform-angular-work-orders-plugin/issues/92)
+- Bump Microting.eFormApi.BasePn from 2.0.106 to 2.0.107 [\#91](https://github.com/microting/eform-angular-work-orders-plugin/issues/91)
+- Bump Microting.eForm from 4.4.11 to 4.4.13 [\#90](https://github.com/microting/eform-angular-work-orders-plugin/issues/90)
+
 ## [v1.0.72](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.72) (2021-03-18)
 
 [Full Changelog](https://github.com/microting/eform-angular-work-orders-plugin/compare/v1.0.71...v1.0.72)
@@ -64,7 +74,6 @@
 **Merged pull requests:**
 
 - Bump Microsoft.NET.Test.Sdk from 16.8.3 to 16.9.1 in /eFormAPI/Plugins/WorkOrders.Pn [\#59](https://github.com/microting/eform-angular-work-orders-plugin/pull/59) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
-- Bump Rebus from 6.0.0 to 6.4.1 in /eFormAPI/Plugins/WorkOrders.Pn [\#29](https://github.com/microting/eform-angular-work-orders-plugin/pull/29) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 
 ## [v1.0.65](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.65) (2021-02-24)
 
@@ -148,6 +157,7 @@
 
 **Merged pull requests:**
 
+- Bump Rebus from 6.0.0 to 6.4.1 in /eFormAPI/Plugins/WorkOrders.Pn [\#29](https://github.com/microting/eform-angular-work-orders-plugin/pull/29) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump NUnit from 3.12.0 to 3.13.0 in /eFormAPI/Plugins/WorkOrders.Pn [\#28](https://github.com/microting/eform-angular-work-orders-plugin/pull/28) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump Castle.Windsor from 5.0.1 to 5.1.1 in /eFormAPI/Plugins/WorkOrders.Pn [\#23](https://github.com/microting/eform-angular-work-orders-plugin/pull/23) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 
@@ -231,6 +241,7 @@
 **Merged pull requests:**
 
 - Changed subheader to use title from router [\#22](https://github.com/microting/eform-angular-work-orders-plugin/pull/22) ([Gid733](https://github.com/Gid733))
+- Updates [\#18](https://github.com/microting/eform-angular-work-orders-plugin/pull/18) ([Gid733](https://github.com/Gid733))
 
 ## [v1.0.31](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.31) (2020-12-30)
 
@@ -347,7 +358,6 @@
 **Merged pull requests:**
 
 - DbContext fixes [\#19](https://github.com/microting/eform-angular-work-orders-plugin/pull/19) ([emleonid](https://github.com/emleonid))
-- Updates [\#18](https://github.com/microting/eform-angular-work-orders-plugin/pull/18) ([Gid733](https://github.com/Gid733))
 - Added sql dump for tests [\#17](https://github.com/microting/eform-angular-work-orders-plugin/pull/17) ([Gid733](https://github.com/Gid733))
 - Updates for tests [\#16](https://github.com/microting/eform-angular-work-orders-plugin/pull/16) ([Gid733](https://github.com/Gid733))
 
