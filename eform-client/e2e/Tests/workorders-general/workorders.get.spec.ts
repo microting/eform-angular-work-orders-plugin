@@ -1,63 +1,59 @@
 import loginPage from '../../Page objects/Login.page';
 import workOrdersPage from '../../Page objects/WorkOrders/WorkOrders.page';
+import { testSorting } from '../../Helpers/helper-functions';
+import { parse } from 'date-fns';
 
 const expect = require('chai').expect;
 
-describe('Work Orders Page',function () {
+describe('Work Orders Page', function () {
   before(function () {
     loginPage.open('/');
     loginPage.login();
     workOrdersPage.goToOrdersPage();
-    $('#workOrderId').waitForDisplayed({timeout: 20000});
   });
   it('Read Work Orders', function () {
-    const rowNum = workOrdersPage.rowNum;
-    expect(rowNum).to.be.equal(2);
+    expect(workOrdersPage.rowNum).equal(2);
   });
   it('Sort Work Orders by Id', function () {
-    $('#idTableHeader').click();
-    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
-    const id = workOrdersPage.firstWorkOrderId;
-    expect(id).equal('2');
+    testSorting(workOrdersPage.idTableHeader, '#workOrderId', 'Id');
   });
   it('Sort Work Orders by Created At', function () {
-    $('#createdAtHeader').click();
-    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
-    $('#createdAtHeader').click();
-    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
-    const id = workOrdersPage.firstWorkOrderId;
-    expect(id).equal('2');
+    testSorting(
+      workOrdersPage.createdAtHeader,
+      '#workOrderCreatedAt',
+      'Created At',
+      (ele) => parse(ele.getText(), 'dd.MM.yyyy HH:mm:ss', new Date())
+    );
   });
   it('Sort Work Orders by Description', function () {
-    $('#descriptionHeader').click();
-    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
-    $('#descriptionHeader').click();
-    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
-    const id = workOrdersPage.firstWorkOrderId;
-    expect(id).equal('2');
+    testSorting(
+      workOrdersPage.descriptionHeader,
+      '#workOrderDescription',
+      'Description'
+    );
   });
   it('Sort Work Orders by Corrected at the Latest', function () {
-    $('#correctedAtTheLatestHeader').click();
-    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
-    $('#correctedAtTheLatestHeader').click();
-    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
-    const id = workOrdersPage.firstWorkOrderId;
-    expect(id).equal('2');
+    testSorting(
+      workOrdersPage.correctedAtTheLatestHeader,
+      '#workOrderCorrectedAtLatest',
+      'Corrected at the Latest'
+    );
   });
   it('Sort Work Orders by Done At', function () {
-    $('#doneAtHeader').click();
-    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
-    $('#doneAtHeader').click();
-    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
-    const id = workOrdersPage.firstWorkOrderId;
-    expect(id).equal('2');
+    testSorting(workOrdersPage.doneAtHeader, '#workOrderDoneAt', 'Done At');
+  });
+  it('Sort Work Orders by Description Of Task Done', function () {
+    testSorting(
+      workOrdersPage.descriptionOfTaskDoneHeader,
+      '#workOrderDescriptionOfTaskDone',
+      'Description Of Task Done'
+    );
   });
   it('Search Work Orders', function () {
     const searchString = 'hhhh';
-    $('#searchInput').setValue(searchString);
+    workOrdersPage.searchInput.setValue(searchString);
     browser.pause(500);
-    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
-    const rowNum = workOrdersPage.rowNum;
-    expect(rowNum).to.be.equal(1);
+    $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
+    expect(workOrdersPage.rowNum).equal(1);
   });
 });

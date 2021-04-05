@@ -1,5 +1,4 @@
-<subheader-pn>
-</subheader-pn>
+<subheader-pn> </subheader-pn>
 <div class="container-fluid">
   <div class="row pl-1">
     <div class="col-md-2">
@@ -7,7 +6,8 @@
         <input
           mdbInput
           type="text"
-          (input)="onSearchInputChanged($event)"
+          [ngModel]="workordersStateService.getNameFilter() | async"
+          (ngModelChange)="onSearchInputChanged($event)"
           class="form-control input-sm"
           id="searchInput"
         />
@@ -23,144 +23,13 @@
       small="true"
       class="z-depth-1 text-center"
     >
-      <thead>
-        <tr>
-          <th
-            scope="col"
-            class="table-header-sortable"
-            id="idTableHeader"
-            (click)="sortTable(sortCols.id)"
-          >
-            <div class="d-flex align-items-center justify-content-center">
-              ID
-              <i class="material-icons text-black-50">{{
-                getSortIcon(sortCols.id)
-              }}</i>
-            </div>
-          </th>
-          <th
-            scope="col"
-            class="table-header-sortable"
-            id="createdAtHeader"
-            (click)="sortTable(sortCols.createdAt)"
-          >
-            <div class="d-flex align-items-center justify-content-center">
-              {{ 'Created at' | translate }}
-              <i class="material-icons text-black-50">{{
-                getSortIcon(sortCols.createdAt)
-              }}</i>
-            </div>
-          </th>
-          <th
-            scope="col"
-            id="createdByHeader"
-          >
-            <div class="d-flex align-items-center justify-content-center">
-              {{ 'Created by' | translate }}
-            </div>
-          </th>
-          <th
-            scope="col"
-            class="table-header-sortable"
-            id="assignedAreaHeader"
-            (click)="sortTable(sortCols.assignedArea)"
-          >
-            <div class="d-flex align-items-center justify-content-center">
-              {{ 'Area' | translate }}
-              <i class="material-icons text-black-50">{{
-                getSortIcon(sortCols.assignedArea)
-                }}</i>
-            </div>
-          </th>
-          <th
-            scope="col"
-            class="table-header-sortable"
-            id="assignedWorkerHeader"
-            (click)="sortTable(sortCols.assignedWorker)"
-          >
-            <div class="d-flex align-items-center justify-content-center">
-              {{ 'Assigned worker' | translate }}
-              <i class="material-icons text-black-50">{{
-                getSortIcon(sortCols.assignedWorker)
-                }}</i>
-            </div>
-          </th>
-          <th
-            scope="col"
-            class="table-header-sortable"
-            id="descriptionHeader"
-            (click)="sortTable(sortCols.description)"
-          >
-            <div class="d-flex align-items-center justify-content-center">
-              {{ 'Description' | translate }}
-              <i class="material-icons text-black-50">{{
-                getSortIcon(sortCols.description)
-              }}</i>
-            </div>
-          </th>
-          <th
-            scope="col"
-            class="table-header-sortable"
-            id="correctedAtTheLatestHeader"
-            (click)="sortTable(sortCols.correctedAtLatest)"
-          >
-            <div class="d-flex align-items-center justify-content-center">
-              {{ 'Corrected at the latest' | translate }}
-              <i class="material-icons text-black-50">{{
-                getSortIcon(sortCols.correctedAtLatest)
-              }}</i>
-            </div>
-          </th>
-          <th
-            scope="col"
-            class="table-header-sortable"
-            id="doneAtHeader"
-            (click)="sortTable(sortCols.doneAt)"
-          >
-            <div class="d-flex align-items-center justify-content-center">
-              {{ 'Done at' | translate }}
-              <i class="material-icons text-black-50">{{
-                getSortIcon(sortCols.doneAt)
-              }}</i>
-            </div>
-          </th>
-          <th
-            scope="col"
-            class="table-header-sortable"
-            id="status"
-            (click)="sortTable(sortCols.doneAt)"
-          >
-            <div class="d-flex align-items-center justify-content-center">
-              {{ 'Status' | translate }}
-              <i class="material-icons text-black-50">{{
-                getSortIcon(sortCols.doneAt)
-                }}</i>
-            </div>
-          </th>
-          <th
-            scope="col"
-            id="doneByHeader"
-          >
-            <div class="d-flex align-items-center justify-content-center">
-              {{ 'Done by' | translate }}
-            </div>
-          </th>
-          <th
-            scope="col"
-            class="table-header-sortable"
-            id="descriptionOfTaskDoneHeader"
-            (click)="sortTable(sortCols.description)"
-          >
-            <div class="d-flex align-items-center justify-content-center">
-              {{ 'Description of the task done' | translate }}
-              <i class="material-icons text-black-50">{{
-                getSortIcon(sortCols.description)
-                }}</i>
-            </div>
-          </th>
-          <th>{{ 'Actions' | translate }}</th>
-        </tr>
-      </thead>
+      <thead
+        table-headers
+        [tableHeaders]="tableHeaders"
+        [currentSortName]="workordersStateService.getSort() | async"
+        (sortChanged)="sortTable($event)"
+        [isSortDsc]="workordersStateService.getIsSortDsc() | async"
+      ></thead>
       <tbody id="tableBody">
         <tr
           *ngFor="let workOrder of workOrdersModel?.workOrders; let i = index"
@@ -174,10 +43,10 @@
           <td id="workOrderCreatedBy">
             {{ workOrder.createdBy }}
           </td>
-          <td id="workOrderDescription">
+          <td id="workOrderAssignedArea">
             {{ workOrder.assignedArea }}
           </td>
-          <td id="workOrderDescription">
+          <td id="workOrderAssignedWorker">
             {{ workOrder.assignedWorker }}
           </td>
           <td id="workOrderDescription">
@@ -191,11 +60,7 @@
           </td>
           <td id="statusResult">
             <div *ngIf="workOrder.doneAt">
-              <fa-icon
-                icon="check"
-                size="lg"
-                [fixedWidth]="true"
-              ></fa-icon>
+              <fa-icon icon="check" size="lg" [fixedWidth]="true"></fa-icon>
             </div>
           </td>
           <td id="workOrderDoneBy">
@@ -207,7 +72,8 @@
           <td>
             <div class="d-flex flex-row justify-content-center">
               <button
-                id="workOrderShowPicturesOfTask" *ngIf="workOrder.picturesOfTask.length > 0"
+                id="workOrderShowPicturesOfTask"
+                *ngIf="workOrder.picturesOfTask.length > 0"
                 (click)="openPicturesModal(workOrder.picturesOfTask)"
                 class="btn btn-accent text-black-50 btn-icon mb-2"
                 mdbTooltip="{{ 'View pictures of task' | translate }}"
@@ -218,7 +84,8 @@
                   [fixedWidth]="true"
                 ></fa-icon>
               </button>
-              <button *ngIf="workOrder.picturesOfTaskDone.length > 0"
+              <button
+                *ngIf="workOrder.picturesOfTaskDone.length > 0"
                 id="workOrderShowPicturesOfTaskDone"
                 (click)="openPicturesModal(workOrder.picturesOfTaskDone)"
                 class="btn btn-accent text-black-50 btn-icon mb-2"
@@ -230,11 +97,17 @@
                   [fixedWidth]="true"
                 ></fa-icon>
               </button>
-              <button id="deletePlanningBtn"
-                      class="btn btn-danger btn-icon mb-2 "
-                      mdbTooltip="{{ 'Delete Planning' | translate }}"
-                      (click)="showDeleteWorkOrderModal(workOrder)">
-                <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true"></fa-icon>
+              <button
+                id="deleteBtn"
+                class="btn btn-danger btn-icon mb-2"
+                mdbTooltip="{{ 'Delete' | translate }}"
+                (click)="showDeleteWorkOrderModal(workOrder)"
+              >
+                <fa-icon
+                  icon="trash-alt"
+                  size="lg"
+                  [fixedWidth]="true"
+                ></fa-icon>
               </button>
             </div>
           </td>
@@ -248,24 +121,23 @@
   <div class="row justify-content-between mr-2 ml-2">
     <div class="col-md-1">
       <page-size-pn
-        [pageSize]="localPageSettings.pageSize"
-        (onPageSizeChanged)="
-          localPageSettings.pageSize = $event;
-          workOrdersRequestModel.offset = 0;
-          updateLocalPageSettings()
-        "
+        [pageSize]="workordersStateService.getPageSize() | async"
+        (onPageSizeChanged)="onPageSizeChanged($event)"
       ></page-size-pn>
     </div>
     <pagination-pn
-      *ngIf="workOrdersModel?.total > workOrdersRequestModel.pageSize"
-      [limit]="workOrdersRequestModel.pageSize"
+      [limit]="workordersStateService.getPageSize() | async"
       [size]="workOrdersModel.total"
-      [offset]="workOrdersRequestModel.offset"
+      [offset]="workordersStateService.getOffset() | async"
       (onPageChanged)="changePage($event)"
     ></pagination-pn>
   </div>
 </div>
 
-<app-workorders-delete #deleteWorkOrderModal
-                     (workOrderDeleted)="getWorkOrders()"></app-workorders-delete>
-<app-workorders-images-modal #imagesModalComponent></app-workorders-images-modal>
+<app-workorders-delete
+  #deleteWorkOrderModal
+  (workOrderDeleted)="workOrderDeleted()"
+></app-workorders-delete>
+<app-workorders-images-modal
+  #imagesModalComponent
+></app-workorders-images-modal>
