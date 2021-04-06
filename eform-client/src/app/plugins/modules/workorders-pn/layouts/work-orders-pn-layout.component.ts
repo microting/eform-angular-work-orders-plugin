@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { LocaleService } from 'src/app/common/services';
 import { TranslateService } from '@ngx-translate/core';
-import { translates } from 'src/app/plugins/modules/items-planning-pn/i18n/translates';
+import { translates } from '../i18n/translates';
 
 @Component({
   selector: 'app-workorders-pn-layout',
