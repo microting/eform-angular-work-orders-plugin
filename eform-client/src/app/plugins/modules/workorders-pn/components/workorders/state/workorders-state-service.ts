@@ -27,6 +27,7 @@ export class WorkordersStateService {
         pageSize: this.query.pageSetting.pageSize,
         sort: this.query.pageSetting.sort,
         searchString: this.query.pageSetting.nameFilter,
+        pageIndex: 0,
       })
       .pipe(
         map((response) => {
