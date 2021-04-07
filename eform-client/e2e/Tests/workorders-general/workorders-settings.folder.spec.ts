@@ -1,50 +1,54 @@
 import loginPage from '../../Page objects/Login.page';
 import myEformsPage from '../../Page objects/MyEforms.page';
-import {Guid} from 'guid-typescript';
 import foldersPage from '../../Page objects/Folders.page';
 import workOrdersPage from '../../Page objects/WorkOrders/WorkOrders.page';
+import { generateRandmString } from '../../Helpers/helper-functions';
 
 const expect = require('chai').expect;
+
+const folders = [
+  { name: generateRandmString(), description: generateRandmString() },
+  { name: generateRandmString(), description: generateRandmString() },
+];
 
 describe('Work Orders Settings Folder', function () {
   before(function () {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToFolderPage();
-    $('#newFolderBtn').waitForDisplayed({timeout: 20000});
-    const name = Guid.create().toString();
-    const description = Guid.create().toString();
-    foldersPage.createNewFolder(name, description);
-
-    const name2 = Guid.create().toString();
-    const description2 = Guid.create().toString();
-    foldersPage.createNewFolder(name2, description2);
+    foldersPage.createNewFolder(folders[0].name, folders[0].description);
+    foldersPage.createNewFolder(folders[1].name, folders[1].description);
 
     workOrdersPage.goToWorkOrdersSettingsPage();
   });
   it('Assign Folder', function () {
-    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
-    $('#folderSelectorLabel').waitForDisplayed({timeout: 20000});
-    const oldFolder = $('#folderSelectorInput').getValue();
-    workOrdersPage.selectFirstFolder();
-    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
+    const spinnerAnimation = $('#spinner-animation');
+    $('#folderSelectorLabel').waitForDisplayed({ timeout: 20000 });
+    browser.pause(1000);
+    const oldFolder = workOrdersPage.folderSelectorInput.getValue();
+    workOrdersPage.selectFolder(0);
+    spinnerAnimation.waitForDisplayed({ timeout: 30000, reverse: true });
     loginPage.open('/');
     workOrdersPage.goToWorkOrdersSettingsPage();
-    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
-    const newFolder = $('#folderSelectorInput').getValue();
+    spinnerAnimation.waitForDisplayed({ timeout: 30000, reverse: true });
+    browser.pause(1000);
+    const newFolder = workOrdersPage.folderSelectorInput.getValue();
     expect(oldFolder).not.equal(newFolder);
   });
   it('Change Assigned Folder', function () {
+    const spinnerAnimation = $('#spinner-animation');
     workOrdersPage.goToWorkOrdersSettingsPage();
-    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
-    $('#folderSelectorLabel').waitForDisplayed({timeout: 20000});
-    const oldFolder = $('#folderSelectorInput').getValue();
-    workOrdersPage.selectSecondFolder();
-    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
+    spinnerAnimation.waitForDisplayed({ timeout: 30000, reverse: true });
+    $('#folderSelectorLabel').waitForDisplayed({ timeout: 20000 });
+    browser.pause(1000);
+    const oldFolder = workOrdersPage.folderSelectorInput.getValue();
+    workOrdersPage.selectFolder(1);
+    spinnerAnimation.waitForDisplayed({ timeout: 30000, reverse: true });
     loginPage.open('/');
     workOrdersPage.goToWorkOrdersSettingsPage();
-    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
-    const newFolder = $('#folderSelectorInput').getValue();
+    spinnerAnimation.waitForDisplayed({ timeout: 30000, reverse: true });
+    browser.pause(1000);
+    const newFolder = workOrdersPage.folderSelectorInput.getValue();
     expect(oldFolder).not.equal(newFolder);
   });
 });

@@ -1,22 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Microting.eForm.Infrastructure.Constants;
-using Microting.eFormApi.BasePn.Infrastructure.Extensions;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.WorkOrderBase.Infrastructure.Data;
-using Microting.WorkOrderBase.Infrastructure.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using WorkOrders.Pn.Abstractions;
-using WorkOrders.Pn.Infrastructure.Models;
-using CollectionExtensions = Castle.Core.Internal.CollectionExtensions;
+﻿
 
 namespace WorkOrders.Pn.Services
 {
+    using System;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Abstractions;
+    using Infrastructure.Models;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
+    using Microting.eForm.Infrastructure.Constants;
     using Microting.eFormApi.BasePn.Abstractions;
+    using Microting.eFormApi.BasePn.Infrastructure.Extensions;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using Microting.WorkOrderBase.Infrastructure.Data;
+    using Microting.WorkOrderBase.Infrastructure.Data.Entities;
 
     public class WorkOrdersService : IWorkOrdersService
     {
@@ -42,18 +41,24 @@ namespace WorkOrders.Pn.Services
 
         public async Task<OperationDataResult<WorkOrdersModel>> GetWorkOrdersAsync(WorkOrdersRequestModel pnRequestModel)
         {
-            TimeZoneInfo timeZoneInfo = await _userService.GetCurrentUserTimeZoneInfo();
             try
             {
-                WorkOrdersModel workOrdersModel = new WorkOrdersModel();
-                IQueryable<WorkOrder> workOrdersQuery = _dbContext.WorkOrders.Where(x =>
-                    x.WorkflowState != Constants.WorkflowStates.Removed).AsQueryable();
-                if(!CollectionExtensions.IsNullOrEmpty(pnRequestModel.SearchString) && pnRequestModel.SearchString != "")
+                var core = await _coreService.GetCore();
+                var sites = await core.Advanced_SiteItemReadAll(false);
+                var workOrdersModel = new WorkOrdersModel();
+                var workOrdersQuery = _dbContext.WorkOrders
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .AsQueryable();
+
+                // add serch
+                if(!string.IsNullOrEmpty(pnRequestModel.SearchString))
                 {
                     workOrdersQuery = workOrdersQuery.Where(x =>
                         x.Description.ToLower().Contains(pnRequestModel.SearchString.ToLower()) ||
                         x.DescriptionOfTaskDone.ToLower().Contains(pnRequestModel.SearchString.ToLower()));
                 }
+
+                // sort
                 if (!string.IsNullOrEmpty(pnRequestModel.Sort))
                 {
                     if (pnRequestModel.IsSortDsc)
@@ -70,35 +75,14 @@ namespace WorkOrders.Pn.Services
                     workOrdersQuery = _dbContext.WorkOrders.OrderBy(x => x.Id);
                 }
 
+                // pagination
                 workOrdersQuery = workOrdersQuery
-                                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                                     .Skip(pnRequestModel.Offset)
                                     .Take(pnRequestModel.PageSize);
+                
+                // add select
+                var workOrderList = await AddSelectToQuery(workOrdersQuery).Result.ToListAsync();
 
-                List<WorkOrderModel> workOrderList = await workOrdersQuery.Select(x => new WorkOrderModel()
-                {
-                    Id = x.Id,
-                    CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(x.CreatedAt, timeZoneInfo),
-                    CreatedByUserId = x.CreatedByUserId,
-                    Description = x.Description,
-                    CorrectedAtLatest = x.CorrectedAtLatest,
-                    DoneAt = x.DoneAt != null ? TimeZoneInfo.ConvertTimeFromUtc((DateTime)x.DoneAt, timeZoneInfo) : (DateTime?) null,
-                    DoneBySiteId = x.DoneBySiteId,
-                    DescriptionOfTaskDone = x.DescriptionOfTaskDone,
-                    AssignedArea = x.AssignedArea,
-                    AssignedWorker = x.AssignedWorker,
-                    PicturesOfTask = x.PicturesOfTasks
-                        .Select(y => y.FileName)
-                        .ToList(),
-                    PicturesOfTaskDone = x.PicturesOfTaskDone
-                        .Select(y => y.FileName)
-                        .ToList(),
-                }).ToListAsync();
-
-
-
-                var core = await _coreService.GetCore();
-                var sites = await core.Advanced_SiteItemReadAll(false);
                 foreach (var workOrderModel in workOrderList)
                 {
                     workOrderModel.CreatedBy = sites
@@ -135,10 +119,10 @@ namespace WorkOrders.Pn.Services
             {
                 if (workOrder.DoneAt == null)
                 {
-                    List<WorkOrdersTemplateCase> wotListToDelete = await _dbContext.WorkOrdersTemplateCases.Where(x =>
+                    var wotListToDelete = await _dbContext.WorkOrdersTemplateCases.Where(x =>
                         x.WorkOrderId == workOrder.Id).ToListAsync();
 
-                    foreach(WorkOrdersTemplateCase wotToDelete in wotListToDelete)
+                    foreach(var wotToDelete in wotListToDelete)
                     {
                         await core.CaseDelete(wotToDelete.CaseId);
                         wotToDelete.WorkflowState = Constants.WorkflowStates.Retracted;
@@ -151,6 +135,33 @@ namespace WorkOrders.Pn.Services
 
             return new OperationDataResult<WorkOrdersModel>(false,
                 _workOrdersLocalizationService.GetString("ErrorWhileObtainingWorkOrders"));
+        }
+
+        private async Task<IQueryable<WorkOrderModel>> AddSelectToQuery(IQueryable<WorkOrder> query)
+        {
+            var timeZoneInfo = await _userService.GetCurrentUserTimeZoneInfo();
+
+            return query.Select(x => new WorkOrderModel
+            {
+                Id = x.Id,
+                CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(x.CreatedAt, timeZoneInfo),
+                CreatedByUserId = x.CreatedByUserId,
+                Description = x.Description,
+                CorrectedAtLatest = x.CorrectedAtLatest,
+                DoneAt = x.DoneAt != null
+                    ? TimeZoneInfo.ConvertTimeFromUtc((DateTime) x.DoneAt, timeZoneInfo)
+                    : (DateTime?) null,
+                DoneBySiteId = x.DoneBySiteId,
+                DescriptionOfTaskDone = x.DescriptionOfTaskDone,
+                AssignedArea = x.AssignedArea,
+                AssignedWorker = x.AssignedWorker,
+                PicturesOfTask = x.PicturesOfTasks
+                    .Select(y => y.FileName)
+                    .ToList(),
+                PicturesOfTaskDone = x.PicturesOfTaskDone
+                    .Select(y => y.FileName)
+                    .ToList(),
+            });
         }
     }
 }
