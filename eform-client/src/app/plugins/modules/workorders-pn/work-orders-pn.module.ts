@@ -13,7 +13,6 @@ import {
   WorkOrdersFoldersModalComponent,
   WorkOrdersDeleteComponent,
 } from './components';
-import { SharedPnModule } from 'src/app/plugins/modules/shared/shared-pn.module';
 import {
   ButtonsModule,
   InputsModule,
@@ -34,7 +33,6 @@ import { WorkordersStateService } from 'src/app/plugins/modules/workorders-pn/co
     CommonModule,
     WorkOrdersPnRoutingModule,
     TranslateModule,
-    SharedPnModule,
     TableModule,
     TooltipModule,
     FontAwesomeModule,
