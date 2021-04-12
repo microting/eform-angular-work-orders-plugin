@@ -1,5 +1,15 @@
 # Changelog
 
+## [v1.0.82](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.82) (2021-04-12)
+
+[Full Changelog](https://github.com/microting/eform-angular-work-orders-plugin/compare/v1.0.81...v1.0.82)
+
+**Implemented enhancements:**
+
+- Bump Microting.WorkOrderBase from 1.2.37 to 1.2.38 [\#125](https://github.com/microting/eform-angular-work-orders-plugin/issues/125)
+- Bump Microting.eFormApi.BasePn from 2.0.117 to 2.0.118 [\#124](https://github.com/microting/eform-angular-work-orders-plugin/issues/124)
+- Bump Microting.eForm from 4.4.26 to 4.4.27 [\#123](https://github.com/microting/eform-angular-work-orders-plugin/issues/123)
+
 ## [v1.0.81](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.81) (2021-04-11)
 
 [Full Changelog](https://github.com/microting/eform-angular-work-orders-plugin/compare/v1.0.80...v1.0.81)
@@ -167,7 +177,7 @@
 - Bump Microting.WorkOrderBase from 1.2.20 to 1.2.21 [\#62](https://github.com/microting/eform-angular-work-orders-plugin/issues/62)
 - Bump Microting.eFormApi.BasePn from 2.0.97 to 2.0.98 [\#61](https://github.com/microting/eform-angular-work-orders-plugin/issues/61)
 - Bump Microting.eForm from 4.4.1 to 4.4.2 [\#60](https://github.com/microting/eform-angular-work-orders-plugin/issues/60)
-- Add logic to populate database with two eforms and insert them to settings while activating plugin [\#9](https://github.com/microting/eform-angular-work-orders-plugin/issues/9)
+- Add API endpoints to add/remove/obtain sites from the plugin settings [\#11](https://github.com/microting/eform-angular-work-orders-plugin/issues/11)
 
 ## [v1.0.64](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.64) (2021-02-20)
 
@@ -178,6 +188,10 @@
 - Bump Microting.WorkOrderBase from 1.2.18 to 1.2.20 [\#56](https://github.com/microting/eform-angular-work-orders-plugin/issues/56)
 - Bump Microting.eFormApi.BasePn from 2.0.95 to 2.0.97 [\#55](https://github.com/microting/eform-angular-work-orders-plugin/issues/55)
 - Bump Microting.eForm from 4.3.17 to 4.4.1 [\#54](https://github.com/microting/eform-angular-work-orders-plugin/issues/54)
+
+**Merged pull requests:**
+
+- Bump NUnit from 3.13.0 to 3.13.1 in /eFormAPI/Plugins/WorkOrders.Pn [\#47](https://github.com/microting/eform-angular-work-orders-plugin/pull/47) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 
 ## [v1.0.63](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.63) (2021-02-18)
 
@@ -376,7 +390,6 @@
 
 **Merged pull requests:**
 
-- Bump NUnit from 3.13.0 to 3.13.1 in /eFormAPI/Plugins/WorkOrders.Pn [\#47](https://github.com/microting/eform-angular-work-orders-plugin/pull/47) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Updates [\#21](https://github.com/microting/eform-angular-work-orders-plugin/pull/21) ([Gid733](https://github.com/Gid733))
 
 ## [v1.0.18](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.18) (2020-10-30)
@@ -440,7 +453,7 @@
 - DbContext fixes [\#19](https://github.com/microting/eform-angular-work-orders-plugin/pull/19) ([emleonid](https://github.com/emleonid))
 - Updates [\#18](https://github.com/microting/eform-angular-work-orders-plugin/pull/18) ([Gid733](https://github.com/Gid733))
 - Added sql dump for tests [\#17](https://github.com/microting/eform-angular-work-orders-plugin/pull/17) ([Gid733](https://github.com/Gid733))
-- Updates [\#13](https://github.com/microting/eform-angular-work-orders-plugin/pull/13) ([Gid733](https://github.com/Gid733))
+- Updates for tests [\#16](https://github.com/microting/eform-angular-work-orders-plugin/pull/16) ([Gid733](https://github.com/Gid733))
 
 ## [v1.0.5](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.5) (2020-09-23)
 
@@ -452,7 +465,6 @@
 
 **Merged pull requests:**
 
-- Updates for tests [\#16](https://github.com/microting/eform-angular-work-orders-plugin/pull/16) ([Gid733](https://github.com/Gid733))
 - Added tests [\#15](https://github.com/microting/eform-angular-work-orders-plugin/pull/15) ([Gid733](https://github.com/Gid733))
 
 ## [v1.0.3](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.3) (2020-09-22)
@@ -477,8 +489,8 @@
 
 **Implemented enhancements:**
 
-- Add API endpoints to add/remove/obtain sites from the plugin settings [\#11](https://github.com/microting/eform-angular-work-orders-plugin/issues/11)
 - Add API endpoints to obtain workorders list with sorting and pagination with photos [\#10](https://github.com/microting/eform-angular-work-orders-plugin/issues/10)
+- Add logic to populate database with two eforms and insert them to settings while activating plugin [\#9](https://github.com/microting/eform-angular-work-orders-plugin/issues/9)
 - Add localization [\#8](https://github.com/microting/eform-angular-work-orders-plugin/issues/8)
 - Add separate gallery lightboxes for pictures of task and pictures of task done with authorization [\#7](https://github.com/microting/eform-angular-work-orders-plugin/issues/7)
 - Create sorting for all columns in the workorders list [\#6](https://github.com/microting/eform-angular-work-orders-plugin/issues/6)
@@ -490,6 +502,7 @@
 
 **Merged pull requests:**
 
+- Updates [\#13](https://github.com/microting/eform-angular-work-orders-plugin/pull/13) ([Gid733](https://github.com/Gid733))
 - Initial commit [\#12](https://github.com/microting/eform-angular-work-orders-plugin/pull/12) ([Gid733](https://github.com/Gid733))
 
 
