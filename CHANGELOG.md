@@ -1,5 +1,15 @@
 # Changelog
 
+## [v1.0.83](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.83) (2021-04-13)
+
+[Full Changelog](https://github.com/microting/eform-angular-work-orders-plugin/compare/v1.0.82...v1.0.83)
+
+**Implemented enhancements:**
+
+- Bump Microting.WorkOrderBase from 1.2.38 to 1.2.39 [\#129](https://github.com/microting/eform-angular-work-orders-plugin/issues/129)
+- Bump Microting.eFormApi.BasePn from 2.0.118 to 2.0.120 [\#128](https://github.com/microting/eform-angular-work-orders-plugin/issues/128)
+- Bump Microting.eForm from 4.4.27 to 4.4.29 [\#127](https://github.com/microting/eform-angular-work-orders-plugin/issues/127)
+
 ## [v1.0.82](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.82) (2021-04-12)
 
 [Full Changelog](https://github.com/microting/eform-angular-work-orders-plugin/compare/v1.0.81...v1.0.82)
@@ -177,7 +187,6 @@
 - Bump Microting.WorkOrderBase from 1.2.20 to 1.2.21 [\#62](https://github.com/microting/eform-angular-work-orders-plugin/issues/62)
 - Bump Microting.eFormApi.BasePn from 2.0.97 to 2.0.98 [\#61](https://github.com/microting/eform-angular-work-orders-plugin/issues/61)
 - Bump Microting.eForm from 4.4.1 to 4.4.2 [\#60](https://github.com/microting/eform-angular-work-orders-plugin/issues/60)
-- Add API endpoints to add/remove/obtain sites from the plugin settings [\#11](https://github.com/microting/eform-angular-work-orders-plugin/issues/11)
 
 ## [v1.0.64](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.64) (2021-02-20)
 
@@ -489,6 +498,7 @@
 
 **Implemented enhancements:**
 
+- Add API endpoints to add/remove/obtain sites from the plugin settings [\#11](https://github.com/microting/eform-angular-work-orders-plugin/issues/11)
 - Add API endpoints to obtain workorders list with sorting and pagination with photos [\#10](https://github.com/microting/eform-angular-work-orders-plugin/issues/10)
 - Add logic to populate database with two eforms and insert them to settings while activating plugin [\#9](https://github.com/microting/eform-angular-work-orders-plugin/issues/9)
 - Add localization [\#8](https://github.com/microting/eform-angular-work-orders-plugin/issues/8)
