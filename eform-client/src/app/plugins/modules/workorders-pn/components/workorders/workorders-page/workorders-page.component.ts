@@ -1,16 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import {
-  PageSettingsModel,
-  TableHeaderElementModel,
-} from 'src/app/common/models';
-import {
-  WorkOrderModel,
-  WorkOrdersModel,
-  WorkOrdersRequestModel,
-} from '../../../models';
+import { TableHeaderElementModel } from 'src/app/common/models';
+import { WorkOrderModel, WorkOrdersModel } from '../../../models';
 import { Subject, Subscription } from 'rxjs';
-import { PluginClaimsHelper } from 'src/app/common/helpers';
-import { WorkOrdersPnClaims } from 'src/app/plugins/modules/workorders-pn/const';
 import { debounceTime } from 'rxjs/operators';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { WorkordersStateService } from 'src/app/plugins/modules/workorders-pn/components/workorders/state/workorders-state-service';
@@ -24,19 +15,9 @@ import { WorkordersStateService } from 'src/app/plugins/modules/workorders-pn/co
 export class WorkOrdersPageComponent implements OnInit, OnDestroy {
   @ViewChild('imagesModalComponent', { static: false }) imagesModalComponent;
   @ViewChild('deleteWorkOrderModal', { static: false }) deleteWorkOrderModal;
-  localPageSettings: PageSettingsModel = new PageSettingsModel();
-  workOrdersRequestModel: WorkOrdersRequestModel = new WorkOrdersRequestModel();
   workOrdersModel: WorkOrdersModel = new WorkOrdersModel();
   searchSubject = new Subject();
   getAllSub$: Subscription;
-
-  get pluginClaimsHelper() {
-    return PluginClaimsHelper;
-  }
-
-  get workOrdersPnClaims() {
-    return WorkOrdersPnClaims;
-  }
 
   tableHeaders: TableHeaderElementModel[] = [
     { name: 'Id', elementId: 'idTableHeader', sortable: true },
