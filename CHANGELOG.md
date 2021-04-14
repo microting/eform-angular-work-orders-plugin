@@ -1,5 +1,15 @@
 # Changelog
 
+## [v1.0.84](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.84) (2021-04-14)
+
+[Full Changelog](https://github.com/microting/eform-angular-work-orders-plugin/compare/v1.0.83...v1.0.84)
+
+**Implemented enhancements:**
+
+- Bump Microting.WorkOrderBase from 1.2.39 to 1.2.40 [\#135](https://github.com/microting/eform-angular-work-orders-plugin/issues/135)
+- Bump Microting.eFormApi.BasePn from 2.0.120 to 2.0.122 [\#134](https://github.com/microting/eform-angular-work-orders-plugin/issues/134)
+- Bump Microting.eForm from 4.4.29 to 4.4.31 [\#133](https://github.com/microting/eform-angular-work-orders-plugin/issues/133)
+
 ## [v1.0.83](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.83) (2021-04-13)
 
 [Full Changelog](https://github.com/microting/eform-angular-work-orders-plugin/compare/v1.0.82...v1.0.83)
@@ -197,6 +207,7 @@
 - Bump Microting.WorkOrderBase from 1.2.18 to 1.2.20 [\#56](https://github.com/microting/eform-angular-work-orders-plugin/issues/56)
 - Bump Microting.eFormApi.BasePn from 2.0.95 to 2.0.97 [\#55](https://github.com/microting/eform-angular-work-orders-plugin/issues/55)
 - Bump Microting.eForm from 4.3.17 to 4.4.1 [\#54](https://github.com/microting/eform-angular-work-orders-plugin/issues/54)
+- Add localization [\#8](https://github.com/microting/eform-angular-work-orders-plugin/issues/8)
 
 **Merged pull requests:**
 
@@ -501,7 +512,6 @@
 - Add API endpoints to add/remove/obtain sites from the plugin settings [\#11](https://github.com/microting/eform-angular-work-orders-plugin/issues/11)
 - Add API endpoints to obtain workorders list with sorting and pagination with photos [\#10](https://github.com/microting/eform-angular-work-orders-plugin/issues/10)
 - Add logic to populate database with two eforms and insert them to settings while activating plugin [\#9](https://github.com/microting/eform-angular-work-orders-plugin/issues/9)
-- Add localization [\#8](https://github.com/microting/eform-angular-work-orders-plugin/issues/8)
 - Add separate gallery lightboxes for pictures of task and pictures of task done with authorization [\#7](https://github.com/microting/eform-angular-work-orders-plugin/issues/7)
 - Create sorting for all columns in the workorders list [\#6](https://github.com/microting/eform-angular-work-orders-plugin/issues/6)
 - Implement obtaining workorders, pagination, saving pagination to localstorage in plugin [\#5](https://github.com/microting/eform-angular-work-orders-plugin/issues/5)
