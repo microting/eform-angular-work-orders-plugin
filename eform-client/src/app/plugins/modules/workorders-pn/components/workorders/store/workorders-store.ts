@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { persistState, Store, StoreConfig } from '@datorama/akita';
 import { CommonPaginationState } from 'src/app/common/models/common-pagination-state';
-import { planningsPersistStorage } from 'src/app/plugins/modules/items-planning-pn/components/plannings/store/plannings-store';
 
 export interface WorkordersState {
   pagination: CommonPaginationState;
