@@ -2,16 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { WorkOrdersPnRoutingModule } from './work-orders-pn-routing.module';
-import { WorkOrdersSettingsService, WorkOrdersService } from './services';
+import { WorkOrdersService, WorkOrdersSettingsService } from './services';
 import { WorkOrdersPnLayoutComponent } from './layouts';
 import {
-  WorkOrdersSettingsComponent,
-  WorkOrdersPageComponent,
   SettingsAddSiteModalComponent,
   SettingsRemoveSiteModalComponent,
-  WorkOrdersImagesModalComponent,
-  WorkOrdersFoldersModalComponent,
   WorkOrdersDeleteComponent,
+  WorkOrdersFoldersModalComponent,
+  WorkOrdersImagesModalComponent,
+  WorkOrdersPageComponent,
+  WorkOrdersSettingsComponent,
   WorkordersStateService,
 } from './components';
 import {
@@ -28,6 +28,7 @@ import { LightboxModule } from '@ngx-gallery/lightbox';
 import { GalleryModule } from '@ngx-gallery/core';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 import { SharedPnModule } from 'src/app/plugins/modules/shared/shared-pn.module';
+import { workordersPersistProvider } from './components/workorders/store/workorders-store';
 
 @NgModule({
   imports: [
@@ -61,6 +62,7 @@ import { SharedPnModule } from 'src/app/plugins/modules/shared/shared-pn.module'
     WorkOrdersService,
     WorkOrdersSettingsService,
     WorkordersStateService,
+    workordersPersistProvider,
   ],
 })
 export class WorkOrdersPnModule {}

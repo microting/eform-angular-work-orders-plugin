@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SettingsAddSiteModalComponent } from './settings-add-site-modal.component';
+import {SettingsAddSiteModalComponent} from './settings-add-site-modal.component';
 
 describe('SettingsAddSiteModalComponent', () => {
   let component: SettingsAddSiteModalComponent;

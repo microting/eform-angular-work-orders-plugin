@@ -4,7 +4,7 @@ import { WorkOrderModel, WorkOrdersModel } from '../../../models';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
-import { WorkordersStateService } from 'src/app/plugins/modules/workorders-pn/components/workorders/state/workorders-state-service';
+import { WorkordersStateService } from 'src/app/plugins/modules/workorders-pn/components/workorders/store/workorders-state-service';
 
 @AutoUnsubscribe()
 @Component({
