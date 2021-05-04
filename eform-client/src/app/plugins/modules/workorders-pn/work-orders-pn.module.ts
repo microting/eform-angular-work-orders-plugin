@@ -12,7 +12,6 @@ import {
   WorkOrdersImagesModalComponent,
   WorkOrdersPageComponent,
   WorkOrdersSettingsComponent,
-  WorkordersStateService,
 } from './components';
 import {
   ButtonsModule,
@@ -28,7 +27,10 @@ import { LightboxModule } from '@ngx-gallery/lightbox';
 import { GalleryModule } from '@ngx-gallery/core';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 import { SharedPnModule } from 'src/app/plugins/modules/shared/shared-pn.module';
-import { workordersPersistProvider } from './components/workorders/store/workorders-store';
+import {
+  workordersPersistProvider,
+  WorkordersStateService,
+} from './components/workorders/store';
 
 @NgModule({
   imports: [

@@ -26,9 +26,8 @@
       <thead
         table-headers
         [tableHeaders]="tableHeaders"
-        [currentSortName]="workordersStateService.getSort() | async"
+        [sort]="workordersStateService.getSort() | async"
         (sortChanged)="sortTable($event)"
-        [isSortDsc]="workordersStateService.getIsSortDsc() | async"
       ></thead>
       <tbody id="tableBody">
         <tr
@@ -126,9 +125,7 @@
       ></eform-page-size>
     </div>
     <eform-pagination
-      [limit]="workordersStateService.getPageSize() | async"
-      [size]="workOrdersModel.total"
-      [offset]="workordersStateService.getOffset() | async"
+      [pagination]="workordersStateService.getPagination() | async"
       (onPageChanged)="changePage($event)"
     ></eform-pagination>
   </div>
