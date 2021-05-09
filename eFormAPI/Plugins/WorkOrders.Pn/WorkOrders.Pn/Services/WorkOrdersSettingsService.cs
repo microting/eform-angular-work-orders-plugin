@@ -21,6 +21,7 @@ using WorkOrders.Pn.Messages;
 namespace WorkOrders.Pn.Services
 {
     using Microting.eForm.Dto;
+    using Microting.eFormApi.BasePn.Infrastructure.Consts;
     using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 
     public class WorkOrdersSettingsService : IWorkOrdersSettingsService
@@ -56,19 +57,19 @@ namespace WorkOrders.Pn.Services
         {
             try
             {
-                List<int> assignedSitesIds = await _dbContext.AssignedSites.Where(y => y.WorkflowState != Constants.WorkflowStates.Removed).Select(x => x.SiteMicrotingUid).ToListAsync();
-                WorkOrdersSettingsModel workOrdersSettings = new WorkOrdersSettingsModel()
+                var assignedSitesIds = await _dbContext.AssignedSites.Where(y => y.WorkflowState != Constants.WorkflowStates.Removed).Select(x => x.SiteMicrotingUid).ToListAsync();
+                var workOrdersSettings = new WorkOrdersSettingsModel()
                 {
                     AssignedSites = new List<SiteNameModel>()
                 };
 
                 if (assignedSitesIds.Count > 0)
                 {
-                    List<SiteDto> allSites = await _core.GetCore().Result.SiteReadAll(false);
+                    var allSites = await _core.GetCore().Result.SiteReadAll(false);
 
-                    foreach (int id in assignedSitesIds)
+                    foreach (var id in assignedSitesIds)
                     {
-                        SiteNameModel siteNameModel = allSites.Where(x => x.SiteId == id).Select(x => new SiteNameModel()
+                        var siteNameModel = allSites.Where(x => x.SiteId == id).Select(x => new SiteNameModel()
                         {
                             SiteName = x.SiteName,
                             SiteUId = x.SiteId
@@ -109,28 +110,43 @@ namespace WorkOrders.Pn.Services
 
         public async Task<OperationResult> AddSiteToSettingsAsync(int siteId)
         {
-            var result = await _dbContext.PluginConfigurationValues.SingleAsync(x => x.Name == "WorkOrdersBaseSettings:NewTaskId");
-            var folderResult = await _dbContext.PluginConfigurationValues.SingleAsync(x => x.Name == "WorkOrdersBaseSettings:FolderId");
+            var option = _options.Value;
+            var newTaskId = option.NewTaskId;
+            var folderId = option.FolderId;
             var theCore = await _core.GetCore();
             await using var sdkDbContext = theCore.DbContextHelper.GetDbContext();
-            string folderId = sdkDbContext.Folders.Single(x => x.Id == int.Parse(folderResult.Value)).MicrotingUid.ToString();
-            Site site = await sdkDbContext.Sites.SingleAsync(x => x.MicrotingUid == siteId);
-            Language language = await sdkDbContext.Languages.SingleAsync(x => x.Id == site.LanguageId);
-            MainElement mainElement = await theCore.ReadeForm(int.Parse(result.Value), language);
+            var folder = await sdkDbContext.Folders.SingleOrDefaultAsync(x => x.Id == folderId);
+            if (folder == null)
+            {
+                return new OperationResult(false, _workOrdersLocalizationService.GetString("FolderNotExist"));
+            }
+            var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.MicrotingUid == siteId);
+            if (site == null)
+            {
+                return new OperationResult(false, _workOrdersLocalizationService.GetString("SiteNotFind"));
+            }
+            var language = await sdkDbContext.Languages.SingleAsync(x => x.Id == site.LanguageId);
+            var mainElement = await theCore.ReadeForm(newTaskId, language);
             switch (language.Name)
             {
-                case "Danish":
+                case LanguageNames.Danish:
+                {
                     mainElement.Label = "Ny opgave";
                     break;
-                case "English":
+                }
+                case LanguageNames.English:
+                {
                     mainElement.Label = "New task";
                     break;
-                case "German":
+                }
+                case LanguageNames.German:
+                {
                     mainElement.Label = "Neue Aufgabe";
                     break;
+                }
             }
 
-            mainElement.CheckListFolderName = folderId;
+            mainElement.CheckListFolderName = folder.MicrotingUid.ToString();
             mainElement.EndDate = DateTime.UtcNow.AddYears(10);
             mainElement.Repeated = 0;
             mainElement.PushMessageTitle = mainElement.Label;
@@ -138,8 +154,8 @@ namespace WorkOrders.Pn.Services
             //await using IDbContextTransaction transaction = await _dbContext.Database.BeginTransactionAsync();
             try
             {
-                int? caseId = await theCore.CaseCreate(mainElement, "", siteId, int.Parse(folderResult.Value));
-                AssignedSite assignedSite = new AssignedSite() { SiteMicrotingUid = siteId, CaseMicrotingUid = (int)caseId};
+                var caseId = await theCore.CaseCreate(mainElement, "", siteId, folderId);
+                var assignedSite = new AssignedSite() { SiteMicrotingUid = siteId, CaseMicrotingUid = (int)caseId};
 
                 await assignedSite.Create(_dbContext);
                 //await transaction.CommitAsync();
@@ -218,16 +234,18 @@ namespace WorkOrders.Pn.Services
         {
             try
             {
-                AssignedSite assignedSite = await _dbContext.AssignedSites.FirstOrDefaultAsync(x => x.SiteMicrotingUid == siteId
-                        && x.WorkflowState != Constants.WorkflowStates.Removed);
+                var assignedSite = await _dbContext.AssignedSites
+                    .Where(x => x.SiteMicrotingUid == siteId)
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .FirstOrDefaultAsync();
                 var theCore = await _core.GetCore();
                 await theCore.CaseDelete((int)assignedSite.CaseMicrotingUid);
                 await assignedSite.Delete(_dbContext);
-                List<WorkOrdersTemplateCase> workOrdersTemplateCases = await _dbContext.WorkOrdersTemplateCases
+                var workOrdersTemplateCases = await _dbContext.WorkOrdersTemplateCases
                     .Where(x => x.SdkSiteMicrotingUid == siteId && x.WorkflowState != Constants.WorkflowStates.Removed)
                     .ToListAsync();
 
-                foreach (WorkOrdersTemplateCase workOrdersTemplateCase in workOrdersTemplateCases)
+                foreach (var workOrdersTemplateCase in workOrdersTemplateCases)
                 {
                     await theCore.CaseDelete(workOrdersTemplateCase.CaseId);
                     await workOrdersTemplateCase.Delete(_dbContext);
