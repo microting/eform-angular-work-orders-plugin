@@ -7,9 +7,8 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { SiteNameDto } from 'src/app/common/models';
+import { SiteNameDto, FolderDto } from 'src/app/common/models';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
-import { FolderDto } from 'src/app/common/models/dto/folder.dto';
 
 @AutoUnsubscribe()
 @Component({
@@ -30,13 +29,14 @@ export class WorkOrdersFoldersModalComponent implements OnInit, OnDestroy {
   ngOnInit() {}
 
   show(selectedFolderId?: number) {
-    this.selectedFolderId = selectedFolderId;
+    this.selectedFolderId = selectedFolderId ?? null;
     this.frame.show();
   }
 
   select(folder: FolderDto) {
     this.folderSelected.emit(folder);
     this.frame.hide();
+    this.selectedFolderId = 0;
   }
 
   ngOnDestroy(): void {}

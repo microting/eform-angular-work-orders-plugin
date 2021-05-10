@@ -103,7 +103,7 @@
     "LocalizedValue": {
       "da": "Fejl under tilføjelse af websted til indstillinger",
       "en-US": "Error while adding site to settings",
-      "de-DE":"Fehler beim Hinzufügen einer Site zu den Einstellungen",
+      "de-DE": "Fehler beim Hinzufügen einer Site zu den Einstellungen",
       "uk-UA": "Помилка при додаванні місця в налаштування"
     }
   },
@@ -190,11 +190,29 @@
   },
   {
     "Key": "TaskCreatedBy",
-    "LocalizeValue": {
+    "LocalizedValue": {
       "da": "Oprettet af",
       "en-US": "Task created by",
       "de-DE": "Aufgabe erstellt von",
       "uk-UA": "Завдання, створене користувачем"
+    }
+  },
+  {
+    "Key": "FolderNotExist",
+    "LocalizedValue": {
+      "da": "Mappe findes ikke",
+      "en-US": "Folder not exist",
+      "de-DE": "Ordner nicht vorhanden",
+      "uk-UA": "Папка не знайдена"
+    }
+  },
+  {
+    "Key": "SiteNotFind",
+    "LocalizedValue": {
+      "da": "Site ikke finde",
+      "en-US": "Site not find",
+      "de-DE": "Site nicht finden",
+      "uk-UA": "Сайт не знайдено"
     }
   }
 ]
