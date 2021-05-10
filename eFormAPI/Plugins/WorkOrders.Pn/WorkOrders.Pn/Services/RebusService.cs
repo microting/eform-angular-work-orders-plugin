@@ -26,12 +26,12 @@ namespace WorkOrders.Pn.Services
             _workOrdersLocalizationService = workOrdersLocalizationService;
         }
 
-        public async Task Start(string connectionString)
+        public async Task Start(string connectionString, string rabbitMqUser, string rabbitMqPassword, string rabbitMqHost)
         {
             _connectionString = connectionString;
             _container = new WindsorContainer();
             _container.Install(new RebusHandlerInstaller(),
-                new RebusInstaller(connectionString, 1, 1));
+                new RebusInstaller(connectionString, 1, 1, rabbitMqUser, rabbitMqPassword, rabbitMqHost));
 
             Core core = await _coreHelper.GetCore();
             DbContextHelper dbContextHelper = new DbContextHelper(connectionString);
