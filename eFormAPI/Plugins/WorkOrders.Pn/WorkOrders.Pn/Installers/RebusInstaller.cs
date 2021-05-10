@@ -12,7 +12,7 @@ namespace WorkOrders.Pn.Installers
         private readonly int maxParallelism;
         private readonly int numberOfWorkers;
 
-        public RebusInstaller(string connectionString, int maxParallelism, int numberOfWorkers)
+        public RebusInstaller(string connectionString, int maxParallelism, int numberOfWorkers, string rabbitMqUser, string rabbitMqPassword, string rabbitMqHost)
         {
             if (string.IsNullOrEmpty(connectionString)) throw new ArgumentNullException(nameof(connectionString));
             this.connectionString = connectionString;
