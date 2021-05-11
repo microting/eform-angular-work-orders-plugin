@@ -5,6 +5,7 @@ using Microting.WorkOrderBase.Infrastructure.Data;
 using Microting.WorkOrderBase.Infrastructure.Data.Factories;
 using Rebus.Bus;
 using System.Threading.Tasks;
+using Castle.MicroKernel.Registration;
 using WorkOrders.Pn.Abstractions;
 using WorkOrders.Pn.Infrastructure.Helpers;
 using WorkOrders.Pn.Installers;
@@ -24,20 +25,23 @@ namespace WorkOrders.Pn.Services
         {
             _coreHelper = coreHelper;
             _workOrdersLocalizationService = workOrdersLocalizationService;
+            _container = new WindsorContainer();
         }
 
         public async Task Start(string connectionString, string rabbitMqUser, string rabbitMqPassword, string rabbitMqHost)
         {
             _connectionString = connectionString;
-            _container = new WindsorContainer();
-            _container.Install(new RebusHandlerInstaller(),
-                new RebusInstaller(connectionString, 1, 1, rabbitMqUser, rabbitMqPassword, rabbitMqHost));
 
             Core core = await _coreHelper.GetCore();
             DbContextHelper dbContextHelper = new DbContextHelper(connectionString);
-            _container.Register(Castle.MicroKernel.Registration.Component.For<Core>().Instance(core));
-            _container.Register(Castle.MicroKernel.Registration.Component.For<DbContextHelper>().Instance(dbContextHelper));
-            _container.Register(Castle.MicroKernel.Registration.Component.For<IWorkOrdersLocalizationService>().Instance(_workOrdersLocalizationService));
+            _container.Register(Component.For<Core>().Instance(core));
+            _container.Register(Component.For<DbContextHelper>().Instance(dbContextHelper));
+            _container.Register(Component.For<IWorkOrdersLocalizationService>().Instance(_workOrdersLocalizationService));
+            _container.Install(
+                new RebusHandlerInstaller(),
+                new RebusInstaller(connectionString, 1, 1, rabbitMqUser, rabbitMqPassword, rabbitMqHost)
+            );
+
             _bus = _container.Resolve<IBus>();
         }
 

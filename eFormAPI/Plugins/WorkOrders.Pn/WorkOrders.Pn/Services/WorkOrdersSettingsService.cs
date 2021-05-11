@@ -50,7 +50,7 @@ namespace WorkOrders.Pn.Services
             _options = options;
             _userService = userService;
             _rebusService = rebusService;
-            _bus = rebusService.GetBus();
+            _bus = _rebusService.GetBus();
         }
 
         public async Task<OperationDataResult<WorkOrdersSettingsModel>> GetAllSettingsAsync()
