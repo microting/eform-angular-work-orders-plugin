@@ -16,6 +16,7 @@ using Rebus.Bus;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace WorkOrders.Pn
 {
@@ -94,10 +95,17 @@ namespace WorkOrders.Pn
             appBuilder.UseHttpsRedirection();
 
             appBuilder.UseRouting();
+            string rabbitMqHost = "localhost";
+
+            if (_connectionString.Contains("frontend"))
+            {
+                var dbPrefix = Regex.Match(_connectionString, @"atabase=(\d*)_").Groups[1].Value;
+                rabbitMqHost = $"frontend-{dbPrefix}-rabbitmq";
+            }
 
             IServiceProvider serviceProvider = appBuilder.ApplicationServices;
             IRebusService rebusService = serviceProvider.GetService<IRebusService>();
-            rebusService.Start(_connectionString);
+            rebusService.Start(_connectionString, "admin", "password", rabbitMqHost);
 
             _bus = rebusService.GetBus();
 
