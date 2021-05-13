@@ -35,7 +35,6 @@ export class WorkOrdersSettingsComponent implements OnInit, OnDestroy {
   folderUpdateSub$: Subscription;
   tasksFolder: boolean;
 
-  // tslint:disable-next-line:max-line-length
   constructor(
     private settingsService: WorkOrdersSettingsService,
     private sitesService: SitesService,
@@ -52,7 +51,6 @@ export class WorkOrdersSettingsComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         if (data && data.success) {
           this.workOrdersSettingsModel = data.model;
-
           this.loadAllFoldersTree();
         }
       });
@@ -73,7 +71,6 @@ export class WorkOrdersSettingsComponent implements OnInit, OnDestroy {
       .subscribe((operation) => {
         if (operation && operation.success) {
           this.foldersTreeDto = operation.model;
-
           this.getSites();
         }
       });
@@ -85,18 +82,8 @@ export class WorkOrdersSettingsComponent implements OnInit, OnDestroy {
       .subscribe((operation) => {
         if (operation && operation.success) {
           this.foldersDto = operation.model;
-          this.workOrdersSettingsModel.folderId === null
-            ? (this.workOrdersSettingsModel.folderName = null)
-            : (this.workOrdersSettingsModel.folderName = composeFolderName(
-                this.workOrdersSettingsModel.folderId,
-                this.foldersDto
-              ));
-
-          this.workOrdersSettingsModel.folderTasksId === null
-            ? (this.workOrdersSettingsModel.folderTasksName = null)
-            : (this.workOrdersSettingsModel.folderTasksName = this.foldersDto.find(
-                (x) => x.id === this.workOrdersSettingsModel.folderTasksId
-              ).name);
+          this.setFolderName();
+          this.setFolderTaskName();
         }
       });
   }
@@ -116,6 +103,7 @@ export class WorkOrdersSettingsComponent implements OnInit, OnDestroy {
     this.tasksFolder = false;
     this.foldersModal.show(this.workOrdersSettingsModel.folderId);
   }
+
   openTasksFoldersModal() {
     this.tasksFolder = true;
     this.foldersModal.show(this.workOrdersSettingsModel.folderTasksId);
@@ -123,22 +111,48 @@ export class WorkOrdersSettingsComponent implements OnInit, OnDestroy {
 
   onFolderSelected(folderDto: FolderDto) {
     if (this.tasksFolder) {
-      this.folderUpdateSub$ = this.settingsService
-        .updateSettingsTasksFolder(folderDto.id)
-        .subscribe((operation) => {
-          if (operation && operation.success) {
-            this.getSettings();
-          }
-        });
+      this.updateFolderTask(folderDto.id);
     } else {
-      this.folderUpdateSub$ = this.settingsService
-        .updateSettingsFolder(folderDto.id)
-        .subscribe((operation) => {
-          if (operation && operation.success) {
-            this.getSettings();
-          }
-        });
+      this.updateFolder(folderDto.id);
     }
+  }
+
+  setFolderTaskName() {
+    this.workOrdersSettingsModel.folderTasksId === null
+      ? (this.workOrdersSettingsModel.folderTasksName = null)
+      : (this.workOrdersSettingsModel.folderTasksName = composeFolderName(
+          this.workOrdersSettingsModel.folderTasksId,
+          this.foldersDto
+        ));
+  }
+
+  setFolderName() {
+    this.workOrdersSettingsModel.folderId === null
+      ? (this.workOrdersSettingsModel.folderName = null)
+      : (this.workOrdersSettingsModel.folderName = composeFolderName(
+          this.workOrdersSettingsModel.folderId,
+          this.foldersDto
+        ));
+  }
+
+  updateFolder(folderDtoId: number) {
+    this.folderUpdateSub$ = this.settingsService
+      .updateSettingsFolder(folderDtoId)
+      .subscribe((operation) => {
+        if (operation && operation.success) {
+          this.getSettings();
+        }
+      });
+  }
+
+  updateFolderTask(folderDtoId: number) {
+    this.folderUpdateSub$ = this.settingsService
+      .updateSettingsTasksFolder(folderDtoId)
+      .subscribe((operation) => {
+        if (operation && operation.success) {
+          this.getSettings();
+        }
+      });
   }
 
   ngOnDestroy(): void {}
