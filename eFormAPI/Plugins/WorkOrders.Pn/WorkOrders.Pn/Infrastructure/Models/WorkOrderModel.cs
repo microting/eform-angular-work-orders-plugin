@@ -17,7 +17,6 @@ namespace WorkOrders.Pn.Infrastructure.Models
         public string DescriptionOfTaskDone { get; set; }
         public string AssignedArea { get; set; }
         public string AssignedWorker { get; set; }
-
         public List<string> PicturesOfTask { get; set; } = new List<string>();
         public List<string> PicturesOfTaskDone { get; set; } = new List<string>();
     }
