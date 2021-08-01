@@ -1,5 +1,15 @@
 # Changelog
 
+## [v1.0.121](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.121) (2021-08-01)
+
+[Full Changelog](https://github.com/microting/eform-angular-work-orders-plugin/compare/v1.0.120...v1.0.121)
+
+**Implemented enhancements:**
+
+- Bump Microting.WorkOrderBase from 2.0.28 to 2.0.29 [\#262](https://github.com/microting/eform-angular-work-orders-plugin/issues/262)
+- Bump Microting.eFormApi.BasePn from 3.0.31 to 3.0.33 [\#261](https://github.com/microting/eform-angular-work-orders-plugin/issues/261)
+- Bump Microting.eForm from 5.2.18 to 5.2.21 [\#260](https://github.com/microting/eform-angular-work-orders-plugin/issues/260)
+
 ## [v1.0.120](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.120) (2021-07-19)
 
 [Full Changelog](https://github.com/microting/eform-angular-work-orders-plugin/compare/v1.0.119...v1.0.120)
@@ -275,6 +285,7 @@
 
 - Bump Microting.WorkOrderBase from 1.3.2 to 2.0.0 [\#175](https://github.com/microting/eform-angular-work-orders-plugin/issues/175)
 - Bump Microting.eFormApi.BasePn from 3.0.0 to 3.0.1 [\#174](https://github.com/microting/eform-angular-work-orders-plugin/issues/174)
+- Bump Microting.WorkOrderBase from 1.2.46 to 1.3.0 [\#156](https://github.com/microting/eform-angular-work-orders-plugin/issues/156)
 
 **Merged pull requests:**
 
@@ -318,8 +329,9 @@
 
 **Implemented enhancements:**
 
-- Bump Microting.WorkOrderBase from 1.2.46 to 1.3.0 [\#156](https://github.com/microting/eform-angular-work-orders-plugin/issues/156)
+- Bump Microting.eFormApi.BasePn from 2.0.129 to 2.1.0 [\#155](https://github.com/microting/eform-angular-work-orders-plugin/issues/155)
 - Bump Microting.eForm from 4.4.38 to 4.5.0 [\#154](https://github.com/microting/eform-angular-work-orders-plugin/issues/154)
+- Bump Microting.eForm from 4.4.37 to 4.4.38 [\#151](https://github.com/microting/eform-angular-work-orders-plugin/issues/151)
 
 ## [v1.0.89](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.89) (2021-04-20)
 
@@ -327,7 +339,6 @@
 
 **Implemented enhancements:**
 
-- Bump Microting.eFormApi.BasePn from 2.0.129 to 2.1.0 [\#155](https://github.com/microting/eform-angular-work-orders-plugin/issues/155)
 - Bump Microting.WorkOrderBase from 1.2.45 to 1.2.46 [\#153](https://github.com/microting/eform-angular-work-orders-plugin/issues/153)
 - Bump Microting.eFormApi.BasePn from 2.0.128 to 2.0.129 [\#152](https://github.com/microting/eform-angular-work-orders-plugin/issues/152)
 
@@ -337,7 +348,6 @@
 
 **Implemented enhancements:**
 
-- Bump Microting.eForm from 4.4.37 to 4.4.38 [\#151](https://github.com/microting/eform-angular-work-orders-plugin/issues/151)
 - Bump Microting.WorkOrderBase from 1.2.43 to 1.2.45 [\#150](https://github.com/microting/eform-angular-work-orders-plugin/issues/150)
 - Bump Microting.eFormApi.BasePn from 2.0.126 to 2.0.128 [\#149](https://github.com/microting/eform-angular-work-orders-plugin/issues/149)
 - Bump Microting.eForm from 4.4.35 to 4.4.37 [\#148](https://github.com/microting/eform-angular-work-orders-plugin/issues/148)
@@ -583,7 +593,6 @@
 **Merged pull requests:**
 
 - Bump NUnit from 3.13.0 to 3.13.1 in /eFormAPI/Plugins/WorkOrders.Pn [\#47](https://github.com/microting/eform-angular-work-orders-plugin/pull/47) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
-- Bump Castle.Windsor from 5.0.1 to 5.1.1 in /eFormAPI/Plugins/WorkOrders.Pn [\#23](https://github.com/microting/eform-angular-work-orders-plugin/pull/23) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 
 ## [v1.0.63](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.63) (2021-02-18)
 
@@ -645,6 +654,7 @@
 
 - Bump Rebus from 6.0.0 to 6.4.1 in /eFormAPI/Plugins/WorkOrders.Pn [\#29](https://github.com/microting/eform-angular-work-orders-plugin/pull/29) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump NUnit from 3.12.0 to 3.13.0 in /eFormAPI/Plugins/WorkOrders.Pn [\#28](https://github.com/microting/eform-angular-work-orders-plugin/pull/28) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump Castle.Windsor from 5.0.1 to 5.1.1 in /eFormAPI/Plugins/WorkOrders.Pn [\#23](https://github.com/microting/eform-angular-work-orders-plugin/pull/23) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 
 ## [v1.0.49](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.49) (2021-01-19)
 
