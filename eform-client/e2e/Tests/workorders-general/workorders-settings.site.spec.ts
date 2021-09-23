@@ -10,46 +10,46 @@ const name = Guid.create().toString();
 const surname = Guid.create().toString();
 
 describe('Work Order Settings', function () {
-  before(function () {
-    loginPage.open('/');
-    loginPage.login();
+  before(async () => {
+    await loginPage.open('/');
+    await loginPage.login();
 
-    deviceUsersPage.createDeviceUserFromScratch(name, surname);
+    await deviceUsersPage.createDeviceUserFromScratch(name, surname);
 
-    $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
-    workOrdersPage.goToWorkOrdersSettingsPage();
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await workOrdersPage.goToWorkOrdersSettingsPage();
   });
-  it('Assign Site', function() {
-    const rowCountBeforeCreation = workOrdersPage.rowNum;
-    workOrdersPage.assignDeviceUser(name);
-    loginPage.open('/');
-    workOrdersPage.goToWorkOrdersSettingsPage();
-    $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
-    const rowCountAfterCreation = workOrdersPage.rowNum;
+  it('Assign Site', async() => {
+    const rowCountBeforeCreation = await workOrdersPage.rowNum();
+    await workOrdersPage.assignDeviceUser(name);
+    await loginPage.open('/');
+    await workOrdersPage.goToWorkOrdersSettingsPage();
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    const rowCountAfterCreation = await workOrdersPage.rowNum();
     expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after adding site').equal(rowCountBeforeCreation + 1);
   });
-  it('Cancel Removing Site', function () {
-    const rowCountBefore = workOrdersPage.rowNum;
-    workOrdersPage.cancelRemovingDeviceUser();
-    loginPage.open('/');
-    workOrdersPage.goToWorkOrdersSettingsPage();
-    const rowCountAfter = workOrdersPage.rowNum;
+  it('Cancel Removing Site', async () => {
+    const rowCountBefore = await workOrdersPage.rowNum();
+    await workOrdersPage.cancelRemovingDeviceUser();
+    await loginPage.open('/');
+    await workOrdersPage.goToWorkOrdersSettingsPage();
+    const rowCountAfter = await workOrdersPage.rowNum();
     expect(rowCountAfter, 'Number of rows has changed').equal(rowCountBefore);
   });
-  it('Remove Site', function () {
-    const rowCountBefore = workOrdersPage.rowNum;
-    workOrdersPage.removeAssignedDeviceUser();
-    loginPage.open('/');
-    workOrdersPage.goToWorkOrdersSettingsPage();
-    const rowCountAfter = workOrdersPage.rowNum;
+  it('Remove Site', async () => {
+    const rowCountBefore = await workOrdersPage.rowNum();
+    await workOrdersPage.removeAssignedDeviceUser();
+    await loginPage.open('/');
+    await workOrdersPage.goToWorkOrdersSettingsPage();
+    const rowCountAfter = await workOrdersPage.rowNum();
     expect(rowCountAfter, 'Number of rows has changed').equal(rowCountBefore - 1);
   });
-  it('Cancel Adding Site', function() {
-    const rowCountBefore = workOrdersPage.rowNum;
-    workOrdersPage.cancelAddingDeviceUser();
-    loginPage.open('/');
-    workOrdersPage.goToWorkOrdersSettingsPage();
-    const rowCountAfter = workOrdersPage.rowNum;
+  it('Cancel Adding Site', async () => {
+    const rowCountBefore = await workOrdersPage.rowNum();
+    await workOrdersPage.cancelAddingDeviceUser();
+    await loginPage.open('/');
+    await workOrdersPage.goToWorkOrdersSettingsPage();
+    const rowCountAfter = await workOrdersPage.rowNum;
     expect(rowCountAfter, 'Number of rows has changed').equal(rowCountBefore);
   });
 });

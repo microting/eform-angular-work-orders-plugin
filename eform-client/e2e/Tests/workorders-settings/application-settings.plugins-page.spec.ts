@@ -5,27 +5,27 @@ import pluginPage from '../../Page objects/Plugin.page';
 import { expect } from 'chai';
 
 describe('Application settings page - site header section', function () {
-  before(function () {
-    loginPage.open('/auth');
+  before(async () => {
+    await loginPage.open('/auth');
   });
-  it('should go to plugin settings page', function () {
-    loginPage.login();
-    myEformsPage.Navbar.goToPluginsPage();
-    $('#plugin-name').waitForDisplayed({ timeout: 50000 });
-    $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
+  it('should go to plugin settings page', async () => {
+    await loginPage.login();
+    await myEformsPage.Navbar.goToPluginsPage();
+    await $('#plugin-name').waitForDisplayed({ timeout: 50000 });
+    await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
 
-    const plugin = pluginPage.getFirstPluginRowObj();
+    const plugin = await pluginPage.getFirstPluginRowObj();
     expect(plugin.name, 'name is not equal').equal(
       'Microting Work Orders Plugin'
     );
     expect(plugin.version, 'version is not equal').equal('1.0.0.0');
     expect(plugin.status, 'status is not equal').eq(false);
   });
-  it('should activate the plugin', function () {
-    let plugin = pluginPage.getFirstPluginRowObj();
-    plugin.enableOrDisablePlugin();
+  it('should activate the plugin', async () => {
+    let plugin = await pluginPage.getFirstPluginRowObj();
+    await plugin.enableOrDisablePlugin();
 
-    plugin = pluginPage.getFirstPluginRowObj();
+    plugin = await pluginPage.getFirstPluginRowObj();
     expect(plugin.name, 'name is not equal').equal(
       'Microting Work Orders Plugin'
     );

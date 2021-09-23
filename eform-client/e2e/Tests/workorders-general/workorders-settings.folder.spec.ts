@@ -12,43 +12,43 @@ const folders = [
 ];
 
 describe('Work Orders Settings Folder', function () {
-  before(function () {
-    loginPage.open('/');
-    loginPage.login();
-    myEformsPage.Navbar.goToFolderPage();
-    foldersPage.createNewFolder(folders[0].name, folders[0].description);
-    foldersPage.createNewFolder(folders[1].name, folders[1].description);
+  before(async () => {
+    await loginPage.open('/');
+    await loginPage.login();
+    await myEformsPage.Navbar.goToFolderPage();
+    await foldersPage.createNewFolder(folders[0].name, folders[0].description);
+    await foldersPage.createNewFolder(folders[1].name, folders[1].description);
 
-    workOrdersPage.goToWorkOrdersSettingsPage();
+    await workOrdersPage.goToWorkOrdersSettingsPage();
   });
-  it('Assign Folder', function () {
-    const spinnerAnimation = $('#spinner-animation');
-    $('#folderSelectorLabel').waitForDisplayed({ timeout: 20000 });
-    browser.pause(1000);
-    const oldFolder = workOrdersPage.folderSelectorInput.getValue();
-    workOrdersPage.selectFolder(0);
-    spinnerAnimation.waitForDisplayed({ timeout: 30000, reverse: true });
-    loginPage.open('/');
-    workOrdersPage.goToWorkOrdersSettingsPage();
-    spinnerAnimation.waitForDisplayed({ timeout: 30000, reverse: true });
-    browser.pause(1000);
-    const newFolder = workOrdersPage.folderSelectorInput.getValue();
+  it('Assign Folder', async () => {
+    const spinnerAnimation = await $('#spinner-animation');
+    await (await $('#folderSelectorLabel')).waitForDisplayed({ timeout: 20000 });
+    await browser.pause(1000);
+    const oldFolder = await (await workOrdersPage.folderSelectorInput()).getValue();
+    await workOrdersPage.selectFolder(0);
+    await spinnerAnimation.waitForDisplayed({ timeout: 30000, reverse: true });
+    await loginPage.open('/');
+    await workOrdersPage.goToWorkOrdersSettingsPage();
+    await spinnerAnimation.waitForDisplayed({ timeout: 30000, reverse: true });
+    await browser.pause(1000);
+    const newFolder = await (await workOrdersPage.folderSelectorInput()).getValue();
     expect(oldFolder).not.equal(newFolder);
   });
-  it('Change Assigned Folder', function () {
-    const spinnerAnimation = $('#spinner-animation');
-    workOrdersPage.goToWorkOrdersSettingsPage();
-    spinnerAnimation.waitForDisplayed({ timeout: 30000, reverse: true });
-    $('#folderSelectorLabel').waitForDisplayed({ timeout: 20000 });
-    browser.pause(1000);
-    const oldFolder = workOrdersPage.folderSelectorInput.getValue();
-    workOrdersPage.selectFolder(1);
-    spinnerAnimation.waitForDisplayed({ timeout: 30000, reverse: true });
-    loginPage.open('/');
-    workOrdersPage.goToWorkOrdersSettingsPage();
-    spinnerAnimation.waitForDisplayed({ timeout: 30000, reverse: true });
-    browser.pause(1000);
-    const newFolder = workOrdersPage.folderSelectorInput.getValue();
+  it('Change Assigned Folder', async () => {
+    const spinnerAnimation = await $('#spinner-animation');
+    await workOrdersPage.goToWorkOrdersSettingsPage();
+    await spinnerAnimation.waitForDisplayed({ timeout: 30000, reverse: true });
+    await (await $('#folderSelectorLabel')).waitForDisplayed({ timeout: 20000 });
+    await browser.pause(1000);
+    const oldFolder = await (await workOrdersPage.folderSelectorInput()).getValue();
+    await workOrdersPage.selectFolder(1);
+    await spinnerAnimation.waitForDisplayed({ timeout: 30000, reverse: true });
+    await loginPage.open('/');
+    await workOrdersPage.goToWorkOrdersSettingsPage();
+    await spinnerAnimation.waitForDisplayed({ timeout: 30000, reverse: true });
+    await browser.pause(1000);
+    const newFolder = await (await workOrdersPage.folderSelectorInput()).getValue();
     expect(oldFolder).not.equal(newFolder);
   });
 });
