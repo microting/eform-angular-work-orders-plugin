@@ -49,7 +49,7 @@ describe('Work Order Settings', function () {
     await workOrdersPage.cancelAddingDeviceUser();
     await loginPage.open('/');
     await workOrdersPage.goToWorkOrdersSettingsPage();
-    const rowCountAfter = await workOrdersPage.rowNum;
+    const rowCountAfter = await workOrdersPage.rowNum();
     expect(rowCountAfter, 'Number of rows has changed').equal(rowCountBefore);
   });
 });
