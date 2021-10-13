@@ -1,5 +1,39 @@
 # Changelog
 
+## [v1.0.142](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.142) (2021-10-13)
+
+[Full Changelog](https://github.com/microting/eform-angular-work-orders-plugin/compare/v1.0.141...v1.0.142)
+
+**Implemented enhancements:**
+
+- Bump Microting.WorkOrderBase from 2.0.49 to 2.0.50 [\#316](https://github.com/microting/eform-angular-work-orders-plugin/issues/316)
+- Bump Microting.eFormApi.BasePn from 3.0.58 to 3.0.59 [\#315](https://github.com/microting/eform-angular-work-orders-plugin/issues/315)
+- Bump Microting.eForm from 5.2.48 to 5.2.49 [\#314](https://github.com/microting/eform-angular-work-orders-plugin/issues/314)
+
+## [v1.0.141](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.141) (2021-10-12)
+
+[Full Changelog](https://github.com/microting/eform-angular-work-orders-plugin/compare/v1.0.140...v1.0.141)
+
+## [v1.0.140](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.140) (2021-10-08)
+
+[Full Changelog](https://github.com/microting/eform-angular-work-orders-plugin/compare/v1.0.139...v1.0.140)
+
+## [v1.0.139](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.139) (2021-10-06)
+
+[Full Changelog](https://github.com/microting/eform-angular-work-orders-plugin/compare/v1.0.138...v1.0.139)
+
+## [v1.0.138](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.138) (2021-10-01)
+
+[Full Changelog](https://github.com/microting/eform-angular-work-orders-plugin/compare/v1.0.137...v1.0.138)
+
+## [v1.0.137](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.137) (2021-09-29)
+
+[Full Changelog](https://github.com/microting/eform-angular-work-orders-plugin/compare/v1.0.136...v1.0.137)
+
+## [v1.0.136](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.136) (2021-09-28)
+
+[Full Changelog](https://github.com/microting/eform-angular-work-orders-plugin/compare/v1.0.135...v1.0.136)
+
 ## [v1.0.135](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.135) (2021-09-25)
 
 [Full Changelog](https://github.com/microting/eform-angular-work-orders-plugin/compare/v1.0.134...v1.0.135)
@@ -187,6 +221,7 @@
 
 - Bump NUnit3TestAdapter from 3.17.0 to 4.0.0 in /eFormAPI/Plugins/WorkOrders.Pn [\#235](https://github.com/microting/eform-angular-work-orders-plugin/pull/235) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump McMaster.NETCore.Plugins from 1.3.1 to 1.4.0 in /eFormAPI/Plugins/WorkOrders.Pn [\#215](https://github.com/microting/eform-angular-work-orders-plugin/pull/215) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump Microsoft.NET.Test.Sdk from 16.9.4 to 16.10.0 in /eFormAPI/Plugins/WorkOrders.Pn [\#210](https://github.com/microting/eform-angular-work-orders-plugin/pull/210) ([dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [v1.0.116](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.116) (2021-06-27)
 
@@ -229,13 +264,16 @@
 
 [Full Changelog](https://github.com/microting/eform-angular-work-orders-plugin/compare/v1.0.111...v1.0.112)
 
+**Implemented enhancements:**
+
+- Bump Microting.eFormApi.BasePn from 3.0.20 to 3.0.21 [\#239](https://github.com/microting/eform-angular-work-orders-plugin/issues/239)
+
 ## [v1.0.111](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.111) (2021-06-09)
 
 [Full Changelog](https://github.com/microting/eform-angular-work-orders-plugin/compare/v1.0.110...v1.0.111)
 
 **Implemented enhancements:**
 
-- Bump Microting.eFormApi.BasePn from 3.0.20 to 3.0.21 [\#239](https://github.com/microting/eform-angular-work-orders-plugin/issues/239)
 - Bump Microting.WorkOrderBase from 2.0.17 to 2.0.18 [\#238](https://github.com/microting/eform-angular-work-orders-plugin/issues/238)
 - Bump Microting.eFormApi.BasePn from 3.0.19 to 3.0.20 [\#237](https://github.com/microting/eform-angular-work-orders-plugin/issues/237)
 - Bump Microting.eForm from 5.2.8 to 5.2.9 [\#236](https://github.com/microting/eform-angular-work-orders-plugin/issues/236)
@@ -314,7 +352,6 @@
 
 **Implemented enhancements:**
 
-- Bump Microting.WorkOrderBase from 2.0.9 to 2.0.10 [\#209](https://github.com/microting/eform-angular-work-orders-plugin/issues/209)
 - Bump Microting.eFormApi.BasePn from 3.0.11 to 3.0.12 [\#208](https://github.com/microting/eform-angular-work-orders-plugin/issues/208)
 - Bump Microting.eForm from 5.2.1 to 5.2.2 [\#207](https://github.com/microting/eform-angular-work-orders-plugin/issues/207)
 
@@ -324,13 +361,13 @@
 
 **Implemented enhancements:**
 
+- Bump Microting.WorkOrderBase from 2.0.9 to 2.0.10 [\#209](https://github.com/microting/eform-angular-work-orders-plugin/issues/209)
 - Bump Microting.WorkOrderBase from 2.0.7 to 2.0.9 [\#206](https://github.com/microting/eform-angular-work-orders-plugin/issues/206)
 - Bump Microting.eFormApi.BasePn from 3.0.9 to 3.0.11 [\#205](https://github.com/microting/eform-angular-work-orders-plugin/issues/205)
 - Bump Microting.eForm from 5.1.5 to 5.2.1 [\#204](https://github.com/microting/eform-angular-work-orders-plugin/issues/204)
 
 **Merged pull requests:**
 
-- Bump Microsoft.NET.Test.Sdk from 16.9.4 to 16.10.0 in /eFormAPI/Plugins/WorkOrders.Pn [\#210](https://github.com/microting/eform-angular-work-orders-plugin/pull/210) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Fix bug in setting page when the folder was not set [\#197](https://github.com/microting/eform-angular-work-orders-plugin/pull/197) ([sanioooook](https://github.com/sanioooook))
 - Seperatly pagination and filtration in store [\#179](https://github.com/microting/eform-angular-work-orders-plugin/pull/179) ([sanioooook](https://github.com/sanioooook))
 
@@ -341,7 +378,6 @@
 **Implemented enhancements:**
 
 - Bump Microting.WorkOrderBase from 2.0.6 to 2.0.7 [\#200](https://github.com/microting/eform-angular-work-orders-plugin/issues/200)
-- Bump Microting.eFormApi.BasePn from 3.0.8 to 3.0.9 [\#199](https://github.com/microting/eform-angular-work-orders-plugin/issues/199)
 - Bump Microting.eForm from 5.1.4 to 5.1.5 [\#198](https://github.com/microting/eform-angular-work-orders-plugin/issues/198)
 
 ## [v1.0.100](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.100) (2021-05-07)
@@ -360,9 +396,9 @@
 
 **Implemented enhancements:**
 
+- Bump Microting.eFormApi.BasePn from 3.0.8 to 3.0.9 [\#199](https://github.com/microting/eform-angular-work-orders-plugin/issues/199)
 - Bump Microting.WorkOrderBase from 2.0.4 to 2.0.5 [\#191](https://github.com/microting/eform-angular-work-orders-plugin/issues/191)
 - Bump Microting.eFormApi.BasePn from 3.0.6 to 3.0.7 [\#190](https://github.com/microting/eform-angular-work-orders-plugin/issues/190)
-- Bump Microting.eForm from 5.1.2 to 5.1.3 [\#189](https://github.com/microting/eform-angular-work-orders-plugin/issues/189)
 
 ## [v1.0.98](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.98) (2021-05-05)
 
@@ -370,6 +406,7 @@
 
 **Implemented enhancements:**
 
+- Bump Microting.eForm from 5.1.2 to 5.1.3 [\#189](https://github.com/microting/eform-angular-work-orders-plugin/issues/189)
 - Bump Microting.WorkOrderBase from 2.0.3 to 2.0.4 [\#188](https://github.com/microting/eform-angular-work-orders-plugin/issues/188)
 - Bump Microting.eFormApi.BasePn from 3.0.5 to 3.0.6 [\#187](https://github.com/microting/eform-angular-work-orders-plugin/issues/187)
 - Bump Microting.eForm from 5.1.1 to 5.1.2 [\#186](https://github.com/microting/eform-angular-work-orders-plugin/issues/186)
@@ -393,6 +430,7 @@
 - Bump Microting.WorkOrderBase from 2.0.1 to 2.0.2 [\#182](https://github.com/microting/eform-angular-work-orders-plugin/issues/182)
 - Bump Microting.eFormApi.BasePn from 3.0.3 to 3.0.4 [\#181](https://github.com/microting/eform-angular-work-orders-plugin/issues/181)
 - Bump Microting.eForm from 5.0.4 to 5.1.0 [\#180](https://github.com/microting/eform-angular-work-orders-plugin/issues/180)
+- Bump Microting.eForm from 5.0.2 to 5.0.4 [\#176](https://github.com/microting/eform-angular-work-orders-plugin/issues/176)
 
 ## [v1.0.95](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.95) (2021-05-03)
 
@@ -402,7 +440,6 @@
 
 - Bump Microting.WorkOrderBase from 2.0.0 to 2.0.1 [\#178](https://github.com/microting/eform-angular-work-orders-plugin/issues/178)
 - Bump Microting.eFormApi.BasePn from 3.0.1 to 3.0.3 [\#177](https://github.com/microting/eform-angular-work-orders-plugin/issues/177)
-- Bump Microting.eForm from 5.0.2 to 5.0.4 [\#176](https://github.com/microting/eform-angular-work-orders-plugin/issues/176)
 
 **Merged pull requests:**
 
@@ -437,10 +474,8 @@
 
 **Implemented enhancements:**
 
-- Bump Microting.WorkOrderBase from 1.3.1 to 1.3.2 [\#165](https://github.com/microting/eform-angular-work-orders-plugin/issues/165)
 - Bump Microting.eFormApi.BasePn from 2.1.1 to 2.1.3 [\#164](https://github.com/microting/eform-angular-work-orders-plugin/issues/164)
 - Bump Microting.eForm from 4.5.1 to 4.5.3 [\#163](https://github.com/microting/eform-angular-work-orders-plugin/issues/163)
-- Bump Microting.eFormApi.BasePn from 2.1.0 to 2.1.1 [\#158](https://github.com/microting/eform-angular-work-orders-plugin/issues/158)
 
 ## [v1.0.91](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.91) (2021-04-26)
 
@@ -448,7 +483,9 @@
 
 **Implemented enhancements:**
 
+- Bump Microting.WorkOrderBase from 1.3.1 to 1.3.2 [\#165](https://github.com/microting/eform-angular-work-orders-plugin/issues/165)
 - Bump Microting.WorkOrderBase from 1.3.0 to 1.3.1 [\#159](https://github.com/microting/eform-angular-work-orders-plugin/issues/159)
+- Bump Microting.eFormApi.BasePn from 2.1.0 to 2.1.1 [\#158](https://github.com/microting/eform-angular-work-orders-plugin/issues/158)
 - Bump Microting.eForm from 4.5.0 to 4.5.1 [\#157](https://github.com/microting/eform-angular-work-orders-plugin/issues/157)
 
 **Merged pull requests:**
@@ -543,6 +580,7 @@
 
 - Bump Microting.WorkOrderBase from 1.2.37 to 1.2.38 [\#125](https://github.com/microting/eform-angular-work-orders-plugin/issues/125)
 - Bump Microting.eFormApi.BasePn from 2.0.117 to 2.0.118 [\#124](https://github.com/microting/eform-angular-work-orders-plugin/issues/124)
+- Bump Microting.eForm from 4.4.26 to 4.4.27 [\#123](https://github.com/microting/eform-angular-work-orders-plugin/issues/123)
 
 ## [v1.0.81](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.81) (2021-04-11)
 
@@ -550,7 +588,7 @@
 
 **Implemented enhancements:**
 
-- Bump Microting.eForm from 4.4.26 to 4.4.27 [\#123](https://github.com/microting/eform-angular-work-orders-plugin/issues/123)
+- Bump Microting.WorkOrderBase from 1.2.36 to 1.2.37 [\#122](https://github.com/microting/eform-angular-work-orders-plugin/issues/122)
 - Bump Microting.eFormApi.BasePn from 2.0.116 to 2.0.117 [\#121](https://github.com/microting/eform-angular-work-orders-plugin/issues/121)
 - Bump Microting.eForm from 4.4.24 to 4.4.26 [\#120](https://github.com/microting/eform-angular-work-orders-plugin/issues/120)
 
@@ -560,7 +598,6 @@
 
 **Implemented enhancements:**
 
-- Bump Microting.WorkOrderBase from 1.2.36 to 1.2.37 [\#122](https://github.com/microting/eform-angular-work-orders-plugin/issues/122)
 - Bump Microting.WorkOrderBase from 1.2.35 to 1.2.36 [\#119](https://github.com/microting/eform-angular-work-orders-plugin/issues/119)
 - Bump Microting.eFormApi.BasePn from 2.0.115 to 2.0.116 [\#118](https://github.com/microting/eform-angular-work-orders-plugin/issues/118)
 - Bump Microting.eForm from 4.4.23 to 4.4.24 [\#117](https://github.com/microting/eform-angular-work-orders-plugin/issues/117)
@@ -574,7 +611,6 @@
 - Bump Microting.WorkOrderBase from 1.2.34 to 1.2.35 [\#116](https://github.com/microting/eform-angular-work-orders-plugin/issues/116)
 - Bump Microting.eFormApi.BasePn from 2.0.113 to 2.0.115 [\#115](https://github.com/microting/eform-angular-work-orders-plugin/issues/115)
 - Bump Microting.eForm from 4.4.21 to 4.4.23 [\#114](https://github.com/microting/eform-angular-work-orders-plugin/issues/114)
-- Bump Microting.eForm from 4.4.20 to 4.4.21 [\#110](https://github.com/microting/eform-angular-work-orders-plugin/issues/110)
 
 ## [v1.0.78](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.78) (2021-04-07)
 
@@ -584,6 +620,7 @@
 
 - Bump Microting.WorkOrderBase from 1.2.32 to 1.2.34 [\#112](https://github.com/microting/eform-angular-work-orders-plugin/issues/112)
 - Bump Microting.eFormApi.BasePn from 2.0.111 to 2.0.113 [\#111](https://github.com/microting/eform-angular-work-orders-plugin/issues/111)
+- Bump Microting.eForm from 4.4.20 to 4.4.21 [\#110](https://github.com/microting/eform-angular-work-orders-plugin/issues/110)
 
 **Merged pull requests:**
 
@@ -627,7 +664,6 @@
 - Bump Microting.WorkOrderBase from 1.2.29 to 1.2.30 [\#98](https://github.com/microting/eform-angular-work-orders-plugin/issues/98)
 - Bump Microting.eFormApi.BasePn from 2.0.107 to 2.0.109 [\#97](https://github.com/microting/eform-angular-work-orders-plugin/issues/97)
 - Bump Microting.eForm from 4.4.13 to 4.4.16 [\#96](https://github.com/microting/eform-angular-work-orders-plugin/issues/96)
-- Bump Microting.WorkOrderBase from 1.2.27 to 1.2.28 [\#89](https://github.com/microting/eform-angular-work-orders-plugin/issues/89)
 
 ## [v1.0.73](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.73) (2021-03-29)
 
@@ -645,6 +681,7 @@
 
 **Implemented enhancements:**
 
+- Bump Microting.WorkOrderBase from 1.2.27 to 1.2.28 [\#89](https://github.com/microting/eform-angular-work-orders-plugin/issues/89)
 - Bump Microting.eFormApi.BasePn from 2.0.104 to 2.0.106 [\#88](https://github.com/microting/eform-angular-work-orders-plugin/issues/88)
 - Bump Microting.eForm from 4.4.9 to 4.4.11 [\#87](https://github.com/microting/eform-angular-work-orders-plugin/issues/87)
 
@@ -698,7 +735,10 @@
 - Bump Microting.WorkOrderBase from 1.2.21 to 1.2.22 [\#66](https://github.com/microting/eform-angular-work-orders-plugin/issues/66)
 - Bump Microting.eFormApi.BasePn from 2.0.98 to 2.0.99 [\#65](https://github.com/microting/eform-angular-work-orders-plugin/issues/65)
 - Bump Microting.eForm from 4.4.2 to 4.4.3 [\#64](https://github.com/microting/eform-angular-work-orders-plugin/issues/64)
-- Bump Microting.eFormApi.BasePn from 2.0.97 to 2.0.98 [\#61](https://github.com/microting/eform-angular-work-orders-plugin/issues/61)
+
+**Merged pull requests:**
+
+- Bump Microsoft.NET.Test.Sdk from 16.8.3 to 16.9.1 in /eFormAPI/Plugins/WorkOrders.Pn [\#59](https://github.com/microting/eform-angular-work-orders-plugin/pull/59) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 
 ## [v1.0.65](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.65) (2021-02-24)
 
@@ -707,6 +747,7 @@
 **Implemented enhancements:**
 
 - Bump Microting.WorkOrderBase from 1.2.20 to 1.2.21 [\#62](https://github.com/microting/eform-angular-work-orders-plugin/issues/62)
+- Bump Microting.eFormApi.BasePn from 2.0.97 to 2.0.98 [\#61](https://github.com/microting/eform-angular-work-orders-plugin/issues/61)
 - Bump Microting.eForm from 4.4.1 to 4.4.2 [\#60](https://github.com/microting/eform-angular-work-orders-plugin/issues/60)
 
 ## [v1.0.64](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.64) (2021-02-20)
@@ -721,7 +762,6 @@
 
 **Merged pull requests:**
 
-- Bump Microsoft.NET.Test.Sdk from 16.8.3 to 16.9.1 in /eFormAPI/Plugins/WorkOrders.Pn [\#59](https://github.com/microting/eform-angular-work-orders-plugin/pull/59) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump NUnit from 3.13.0 to 3.13.1 in /eFormAPI/Plugins/WorkOrders.Pn [\#47](https://github.com/microting/eform-angular-work-orders-plugin/pull/47) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 
 ## [v1.0.63](https://github.com/microting/eform-angular-work-orders-plugin/tree/v1.0.63) (2021-02-18)
