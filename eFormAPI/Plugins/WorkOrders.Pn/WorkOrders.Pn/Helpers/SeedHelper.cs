@@ -28,19 +28,15 @@ namespace WorkOrders.Pn.Helpers
                 false,
                 Constants.WorkflowStates.NotRemoved);
 
-            EntityGroup group;
-
             if (!model.EntityGroups.Any())
             {
-                group = await core.EntityGroupCreate(Constants.FieldTypes.EntitySelect,
-                    "eform-angular-work-orders-plugin-editable-TaskArea", "Områder");
-            }
-            else
-            {
-                group = model.EntityGroups.First();
+                var eg = await core.EntityGroupCreate(Constants.FieldTypes.EntitySelect,
+                    "eform-angular-work-orders-plugin-editable-TaskArea", "Områder", true, true);
+
+                return int.Parse(eg.MicrotingUid);
             }
 
-            return int.Parse(group.MicrotingUUID);
+            return int.Parse(model.EntityGroups.First().MicrotingUUID);
         }
 
         private static async Task<int> CreateWorkerList(Core core)
@@ -52,18 +48,15 @@ namespace WorkOrders.Pn.Helpers
                 false,
                 Constants.WorkflowStates.NotRemoved);
 
-            EntityGroup group;
-
             if (!model.EntityGroups.Any())
             {
-                group = await core.EntityGroupCreate(Constants.FieldTypes.EntitySelect,
-                    "eform-angular-work-orders-plugin-editable-Worker", "Medarbejdere");
+                var eg = await core.EntityGroupCreate(Constants.FieldTypes.EntitySelect,
+                    "eform-angular-work-orders-plugin-editable-Worker", "Medarbejdere", true, true);
+
+                return int.Parse(eg.MicrotingUid);
             }
-            else
-            {
-                group = model.EntityGroups.First();
-            }
-            return int.Parse(group.MicrotingUUID);
+
+            return int.Parse(model.EntityGroups.First().MicrotingUUID);
         }
 
         public static async Task<int> CreateNewTaskEform(Core core)
