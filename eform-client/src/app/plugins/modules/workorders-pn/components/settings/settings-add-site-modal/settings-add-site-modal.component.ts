@@ -15,6 +15,7 @@ export class SettingsAddSiteModalComponent implements OnInit, OnDestroy {
   @ViewChild('frame', { static: false }) frame;
   @Output() siteAdded: EventEmitter<void> = new EventEmitter<void>();
   availableSites: SiteNameDto[] = [];
+  availableSiteForSelection: SiteNameDto[] = [];
   selectedSiteId: number;
   addSiteSub$: Subscription;
 
@@ -26,6 +27,7 @@ export class SettingsAddSiteModalComponent implements OnInit, OnDestroy {
     // Removing assigned sites from all sites by id
     const propEqual = eqBy(prop('siteUId'));
     this.availableSites = symmetricDifferenceWith(propEqual, sites, assignedSites);
+    this.availableSiteForSelection = this.availableSites.filter(site => site.workflowState !== 'removed');
     this.frame.show();
   }
 

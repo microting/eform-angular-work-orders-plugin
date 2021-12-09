@@ -74,8 +74,9 @@ namespace WorkOrders.Pn.Services
                     {
                         var siteNameModel = allSites.Where(x => x.MicrotingUid == id).Select(x => new SiteNameModel()
                         {
-                            SiteName = x.Name,
+                            SiteName = x.WorkflowState == Constants.WorkflowStates.Removed ? $"{x.Name} (Removed)" : x.Name,
                             SiteUId = (int)x.MicrotingUid,
+                            WorkflowState = x.WorkflowState,
                             CreatedAt = x.CreatedAt,
                             UpdatedAt = x.UpdatedAt
                         }).FirstOrDefault();

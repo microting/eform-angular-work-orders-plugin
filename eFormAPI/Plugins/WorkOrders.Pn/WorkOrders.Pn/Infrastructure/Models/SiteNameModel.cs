@@ -6,6 +6,7 @@ namespace WorkOrders.Pn.Infrastructure.Models
     {
         public int SiteUId { get; set; }
         public string SiteName { get; set; }
+        public string WorkflowState { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
     }
