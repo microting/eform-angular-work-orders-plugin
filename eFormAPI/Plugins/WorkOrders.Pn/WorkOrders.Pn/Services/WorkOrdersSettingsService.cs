@@ -58,6 +58,9 @@ namespace WorkOrders.Pn.Services
             try
             {
                 var assignedSitesIds = await _dbContext.AssignedSites.Where(y => y.WorkflowState != Constants.WorkflowStates.Removed).Select(x => x.SiteMicrotingUid).ToListAsync();
+
+                var theCore = await _core.GetCore();
+                await using var sdkDbContext = theCore.DbContextHelper.GetDbContext();
                 var workOrdersSettings = new WorkOrdersSettingsModel()
                 {
                     AssignedSites = new List<SiteNameModel>()
@@ -65,14 +68,16 @@ namespace WorkOrders.Pn.Services
 
                 if (assignedSitesIds.Count > 0)
                 {
-                    var allSites = await _core.GetCore().Result.SiteReadAll(false);
+                    var allSites = await sdkDbContext.Sites.ToListAsync();
 
                     foreach (var id in assignedSitesIds)
                     {
-                        var siteNameModel = allSites.Where(x => x.SiteId == id).Select(x => new SiteNameModel()
+                        var siteNameModel = allSites.Where(x => x.MicrotingUid == id).Select(x => new SiteNameModel()
                         {
-                            SiteName = x.SiteName,
-                            SiteUId = x.SiteId
+                            SiteName = x.Name,
+                            SiteUId = (int)x.MicrotingUid,
+                            CreatedAt = x.CreatedAt,
+                            UpdatedAt = x.UpdatedAt
                         }).FirstOrDefault();
                         workOrdersSettings.AssignedSites.Add(siteNameModel);
                     }
