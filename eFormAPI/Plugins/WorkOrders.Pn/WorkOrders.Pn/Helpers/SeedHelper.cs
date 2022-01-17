@@ -203,7 +203,14 @@ namespace WorkOrders.Pn.Helpers
             newTaskForm.ElementList.Add(dataElement);
 
             newTaskForm = await core.TemplateUploadData(newTaskForm);
-            return await core.TemplateCreate(newTaskForm);
+            int id =  await core.TemplateCreate(newTaskForm);
+
+            await using var dbContext = core.DbContextHelper.GetDbContext();
+            var cl = await dbContext.CheckLists.SingleAsync(x => x.Id == id);
+            cl.IsLocked = true;
+            await cl.Update(dbContext);
+
+            return id;
         }
 
         public static async Task<int> CreateTaskListEform(Core core)
@@ -345,7 +352,14 @@ namespace WorkOrders.Pn.Helpers
             taskListForm.ElementList.Add(dataElement);
 
             taskListForm = await core.TemplateUploadData(taskListForm);
-            return await core.TemplateCreate(taskListForm);
+            int id =  await core.TemplateCreate(taskListForm);
+
+            await using var dbContext = core.DbContextHelper.GetDbContext();
+            var cl = await dbContext.CheckLists.SingleAsync(x => x.Id == id);
+            cl.IsLocked = true;
+            await cl.Update(dbContext);
+
+            return id;
         }
     }
 }

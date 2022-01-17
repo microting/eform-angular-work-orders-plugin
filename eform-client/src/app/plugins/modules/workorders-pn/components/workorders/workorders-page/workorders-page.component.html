@@ -43,10 +43,14 @@
             {{ workOrder.createdBy }}
           </td>
           <td id="workOrderAssignedArea">
-            {{ workOrder.assignedArea }}
+            <ng-container *ngIf="workOrder.assignedArea != 'null'">
+              {{ workOrder.assignedArea }}
+            </ng-container>
           </td>
           <td id="workOrderAssignedWorker">
-            {{ workOrder.assignedWorker }}
+            <ng-container *ngIf="workOrder.assignedWorker != 'null'">
+              {{ workOrder.assignedWorker }}
+            </ng-container>
           </td>
           <td id="workOrderDescription">
             {{ workOrder.description }}
