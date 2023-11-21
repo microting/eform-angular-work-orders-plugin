@@ -22,7 +22,7 @@
     <PackageReference Include="Microting.eForm" Version="7.0.75" />
     <PackageReference Include="Microting.eFormApi.BasePn" Version="7.0.61" />
     <PackageReference Include="McMaster.NETCore.Plugins" Version="1.4.0" />
-    <PackageReference Include="Microting.WorkOrderBase" Version="2.0.152" />
+    <PackageReference Include="Microting.WorkOrderBase" Version="7.0.5" />
   </ItemGroup>
 
   <ItemGroup>
