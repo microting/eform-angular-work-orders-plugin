@@ -75,7 +75,7 @@ namespace WorkOrders.Pn
         public void ConfigureDbContext(IServiceCollection services, string connectionString)
         {
             _connectionString = connectionString;
-            services.AddDbContext<WorkOrderPnDbContext>(o => o.UseMySql(connectionString, new MariaDbServerVersion(
+            services.AddDbContextPool<WorkOrderPnDbContext>(o => o.UseMySql(connectionString, new MariaDbServerVersion(
                 new Version(10, 4, 0)), mySqlOptionsAction: builder =>
             {
                 builder.EnableRetryOnFailure();
