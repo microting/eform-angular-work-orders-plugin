@@ -94,7 +94,6 @@ namespace WorkOrders.Pn
         {
             appBuilder.UseHttpsRedirection();
 
-            appBuilder.UseRouting();
             string rabbitMqHost = "localhost";
 
             if (_connectionString.Contains("frontend"))
